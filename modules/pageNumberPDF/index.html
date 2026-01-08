@@ -3,13 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Page Number to PDF</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>Page Number PDF - I Love PDF</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Montserrat:wght@700&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS -->
     <link href="styles.css" rel="stylesheet">
-    <link href="../main.css" rel="stylesheet">
     <link href="../shared-styles.css" rel="stylesheet">
 </head>
-<body data-page-title="Page Numbers PDF">
+<body data-page-title="Page Number">
     <!-- Shared Navbar -->
     <div id="shared-navbar"></div>
 
@@ -19,66 +28,245 @@
     <!-- Shared Breadcrumb -->
     <div id="shared-breadcrumb"></div>
 
-    <div class="landing-page text-center mt-5">
-        <h1>Welcome to the Add Page Number to PDF App</h1>
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#pageNumberModal">Add Page Number</button>
-    </div>
+    <!-- Main Content (new design) -->
+    <main class="main-content">
+        <div class="container-fluid container-custom">
+            <div id="alertPlaceholder" class="mb-3"></div>
 
-    <div class="modal fade" id="pageNumberModal" tabindex="-1" aria-labelledby="pageNumberModalLabel" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header text-white bg-danger">
-                    <h5 class="modal-title" id="pageNumberModalLabel">Add Page Number to PDF</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="pdfInput" accept="application/pdf">
-                        <label class="custom-file-label" for="pdfInput">Choose PDF</label>
+            <div class="row g-4">
+                <!-- Left Side - PDF Upload Area -->
+                <div class="col-lg-6 position-relative">
+                    <!-- Initial Upload State -->
+                    <div id="initialUploadState" class="initial-upload-state">
+                        <div class="upload-content">
+                            <h2 class="upload-title">Add Page Numbers to PDF</h2>
+                            <p class="upload-subtitle">Select a PDF file to add page numbers with customizable options.</p>
+                            <div class="upload-buttons-wrapper">
+                                <button id="selectFilesBtn" class="btn-select-files" type="button">
+                                    Select PDF file
+                                </button>
+                                <div class="cloud-buttons">
+                                    <button id="initialGoogleDriveBtn" class="cloud-btn" type="button" title="Select from Google Drive">
+                                        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                                            <path d="M7.71 2.5L2.5 12.71l5.21 10.21L12.71 16l5.21-3.29L12.71 2.5H7.71z"/>
+                                        </svg>
+                                    </button>
+                                    <button id="initialDropboxBtn" class="cloud-btn" type="button" title="Select from Dropbox">
+                                        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                                            <path d="M6 2L0 6l6 4 6-4-6-4zm12 4l6-4-6-4-6 4 6 4zM0 14l6 4 6-4-6-4-6 4zm18-4l-6 4 6 4 6-4-6-4zM0 20l6 4 6-4-6-4-6 4zm12 0l6 4 6-4-6-4-6 4z"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <p class="drop-hint">or drop PDF here</p>
+                        </div>
                     </div>
-                    <ul id="fileList" class="list-group mt-3"></ul>
-                    
-                    <div class="page-number-options mt-4">
-                        <div class="form-group">
-                            <label for="position">Position:</label>
-                            <div id="position" class="d-flex flex-wrap justify-content-center">
+
+                    <!-- File Selection Buttons Group (shown after files are selected) -->
+                    <div id="fileSelectionButtons" class="file-selection-buttons" style="display: none;">
+                        <button id="addBtn" class="file-select-btn add-btn" type="button" title="Select PDF file">
+                            <i class="fas fa-plus"></i>
+                            <span class="file-count-badge" id="fileCountBadge">0</span>
+                        </button>
+                        <button id="computerBtn" class="file-select-btn computer-btn" type="button" title="Select from computer">
+                            <i class="fas fa-desktop"></i>
+                        </button>
+                        <button id="googleDriveBtn" class="file-select-btn google-drive-btn" type="button" title="Select from Google Drive">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                                <path d="M7.71 2.5L2.5 12.71l5.21 10.21L12.71 16l5.21-3.29L12.71 2.5H7.71z"/>
+                            </svg>
+                        </button>
+                        <button id="dropboxBtn" class="file-select-btn dropbox-btn" type="button" title="Select from Dropbox">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                                <path d="M6 2L0 6l6 4 6-4-6-4zm12 4l6-4-6-4-6 4 6 4zM0 14l6 4 6-4-6-4-6 4zm18-4l-6 4 6 4 6-4-6-4zM0 20l6 4 6-4-6-4-6 4zm12 0l6 4 6-4-6-4-6 4z"/>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Hidden file input -->
+                    <input type="file" id="pdfInput" accept="application/pdf" style="display:none;">
+
+                    <!-- Upload area for displaying selected file -->
+                    <div class="upload-area">
+                        <div id="fileList" class="file-list-container"></div>
+                    </div>
+                </div>
+
+                <!-- Right Side - Page Number Options -->
+                <div class="col-lg-6">
+                    <div class="options-panel">
+                        <h5 class="section-title"><strong>Page Number Options</strong></h5>
+
+                        <!-- Page Type Selection -->
+                        <div class="page-type-selection mb-3">
+                            <h6 class="option-label">Page Type <small class="text-muted">(for book-style layouts)</small></h6>
+                            <div class="row g-2 mt-2">
+                                <div class="col-6">
+                                    <div class="page-type-option active" id="pageTypeSingle" data-type="single" title="Same position on all pages">
+                                        <span class="type-indicator" style="background-color: #5A26EF;"></span>
+                                        <span class="type-label">Single Page</span>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="page-type-option" id="pageTypeFacing" data-type="facing" title="Left pages: left side, Right pages: right side (like a book)">
+                                        <span class="type-indicator" style="background-color: #FFFFFF; border: 1px solid #E4E4E4;"></span>
+                                        <span class="type-label">Facing Page</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Position Selection -->
+                        <div class="position-selection mb-3">
+                            <h6 class="option-label">Positions:</h6>
+                            <div id="position" class="position-grid">
                                 <div class="position-box" data-position="top-left"></div>
                                 <div class="position-box" data-position="top-center"></div>
                                 <div class="position-box" data-position="top-right"></div>
                                 <div class="position-box" data-position="middle-left"></div>
-                                <div class="position-box" data-position="middle-center"></div>
+                                <div class="position-box active" data-position="middle-center"></div>
                                 <div class="position-box" data-position="middle-right"></div>
                                 <div class="position-box" data-position="bottom-left"></div>
                                 <div class="position-box" data-position="bottom-center"></div>
                                 <div class="position-box" data-position="bottom-right"></div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="transparency">Transparency:</label>
-                            <input type="range" class="form-control-range" id="transparency" min="0" max="100" value="50">
-                            <small class="form-text text-muted">Adjust the transparency of the page numbers.</small>
+
+                        <!-- Page Margin -->
+                        <div class="page-margin-selection mb-3">
+                            <h6 class="option-label">Page Margin <small class="text-muted">(distance from page edge)</small></h6>
+                            <div class="row g-2 mt-2">
+                                <div class="col-4">
+                                    <div class="margin-option" id="marginSmall" data-margin="small" title="Small margin (5px from edge)">
+                                        <i class="fa-solid fa-image"></i>
+                                        <small class="d-block mt-1">Small</small>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="margin-option margin-option-selected" id="marginMedium" data-margin="medium" title="Medium margin (10px from edge)">
+                                        <i class="fa-solid fa-image"></i>
+                                        <small class="d-block mt-1">Medium</small>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="margin-option" id="marginLarge" data-margin="large" title="Large margin (20px from edge)">
+                                        <i class="fa-solid fa-image"></i>
+                                        <small class="d-block mt-1">Large</small>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="pageSize">Size:</label>
-                            <input type="range" class="form-control-range" id="pageSize" min="10" max="40" value="12">
-                            <small class="form-text text-muted">Adjust the size of the page numbers.</small>
+
+                        <!-- Page Range -->
+                        <div class="page-range-selection mb-3">
+                            <h6 class="option-label">Page</h6>
+                            <div class="row g-2 mt-2">
+                                <div class="col-12">
+                                    <div class="page-number-display" id="totalPagesDisplay">
+                                        <span>0</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Which Pages to Number -->
+                        <div class="which-pages-selection mb-3">
+                            <h6 class="option-label">Which Page do You Want To Number</h6>
+                            <div class="row g-2 mt-2 align-items-center">
+                                <div class="col-5">
+                                    <input type="number" class="form-control page-range-input" id="startPage" value="1" min="1" placeholder="Start">
+                                </div>
+                                <div class="col-2 text-center">
+                                    <span class="range-separator">to</span>
+                                </div>
+                                <div class="col-5">
+                                    <input type="number" class="form-control page-range-input" id="endPage" value="1" min="1" placeholder="End">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Text Input -->
+                        <div class="text-input-selection mb-3">
+                            <h6 class="option-label">Text <small class="text-muted">(format: {n} = page number, {t} = total pages)</small></h6>
+                            <div class="row g-2 mt-2">
+                                <div class="col-12">
+                                    <div class="text-input-wrapper">
+                                        <select class="form-control text-input-field" id="textTemplate">
+                                            <option value="">Page Number Only</option>
+                                            <option value="Page {n}">Page {n}</option>
+                                            <option value="Page {n} of {t}">Page {n} of {t}</option>
+                                            <option value="{n}/{t}">{n}/{t}</option>
+                                            <option value="{n} / {t}">{n} / {t}</option>
+                                            <option value="Page In">Page In</option>
+                                            <option value="custom">Custom Text...</option>
+                                        </select>
+                                        <i class="fa-solid fa-chevron-down text-input-arrow"></i>
+                                    </div>
+                                    <input type="text" class="form-control mt-2" id="customText" placeholder="Example: Page {n} of {t} or Chapter {n}" style="display: none;">
+                                    <small class="form-text text-muted mt-1" id="textPreview">Preview: Will show page number only</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Text Format -->
+                        <div class="text-format-selection mb-3">
+                            <h6 class="option-label">Text Format</h6>
+                            <div class="row g-2 mt-2">
+                                <div class="col-12">
+                                    <div class="text-format-controls">
+                                        <select class="form-select format-select" id="fontFamily">
+                                            <option value="Helvetica">Arial</option>
+                                            <option value="Times-Roman">Times</option>
+                                            <option value="Courier">Courier</option>
+                                        </select>
+                                        <div class="format-buttons">
+                                            <button class="format-btn" id="formatBold" type="button" title="Bold" data-format="bold"><strong>B</strong></button>
+                                            <button class="format-btn" id="formatItalic" type="button" title="Italic" data-format="italic"><em>I</em></button>
+                                            <button class="format-btn" id="formatUnderline" type="button" title="Underline" data-format="underline"><u>U</u></button>
+                                            <input type="color" class="format-btn" id="textColor" title="Text Color" value="#000000" style="width: 32px; height: 32px; padding: 2px; cursor: pointer;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Size and Transparency Controls -->
+                        <div class="size-transparency-controls mb-3">
+                            <div class="row g-2">
+                                <div class="col-6">
+                                    <h6 class="option-label">Size</h6>
+                                    <input type="range" class="form-control-range" id="pageSize" min="8" max="48" value="12">
+                                    <small class="form-text text-muted" id="sizeValue">12pt</small>
+                                </div>
+                                <div class="col-6">
+                                    <h6 class="option-label">Transparency</h6>
+                                    <input type="range" class="form-control-range" id="transparency" min="0" max="100" value="50">
+                                    <small class="form-text text-muted" id="transparencyValue">50%</small>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div id="alertPlaceholder"></div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                    <button type="button" id="addPageNumberBtn" class="btn btn-primary">Add Page Number</button>
+            </div>
+
+            <!-- Add Page Number Button -->
+            <div class="row mt-3">
+                <div class="col-lg-6 offset-lg-6">
+                    <button id="addPageNumberBtn" class="btn-add-page-number" type="button">
+                        Add Page Numbers
+                    </button>
                 </div>
             </div>
         </div>
-    </div>
+    </main>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Google API Client Library -->
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script src="https://accounts.google.com/gsi/client"></script>
+    <script src="https://apis.google.com/js/picker.js"></script>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../shared-components.js"></script>
     <script src="../config.js"></script>
     <script src="app.js"></script>

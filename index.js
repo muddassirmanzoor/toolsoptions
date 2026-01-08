@@ -21,6 +21,7 @@ const pythonPath = process.env.PYTHON_PATH || 'python';
 
 app.use(cors());
 app.use(express.json()); // To parse JSON bodies
+app.use(express.urlencoded({ extended: true })); // To parse URL-encoded bodies (for form data)
 
 // Helper function to handle file deletion
 const cleanUpFiles = async (inputPath, outputPath) => {
@@ -275,22 +276,84 @@ app.post('/api/add-watermark', upload.fields([{ name: 'pdf', maxCount: 1 }, { na
 
 // Add Page Number to PDF
 app.post('/api/add-page-number', upload.single('pdf'), (req, res) => {
-    const { position = 'bottom-right', transparency = '50', pageSize = '35' } = req.body;
+    // Multer stores file in req.file, form data in req.body
+    // Log the raw body to see what we're receiving
+    console.log('Raw req.body:', JSON.stringify(req.body, null, 2));
+    
+    const { 
+        position = 'bottom-right', 
+        transparency = '50', 
+        pageSize = '35',
+        pageType = 'single',
+        pageMargin = 'medium',
+        startPage = '1',
+        endPage = '1',
+        textTemplate = '',
+        customText = '',
+        fontFamily = 'Helvetica',
+        textBold = 'false',
+        textItalic = 'false',
+        textUnderline = 'false',
+        textColor = '#000000',
+        totalPages = '1'
+    } = req.body;
+    
     const pdfFile = req.file;
     const pdfPath = path.normalize(pdfFile.path);
     const outputFileName = `${pdfFile.filename}_numbered.pdf`;
     const outputPath = path.normalize(path.join(__dirname, 'uploads', outputFileName));
 
-    // Build the page numbering command
-    const pageNumberCommand = `python add_page_number.py "${pdfPath.replace(/\\/g, '/')}" "${outputPath.replace(/\\/g, '/')}" --position "${position}" --transparency ${transparency} --page-size ${pageSize}`;
+    // Build the page numbering command with all parameters
+    // Use proper escaping for all arguments
+    const escapeArg = (arg) => {
+        if (typeof arg === 'string') {
+            // Escape quotes and backslashes, wrap in quotes
+            return `"${arg.replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"`;
+        }
+        return arg;
+    };
     
-    console.log(pageNumberCommand);
+    let pageNumberCommand = `python add_page_number.py ${escapeArg(pdfPath.replace(/\\/g, '/'))} ${escapeArg(outputPath.replace(/\\/g, '/'))}`;
+    pageNumberCommand += ` --position ${escapeArg(position)}`;
+    pageNumberCommand += ` --transparency ${transparency}`;
+    pageNumberCommand += ` --page-size ${pageSize}`;
+    pageNumberCommand += ` --page-type ${escapeArg(pageType)}`;
+    pageNumberCommand += ` --page-margin ${escapeArg(pageMargin)}`;
+    pageNumberCommand += ` --start-page ${startPage}`;
+    pageNumberCommand += ` --end-page ${endPage}`;
+    pageNumberCommand += ` --font-family ${escapeArg(fontFamily)}`;
+    pageNumberCommand += ` --text-bold ${textBold}`;
+    pageNumberCommand += ` --text-italic ${textItalic}`;
+    pageNumberCommand += ` --text-underline ${textUnderline}`;
+    pageNumberCommand += ` --text-color ${escapeArg(textColor)}`;
+    pageNumberCommand += ` --total-pages ${totalPages}`;
+    
+    // Add text template or custom text
+    if (textTemplate && textTemplate.trim()) {
+        pageNumberCommand += ` --text-template ${escapeArg(textTemplate)}`;
+    } else if (customText && customText.trim()) {
+        pageNumberCommand += ` --custom-text ${escapeArg(customText)}`;
+    }
+    
+    console.log('Executing command:', pageNumberCommand);
+    console.log('Command length:', pageNumberCommand.length);
+    
     // Execute the page numbering command
-    exec(pageNumberCommand, async (error, stdout, stderr) => {
+    exec(pageNumberCommand, { maxBuffer: 1024 * 1024 * 10 }, async (error, stdout, stderr) => {
+        // Log stdout and stderr for debugging
+        if (stdout) {
+            console.log('Python stdout:', stdout);
+        }
+        if (stderr) {
+            console.log('Python stderr:', stderr);
+        }
+        
         if (error) {
             console.error(`exec error: ${error}`);
-            console.error(stderr);
-            res.status(500).send('Failed to add page numbers.');
+            console.error('Error code:', error.code);
+            console.error('Error signal:', error.signal);
+            console.error('stderr:', stderr);
+            res.status(500).send('Failed to add page numbers: ' + (stderr || error.message));
             return;
         }
 
