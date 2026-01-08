@@ -1,0 +1,28 @@
+.custom-file-input ~ .custom-file-label::after {
+    content: 'Browse';
+}
+
+.custom-file-label {
+    border-radius: 0;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    display: inline-block;
+    margin-top: 0;
+    line-height: 1.5;
+}
+
+.custom-file {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+/* Adjust modal and alert styles */
+.modal {
+    border-radius: 10px;
+}
+
+/* Alert styles */
+#alertPlaceholder {
+    margin-top: 10px;
+}

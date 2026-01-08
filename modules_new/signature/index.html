@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signature PDF - I Love PDF</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Montserrat:wght@700&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand" href="/">
+                <img src="../compressPDF/assets/logo-ilovepdf.svg" alt="I Love PDF" class="logo-img">
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Browse Tools
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">All Tools</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">How It Works</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            All Tools PDF
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Compress PDF</a></li>
+                            <li><a class="dropdown-item" href="#">Merge PDF</a></li>
+                            <li><a class="dropdown-item" href="#">Split PDF</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Pricing Plan</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center gap-3">
+                    <a href="#" class="btn-login">Login</a>
+                    <a href="#" class="btn-signup">Sign Up Free</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-decorations">
+            <img src="../compressPDF/assets/triangle-orange-1.svg" alt="" class="decoration decoration-triangle-left">
+            <img src="../compressPDF/assets/star-orange.svg" alt="" class="decoration decoration-star-right">
+        </div>
+        <div class="container">
+            <h1 class="hero-title">Signature PDF</h1>
+        </div>
+    </section>
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb-section">
+        <div class="container">
+            <div class="breadcrumb-decorations">
+                <img src="../compressPDF/assets/star-orange.svg" alt="" class="decoration decoration-star-left">
+                <img src="../compressPDF/assets/triangle-orange-1.svg" alt="" class="decoration decoration-triangle-right">
+            </div>
+            <div class="breadcrumb-content">
+                <a href="/" class="breadcrumb-link">Home</a>
+                <span class="breadcrumb-separator">|</span>
+                <a href="#" class="breadcrumb-link">Tools</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container-fluid container-custom">
+            <div class="row g-4">
+                <!-- Left Side - Document Preview -->
+                <div class="col-lg-6">
+                    <div class="document-preview-container">
+                        <!-- Top Navigation Bar -->
+                        <div class="document-nav-bar">
+                            <div class="nav-left">
+                                <span class="page-info">Page: <span id="currentPage">2</span> - <span id="totalPages">3</span></span>
+                                <div class="go-to-page">
+                                    <span>Go to Page</span>
+                                    <i class="fa-solid fa-chevron-down"></i>
+                                </div>
+                                <span class="page-number">2</span>
+                            </div>
+                            <div class="nav-right">
+                                <div class="document-name">
+                                    <span id="documentName">Audit.pdf</span>
+                                    <i class="fa-solid fa-chevron-down"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Page Thumbnails (Vertical Stack) -->
+                        <div class="page-thumbnails-column">
+                            <div class="page-thumbnail-small">
+                                <div class="thumbnail-box"></div>
+                            </div>
+                            <div class="page-thumbnail-small active">
+                                <div class="thumbnail-box"></div>
+                            </div>
+                            <div class="page-thumbnail-small">
+                                <div class="thumbnail-box"></div>
+                            </div>
+                            <div class="page-thumbnail-small">
+                                <div class="thumbnail-box"></div>
+                            </div>
+                        </div>
+
+                        <!-- Main Document Preview -->
+                        <div class="document-preview-area">
+                            <div class="pdf-preview-placeholder">
+                                <img src="../compressPDF/assets/pdf-icon.svg" alt="PDF" class="pdf-icon-large">
+                                <span class="pdf-label">PDF</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Side - Signing Options -->
+                <div class="col-lg-6">
+                    <div class="options-panel">
+                        <h5 class="section-title"><strong>Signing Options</strong></h5>
+
+                        <!-- Type Section -->
+                        <div class="type-section mb-4">
+                            <label class="option-label">Type:</label>
+                            <div class="type-buttons">
+                                <button class="type-btn" data-type="simple">
+                                    <i class="fa-solid fa-pen"></i>
+                                    <span>Simple Signature</span>
+                                </button>
+                                <button class="type-btn" data-type="digital">
+                                    <i class="fa-solid fa-shield-halved"></i>
+                                    <span>Digital Signature</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Required Fields Section -->
+                        <div class="required-fields-section mb-4">
+                            <label class="option-label">Required Fields:</label>
+                            <div class="field-item required-field">
+                                <div class="drag-handle">
+                                    <i class="fa-solid fa-grip-vertical"></i>
+                                </div>
+                                <div class="field-content">
+                                    <label class="field-label">Signature:</label>
+                                    <input type="text" class="field-input" value="omer riaz" readonly>
+                                </div>
+                                <button class="field-edit-btn">
+                                    <i class="fa-solid fa-pen"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Optimal Fields Section -->
+                        <div class="optimal-fields-section mb-4">
+                            <label class="option-label">Optimal Fields:</label>
+                            <div class="fields-list">
+                                <!-- Initials Field -->
+                                <div class="field-item optimal-field">
+                                    <div class="drag-handle">
+                                        <i class="fa-solid fa-grip-vertical"></i>
+                                    </div>
+                                    <div class="field-icon">
+                                        <i class="fa-solid fa-pen"></i>
+                                    </div>
+                                    <div class="field-content">
+                                        <label class="field-label">Initials:</label>
+                                        <input type="text" class="field-input" value="or" readonly>
+                                    </div>
+                                    <button class="field-edit-btn">
+                                        <i class="fa-solid fa-pen"></i>
+                                    </button>
+                                </div>
+
+                                <!-- Name Field -->
+                                <div class="field-item optimal-field">
+                                    <div class="drag-handle">
+                                        <i class="fa-solid fa-grip-vertical"></i>
+                                    </div>
+                                    <div class="field-icon">
+                                        <i class="fa-solid fa-user"></i>
+                                    </div>
+                                    <div class="field-content">
+                                        <span class="field-text">Name</span>
+                                    </div>
+                                </div>
+
+                                <!-- Date Field -->
+                                <div class="field-item optimal-field">
+                                    <div class="drag-handle">
+                                        <i class="fa-solid fa-grip-vertical"></i>
+                                    </div>
+                                    <div class="field-icon">
+                                        <i class="fa-solid fa-calendar-days"></i>
+                                    </div>
+                                    <div class="field-content">
+                                        <span class="field-text">Date</span>
+                                    </div>
+                                </div>
+
+                                <!-- Text Field -->
+                                <div class="field-item optimal-field">
+                                    <div class="drag-handle">
+                                        <i class="fa-solid fa-grip-vertical"></i>
+                                    </div>
+                                    <div class="field-icon">
+                                        <i class="fa-solid fa-font"></i>
+                                    </div>
+                                    <div class="field-content">
+                                        <span class="field-text">Text</span>
+                                    </div>
+                                </div>
+
+                                <!-- Company Setup Field -->
+                                <div class="field-item optimal-field">
+                                    <div class="drag-handle">
+                                        <i class="fa-solid fa-grip-vertical"></i>
+                                    </div>
+                                    <div class="field-icon">
+                                        <i class="fa-solid fa-user-gear"></i>
+                                    </div>
+                                    <div class="field-content">
+                                        <span class="field-text">Company Setup</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Alert Placeholder -->
+                        <div id="alertPlaceholder" class="alert-container mb-3"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sign PDF Button -->
+            <div class="row mt-4">
+                <div class="col-lg-6 offset-lg-6">
+                    <button id="signPdfBtn" class="btn-sign-pdf">Sign PDF</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Floating Add Button -->
+    <button id="addBtn" class="floating-add-btn" type="button">
+        <img src="/assests/Group 89.png" alt="+" class="plus-icon">
+    </button>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../config.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

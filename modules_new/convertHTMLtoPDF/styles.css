@@ -1,0 +1,619 @@
+/* ===================================
+   CSS Variables / Design Tokens
+   =================================== */
+:root {
+    /* Colors */
+    --color-primary-purple: #5A26EF;
+    --color-primary-orange: #F56129;
+    --color-white: #FFFFFF;
+    --color-black: #000000;
+    --color-gray-light: #FAFAFA;
+    --color-gray-border: #E4E4E4;
+    --color-gray-text: #666666;
+    --color-gray-dark: #333333;
+    
+    /* Typography */
+    --font-poppins: 'Poppins', sans-serif;
+    --font-montserrat: 'Montserrat', sans-serif;
+    --font-sora: 'Sora', sans-serif;
+    
+    /* Spacing */
+    --spacing-xs: 8px;
+    --spacing-sm: 12px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+    --spacing-2xl: 48px;
+    
+    /* Border Radius */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 50px;
+    
+    /* Shadows */
+    --shadow-sm: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    --shadow-lg: 0px 4px 12px rgba(90, 38, 239, 0.3);
+}
+
+/* ===================================
+   Global Styles
+   =================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-sora);
+    background-color: var(--color-white);
+    color: var(--color-black);
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+/* ===================================
+   Navbar Styles
+   =================================== */
+.navbar {
+    padding: var(--spacing-md) 0;
+    border-bottom: 1px solid var(--color-gray-border);
+}
+
+.logo-img {
+    height: 40px;
+    width: auto;
+}
+
+.navbar-nav .nav-link {
+    font-family: var(--font-poppins);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--color-black);
+    padding: var(--spacing-xs) var(--spacing-md);
+    transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    color: var(--color-primary-purple);
+}
+
+.navbar-nav .dropdown-toggle::after {
+    content: '';
+    display: inline-block;
+    width: 13px;
+    height: 6px;
+    background-image: url('../compressPDF/assets/dropdown-arrow.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    border: none;
+    margin-left: var(--spacing-xs);
+    vertical-align: middle;
+}
+
+.btn-login {
+    font-family: var(--font-montserrat);
+    font-size: 18.92px;
+    font-weight: 700;
+    color: var(--color-black);
+    text-decoration: none;
+    padding: var(--spacing-xs) var(--spacing-md);
+    transition: color 0.3s ease;
+}
+
+.btn-login:hover {
+    color: var(--color-primary-purple);
+}
+
+.btn-signup {
+    font-family: var(--font-montserrat);
+    font-size: 17.81px;
+    font-weight: 700;
+    color: var(--color-white);
+    background-color: var(--color-primary-orange);
+    padding: 10px 24px;
+    border-radius: var(--radius-xl);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.btn-signup:hover {
+    background-color: #e04f1f;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.navbar-toggler {
+    border: none;
+}
+
+/* ===================================
+   Hero Section
+   =================================== */
+.hero-section {
+    background-color: var(--color-primary-purple);
+    padding: 80px 0 120px;
+    position: relative;
+    overflow: hidden;
+    clip-path: polygon(0 0, 100% 0, 100% 85%, 50% 100%, 0 85%);
+}
+
+.hero-decorations {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+
+.decoration {
+    position: absolute;
+    width: auto;
+    height: auto;
+}
+
+.decoration-triangle-left {
+    left: 68px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 107px;
+    height: 107px;
+}
+
+.decoration-star-right {
+    right: 80px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 69px;
+    height: 70px;
+}
+
+.hero-title {
+    font-family: 'Mont', var(--font-montserrat);
+    font-size: 75px;
+    font-weight: 900;
+    color: var(--color-white);
+    text-align: center;
+    text-transform: capitalize;
+    margin: 0;
+    padding: 20px 0;
+}
+
+/* ===================================
+   Breadcrumb Section
+   =================================== */
+.breadcrumb-section {
+    padding: var(--spacing-lg) 0;
+    background-color: var(--color-white);
+    position: relative;
+}
+
+.breadcrumb-decorations {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+
+.decoration-star-left {
+    left: 73px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 69px;
+    height: 70px;
+}
+
+.decoration-triangle-right {
+    right: 80px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 107px;
+    height: 107px;
+}
+
+.breadcrumb-content {
+    text-align: center;
+    font-family: var(--font-sora);
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.breadcrumb-link {
+    color: var(--color-black);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.breadcrumb-link:hover {
+    color: var(--color-primary-purple);
+}
+
+.breadcrumb-separator {
+    margin: 0 var(--spacing-sm);
+    color: var(--color-black);
+}
+
+/* ===================================
+   Main Content
+   =================================== */
+.main-content {
+    padding: var(--spacing-2xl) 0 80px;
+    background-color: var(--color-white);
+}
+
+.container-custom {
+    padding: 20px;
+}
+
+.alert-container {
+    max-width: 100%;
+}
+
+/* ===================================
+   Upload Area
+   =================================== */
+.upload-area {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-black);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    padding: var(--spacing-2xl);
+    height: 100%;
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+}
+
+.upload-area:hover {
+    border-color: var(--color-primary-purple);
+}
+
+.file-list-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+}
+
+.upload-default {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.pdf-icon-large {
+    width: 80px;
+    height: 99px;
+}
+
+.file-upload {
+    display: none;
+}
+
+/* ===================================
+   Options Panel
+   =================================== */
+.options-panel {
+    background-color: rgba(254, 254, 254, 0.25);
+    border: 1px solid var(--color-black);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    padding: var(--spacing-xl);
+    height: 100%;
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+}
+
+.section-title {
+    font-family: var(--font-montserrat);
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: var(--spacing-lg);
+    color: var(--color-black);
+}
+
+/* ===================================
+   Form Styles
+   =================================== */
+.form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.form-label {
+    font-family: var(--font-sora);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-black);
+    margin-bottom: var(--spacing-sm);
+    display: block;
+}
+
+.form-control,
+.form-select {
+    width: 100%;
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-family: var(--font-sora);
+    font-size: 14px;
+    border: 1px solid var(--color-gray-border);
+    border-radius: var(--radius-md);
+    background-color: var(--color-white);
+    transition: all 0.3s ease;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--color-primary-purple);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(90, 38, 239, 0.1);
+}
+
+.form-check {
+    margin-bottom: var(--spacing-md);
+    position: relative;
+}
+
+.form-check-input {
+    width: 18px;
+    height: 18px;
+    margin-right: var(--spacing-sm);
+    cursor: pointer;
+    accent-color: var(--color-primary-purple);
+}
+
+.form-check-label {
+    font-family: var(--font-sora);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-black);
+    cursor: pointer;
+}
+
+/* ===================================
+   Orientation Options
+   =================================== */
+.orientation-options {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-sm);
+}
+
+.orientation-options .form-check {
+    margin-bottom: 0;
+}
+
+.orientation-icon {
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid var(--color-gray-border);
+    border-radius: var(--radius-sm);
+    padding: var(--spacing-xs);
+}
+
+.orientation-options .form-check-input:checked ~ .form-check-label .orientation-icon {
+    border-color: var(--color-primary-purple);
+    background-color: rgba(90, 38, 239, 0.1);
+}
+
+/* ===================================
+   Margin Options
+   =================================== */
+.margin-options {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-sm);
+}
+
+.margin-options .form-check {
+    margin-bottom: 0;
+}
+
+.margin-icon {
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid var(--color-gray-border);
+    border-radius: var(--radius-sm);
+    padding: var(--spacing-xs);
+}
+
+.margin-options .form-check-input:checked ~ .form-check-label .margin-icon {
+    border-color: var(--color-primary-purple);
+    background-color: rgba(90, 38, 239, 0.1);
+}
+
+/* ===================================
+   Eye Icon
+   =================================== */
+.eye-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.eye-img {
+    width: 20px;
+    height: 20px;
+}
+
+/* ===================================
+   Convert Button
+   =================================== */
+.btn-convert {
+    font-family: var(--font-sora);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--color-white);
+    background-color: var(--color-primary-orange);
+    padding: var(--spacing-md) var(--spacing-xl);
+    border-radius: var(--radius-md);
+    border: none;
+    width: 100%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(245, 97, 41, 0.3);
+}
+
+.btn-convert:hover {
+    background-color: #e04f1f;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(245, 97, 41, 0.4);
+}
+
+.btn-convert:active {
+    transform: translateY(0);
+}
+
+.btn-convert:disabled {
+    background-color: var(--color-gray-border);
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+
+/* ===================================
+   Floating Add Button
+   =================================== */
+.floating-add-btn {
+    position: fixed;
+    bottom: 40px;
+    left: 40px;
+    width: 49px;
+    height: 49px;
+    background-color: var(--color-primary-purple);
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: var(--shadow-lg);
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.floating-add-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(90, 38, 239, 0.4);
+}
+
+.floating-add-btn:active {
+    transform: scale(0.95);
+}
+
+.plus-icon {
+    width: 28px;
+    height: 28px;
+}
+
+/* ===================================
+   Responsive Styles
+   =================================== */
+@media (max-width: 992px) {
+    .hero-title {
+        font-size: 60px;
+    }
+    
+    .decoration-triangle-left,
+    .decoration-star-right,
+    .decoration-star-left,
+    .decoration-triangle-right {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .upload-area,
+    .options-panel {
+        min-height: 400px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 48px;
+    }
+    
+    .hero-section {
+        padding: 60px 0 100px;
+    }
+    
+    .upload-area,
+    .options-panel {
+        padding: var(--spacing-lg);
+        min-height: 350px;
+    }
+    
+    .orientation-options,
+    .margin-options {
+        flex-wrap: wrap;
+    }
+    
+    .orientation-icon,
+    .margin-icon {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .floating-add-btn {
+        bottom: 20px;
+        left: 20px;
+        width: 44px;
+        height: 44px;
+    }
+    
+    .floating-add-btn .plus-icon {
+        width: 24px;
+        height: 24px;
+    }
+    
+    .decoration {
+        display: none;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero-title {
+        font-size: 36px;
+    }
+    
+    .navbar-nav .nav-link {
+        font-size: 14px;
+    }
+    
+    .btn-login,
+    .btn-signup {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+    
+    .section-title {
+        font-size: 20px;
+    }
+    
+    .form-label {
+        font-size: 14px;
+    }
+    
+    .orientation-icon,
+    .margin-icon {
+        width: 40px;
+        height: 40px;
+    }
+}

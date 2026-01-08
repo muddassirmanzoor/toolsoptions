@@ -1,0 +1,203 @@
+/*.custom-file-input ~ .custom-file-label::after {
+    content: 'Browse';
+}
+
+.custom-file-label {
+    border-radius: 0;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+}
+
+.alert-dismissible .close {
+    position: absolute;
+    z-index: 2;
+    padding: 0.75rem 1.25rem;
+    color: inherit;
+}
+
+.modal {
+    border-radius: 50px;
+}
+*/
+body {
+    font-family: 'Red Hat Display', sans-serif;
+}
+
+
+.pdf-section {
+    background-color: #f9f9f9;
+}
+
+.navbar-brand, .navbar-nav .nav-link {
+    font-family: 'Inter', sans-serif;
+}
+
+.pdf-section h1, .pdf-section p {
+    font-family: 'Red Hat Display', sans-serif;
+}
+
+
+.navbar-nav {
+    flex-direction: row;
+    margin-right: auto; /* Pushes the buttons to the right */
+}
+
+.nav-item {
+    margin-left: 15px; /* Adjust spacing between nav items */
+}
+
+.nav-link {
+    font-family: 'Inter', sans-serif;
+}
+
+.navbar-btns {
+    display: flex;
+    align-items: center;
+}
+
+.btn-create-account {
+
+    border: none;
+    color: black;
+    margin-left: 10px;
+    padding: 8px 15px;
+}
+
+.btn-start-trial {
+    background-color: #F56129;
+    ;
+    ;
+    border: none;
+    color: white;
+    margin-left: 10px;
+    padding: 8px 15px;
+}
+
+.navbar-toggler {
+    border: none;
+}
+
+
+
+.logo {
+    height: 40px; /* Adjust the height as needed */
+    max-width: 100%; /* Ensure the logo does not exceed its container width */
+}
+
+
+.main-image {
+    width: 100%;
+    height: auto;
+    max-width: 1200px;
+    border-radius: 15px;
+}
+
+.responsive-image {
+    width: 100%;
+    height: auto;
+    max-width: 1000px; /* Set a maximum width */
+    transform: scale(0.8); /* Scale the image to 80% of its original size */
+    transform-origin: center; /* Ensures the image scales from its center */
+}
+
+
+.store-logo {
+    height: 30px;
+    margin-right: 10px;
+}
+
+@media (max-width: 768px) {
+    .mobile-image {
+        right: -30px;
+        bottom: -20px;
+        width: 150px;
+    }
+
+    .pdf-section h1 {
+        font-size: 1.75rem;
+    }
+}
+
+
+
+/* Custom header background and text styling */
+.custom-header {
+    background-color: #5f20da; /* Matching the purple background */
+    position: relative;
+    color: white;
+    font-family: Arial, sans-serif;
+    height: 300px; /* Adjust the height as per your design */
+    clip-path: polygon(0 0, 100% 0, 100% 75%, 50% 100%, 0 75%); /* V shape with straight sides */
+}
+
+/* Heading styling */
+.custom-header h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+/* Footer links */
+nav a {
+    color: #000;
+    text-decoration: none;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+
+.icons__box i{
+    padding: 6px;
+    background: #F56129;
+    color: aliceblue !important;
+    border-radius: 50%;
+}
+
+/* Style the custom label */
+.custom-file-upload {
+    cursor: pointer;
+    color: #333; /* Change the color as needed */
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 4px;
+    background-color: #f9f9f9; /* Change the background color as needed */
+    font-size: 100px;
+}
+
+/* Hide the file input */
+input[type="file"] {
+    display: none;
+}
+
+
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .custom-header h1 {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .custom-header h1 {
+        font-size: 1.5rem;
+    }
+}
+.add-icon {
+    background: #5f20da;
+    color: rgb(255, 255, 255);
+    border-radius: 50%;
+}
+
+
+
+
+
+
+
+
+
+
+

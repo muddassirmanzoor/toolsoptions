@@ -1,0 +1,969 @@
+<!--<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop PDF</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+    <link href="../main.css" rel="stylesheet">
+</head>
+<body>
+    <div id="navbar"></div>
+
+    <div class="landing-page text-center mt-5">
+        <h1>Welcome to the Compress PDF App</h1>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#pdfModal">Compress PDF</button>
+    </div>
+
+    <div class="modal fade" id="pdfModal" tabindex="-1" aria-labelledby="pdfModalLabel" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header text-white bg-danger">
+                    <h5 class="modal-title" id="pdfModalLabel">Compress PDF</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="pdfFile" name="pdfFile" accept="application/pdf">
+                        <label class="custom-file-label" for="pdfFile">Choose PDF</label>
+                    </div>
+                    <ul id="fileList" class="list-group mt-3"></ul>
+                </div>
+                <div id="alertPlaceholder"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <button type="button" id="compressBtn" class="btn btn-primary">Compress PDF</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="alertPlaceholder" class="mt-3"></div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="../config.js"></script>
+    <script src="app.js"></script>
+    <script src="../main.js"></script>
+</body>
+</html>-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Crop PDF - I Love PDF</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Montserrat:wght@700&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Custom CSS -->
+  <link href="../shared-styles.css" rel="stylesheet">
+  <style>
+    :root {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      background: #f5f5f5;
+    }
+    .page {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 40px 16px;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    }
+    h1 {
+      margin: 0 0 4px;
+      font-size: 1.5rem;
+    }
+    .subtitle {
+      margin: 0 0 16px;
+      color: #666;
+      font-size: 0.9rem;
+    }
+    label {
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+    input[type="file"] {
+      margin-top: 4px;
+      font-size: 0.9rem;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 16px;
+      margin: 12px 0 8px;
+    }
+
+    .scope-group {
+      display: flex;
+      gap: 12px;
+      font-size: 0.85rem;
+      align-items: center;
+    }
+
+    button {
+      padding: 8px 18px;
+      font-size: 0.95rem;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      background: #2563eb;
+      color: #ffffff;
+    }
+    button:disabled {
+      opacity: 0.6;
+      cursor: default;
+    }
+
+    .hint {
+      font-size: 0.8rem;
+      color: #777;
+      margin-top: 4px;
+    }
+    #status {
+      margin-top: 10px;
+      font-size: 0.85rem;
+      white-space: pre-line;
+    }
+    .error {
+      color: #b91c1c;
+    }
+    .success {
+      color: #15803d;
+    }
+
+    .pdf-container {
+      margin-top: 16px;
+      background: #e5e5e5;
+      border-radius: 8px;
+      padding: 10px;
+      max-height: 75vh;
+      overflow: auto;
+    }
+    .pdf-page-wrapper {
+      position: relative;
+      display: inline-block;
+      background: #fff;
+      margin-bottom: 16px;
+      border-radius: 4px;
+      overflow: hidden;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+    }
+    .pdf-page-label {
+      position: absolute;
+      top: 4px;
+      right: 6px;
+      background: rgba(0,0,0,0.65);
+      color: #fff;
+      font-size: 0.75rem;
+      padding: 2px 6px;
+      border-radius: 999px;
+      z-index: 5;
+    }
+    canvas.pdfCanvas {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+    #selectionBox {
+      position: fixed; /* global overlay following the active canvas */
+      border: 2px dashed #2563eb;
+      background: rgba(37, 99, 235, 0.15);
+      pointer-events: none;
+      display: none;
+      z-index: 10;
+    }
+
+    /* File Upload Section Styles */
+    .file-upload-section {
+      margin-bottom: 24px;
+      min-height: 200px;
+    }
+
+    .file-info {
+      margin-top: 16px;
+      margin-left: 80px;
+      padding: 12px 16px;
+      background: #f8f9fa;
+      border-radius: 8px;
+      border: 1px solid #e9ecef;
+    }
+
+    @media (max-width: 768px) {
+      .file-info {
+        margin-left: 0;
+      }
+    }
+
+    .file-info-content {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .file-info-content i.fa-file-pdf {
+      color: #dc3545;
+      font-size: 20px;
+    }
+
+    .file-info-content span {
+      flex: 1;
+      font-weight: 500;
+      color: #333;
+    }
+
+    .remove-file-btn {
+      background: transparent;
+      border: none;
+      color: #dc3545;
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: 4px;
+      transition: background 0.2s;
+    }
+
+    .remove-file-btn:hover {
+      background: rgba(220, 53, 69, 0.1);
+    }
+
+    /* Initial Upload State */
+    .initial-upload-state {
+      min-height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      border: 2px dashed transparent;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+    }
+
+    .initial-upload-state.drag-over {
+      border-color: #F56129;
+      background-color: rgba(245, 97, 41, 0.05);
+    }
+
+    .upload-content {
+      text-align: center;
+      width: 100%;
+      max-width: 600px;
+    }
+
+    .upload-title {
+      font-size: 28px;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 12px;
+      font-family: var(--font-sora, 'Sora', sans-serif);
+    }
+
+    .upload-subtitle {
+      font-size: 16px;
+      color: #666;
+      margin-bottom: 32px;
+      font-family: var(--font-sora, 'Sora', sans-serif);
+    }
+
+    .upload-buttons-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn-select-files {
+      background-color: #F56129;
+      color: white;
+      border: none;
+      padding: 16px 40px;
+      border-radius: 8px;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: var(--font-sora, 'Sora', sans-serif);
+      box-shadow: 0 4px 12px rgba(245, 97, 41, 0.3);
+    }
+
+    .btn-select-files:hover {
+      background-color: #e04f1f;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(245, 97, 41, 0.4);
+    }
+
+    .btn-select-files:active {
+      transform: translateY(0);
+    }
+
+    .cloud-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .cloud-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: none;
+      background-color: #F56129;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(245, 97, 41, 0.3);
+      transition: all 0.3s ease;
+      padding: 0;
+    }
+
+    .cloud-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 16px rgba(245, 97, 41, 0.4);
+    }
+
+    .cloud-btn:active {
+      transform: scale(0.95);
+    }
+
+    .cloud-btn svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .drop-hint {
+      font-size: 14px;
+      color: #666;
+      margin-top: 16px;
+      font-family: var(--font-sora, 'Sora', sans-serif);
+    }
+
+    /* File Selection Buttons */
+    .file-selection-buttons {
+      position: absolute;
+      left: 0;
+      top: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      z-index: 100;
+      padding: 0;
+    }
+
+    .file-select-btn {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      border: none;
+      background-color: #F56129;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(245, 97, 41, 0.3);
+      transition: all 0.3s ease;
+      position: relative;
+      padding: 0;
+    }
+
+    .file-select-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 16px rgba(245, 97, 41, 0.4);
+    }
+
+    .file-select-btn:active {
+      transform: scale(0.95);
+    }
+
+    .file-select-btn i {
+      font-size: 24px;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .file-select-btn svg {
+      width: 24px;
+      height: 24px;
+      display: block;
+    }
+
+    .file-upload-section.has-files {
+      padding-left: 80px;
+    }
+
+    @media (max-width: 768px) {
+      .file-upload-section.has-files {
+        padding-left: 15px;
+      }
+      
+      .file-selection-buttons {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        flex-direction: column-reverse;
+      }
+      
+      .file-select-btn {
+        width: 50px;
+        height: 50px;
+      }
+    }
+  </style>
+</head>
+<body data-page-title="Crop PDF">
+  <!-- Shared Navbar -->
+  <div id="shared-navbar"></div>
+
+  <!-- Shared Hero Section -->
+  <div id="shared-hero"></div>
+            
+  <!-- Shared Breadcrumb -->
+  <div id="shared-breadcrumb"></div>
+
+  <div class="page">
+    <div class="card">
+      <h1>Crop PDF</h1>
+      <p class="subtitle">
+        Upload a PDF, drag on any page to select the area you want to keep,
+        then choose whether to apply the crop to all pages or only that page.
+      </p>
+
+      <!-- File Upload Section -->
+      <div class="file-upload-section position-relative">
+        <!-- Initial Upload State -->
+        <div id="initialUploadState" class="initial-upload-state">
+          <div class="upload-content">
+            <h2 class="upload-title">Crop PDF</h2>
+            <p class="upload-subtitle">Select a PDF file to crop. After selecting, all pages will render below.</p>
+            <div class="upload-buttons-wrapper">
+              <button id="selectFilesBtn" class="btn-select-files" type="button">
+                Select PDF file
+              </button>
+              <div class="cloud-buttons">
+                <button id="initialGoogleDriveBtn" class="cloud-btn" type="button" title="Select from Google Drive">
+                  <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                    <path d="M7.71 2.5L2.5 12.71l5.21 10.21L12.71 16l5.21-3.29L12.71 2.5H7.71z"/>
+                  </svg>
+                </button>
+                <button id="initialDropboxBtn" class="cloud-btn" type="button" title="Select from Dropbox">
+                  <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                    <path d="M6 2L0 6l6 4 6-4-6-4zm12 4l6-4-6-4-6 4 6 4zM0 14l6 4 6-4-6-4-6 4zm18-4l-6 4 6 4 6-4-6-4zM0 20l6 4 6-4-6-4-6 4zm12 0l6 4 6-4-6-4-6 4z"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <p class="drop-hint">or drop PDF here</p>
+          </div>
+        </div>
+
+        <!-- File Selection Buttons Group (shown after file is selected) -->
+        <div id="fileSelectionButtons" class="file-selection-buttons" style="display: none;">
+          <button id="addBtn" class="file-select-btn add-btn" type="button" title="Change PDF file">
+            <i class="fas fa-plus"></i>
+          </button>
+          <button id="computerBtn" class="file-select-btn computer-btn" type="button" title="Select from computer">
+            <i class="fas fa-desktop"></i>
+          </button>
+          <button id="googleDriveBtn" class="file-select-btn google-drive-btn" type="button" title="Select from Google Drive">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+              <path d="M7.71 2.5L2.5 12.71l5.21 10.21L12.71 16l5.21-3.29L12.71 2.5H7.71z"/>
+            </svg>
+          </button>
+          <button id="dropboxBtn" class="file-select-btn dropbox-btn" type="button" title="Select from Dropbox">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+              <path d="M6 2L0 6l6 4 6-4-6-4zm12 4l6-4-6-4-6 4 6 4zM0 14l6 4 6-4-6-4-6 4zm18-4l-6 4 6 4 6-4-6-4zM0 20l6 4 6-4-6-4-6 4zm12 0l6 4 6-4-6-4-6 4z"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- File Input (hidden) -->
+        <input type="file" id="fileInput" accept="application/pdf" style="display:none;" />
+        
+        <!-- File Info (shown after file is selected) -->
+        <div id="fileInfo" class="file-info" style="display: none;">
+          <div class="file-info-content">
+            <i class="fas fa-file-pdf"></i>
+            <span id="fileName"></span>
+            <button id="removeFileBtn" class="remove-file-btn" type="button" title="Remove file">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <p class="hint" id="hintText" style="display: none;">
+        Click and drag on any page below to draw the crop area (you can redraw as many times as you like).
+      </p>
+
+      <div class="controls">
+        <div class="scope-group">
+          <span>Apply crop to:</span>
+          <label>
+            <input type="radio" name="scope" value="all" checked />
+            All pages
+          </label>
+          <label>
+            <input type="radio" name="scope" value="current" />
+            Current page only
+          </label>
+        </div>
+        <button id="cropBtn" disabled>Crop &amp; Download PDF</button>
+      </div>
+
+      <p id="status"></p>
+
+      <div class="pdf-container" id="pdfContainer">
+        <!-- Pages (canvas per page) will be appended here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- PDF.js v2 (stable) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+  
+  <!-- Bootstrap Bundle with Popper.js -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../shared-components.js"></script>
+  <script src="../config.js"></script>
+  <script src="../main.js"></script>
+  
+  <script>
+    // PDF.js setup
+    const pdfjsLib = window['pdfjsLib'];
+    if (!pdfjsLib) {
+      console.error('PDF.js failed to load');
+    } else {
+      pdfjsLib.GlobalWorkerOptions.workerSrc =
+        'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+    }
+
+    const fileInput = document.getElementById('fileInput');
+    const pdfContainer = document.getElementById('pdfContainer');
+    const cropBtn = document.getElementById('cropBtn');
+    const statusEl = document.getElementById('status');
+    const selectionBox = document.createElement('div');
+    selectionBox.id = 'selectionBox';
+    document.body.appendChild(selectionBox);
+
+    // UI State Elements
+    const initialUploadState = document.getElementById('initialUploadState');
+    const fileSelectionButtons = document.getElementById('fileSelectionButtons');
+    const selectFilesBtn = document.getElementById('selectFilesBtn');
+    const initialGoogleDriveBtn = document.getElementById('initialGoogleDriveBtn');
+    const initialDropboxBtn = document.getElementById('initialDropboxBtn');
+    const addBtn = document.getElementById('addBtn');
+    const computerBtn = document.getElementById('computerBtn');
+    const googleDriveBtn = document.getElementById('googleDriveBtn');
+    const dropboxBtn = document.getElementById('dropboxBtn');
+    const fileInfo = document.getElementById('fileInfo');
+    const fileName = document.getElementById('fileName');
+    const removeFileBtn = document.getElementById('removeFileBtn');
+    const hintText = document.getElementById('hintText');
+    const fileUploadSection = document.querySelector('.file-upload-section');
+
+    let pdfDoc = null;
+    let pageViews = []; // one entry per page: {canvas, ctx, scale, widthPts, heightPts}
+    let currentFile = null;
+
+    let isDragging = false;
+    let dragStart = null;
+    let activePageIndex = null; // 0-based
+    let selection = null; // {pageIndex, x, y, w, h} in canvas pixels
+
+    // Button event listeners
+    if (selectFilesBtn) {
+      selectFilesBtn.addEventListener('click', () => fileInput.click());
+    }
+    if (initialGoogleDriveBtn) {
+      initialGoogleDriveBtn.addEventListener('click', () => {
+        alert('Google Drive integration coming soon!');
+      });
+    }
+    if (initialDropboxBtn) {
+      initialDropboxBtn.addEventListener('click', () => {
+        alert('Dropbox integration coming soon!');
+      });
+    }
+    if (addBtn) {
+      addBtn.addEventListener('click', () => fileInput.click());
+    }
+    if (computerBtn) {
+      computerBtn.addEventListener('click', () => fileInput.click());
+    }
+    if (googleDriveBtn) {
+      googleDriveBtn.addEventListener('click', () => {
+        alert('Google Drive integration coming soon!');
+      });
+    }
+    if (dropboxBtn) {
+      dropboxBtn.addEventListener('click', () => {
+        alert('Dropbox integration coming soon!');
+      });
+    }
+    if (removeFileBtn) {
+      removeFileBtn.addEventListener('click', removeCurrentFile);
+    }
+
+    // Drag and drop for initial upload area
+    if (initialUploadState) {
+      initialUploadState.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        initialUploadState.classList.add('drag-over');
+      });
+
+      initialUploadState.addEventListener('dragleave', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        initialUploadState.classList.remove('drag-over');
+      });
+
+      initialUploadState.addEventListener('drop', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        initialUploadState.classList.remove('drag-over');
+        
+        const files = Array.from(e.dataTransfer.files);
+        if (files.length > 0 && files[0].type === 'application/pdf') {
+          handleFileSelection(files[0]);
+        }
+      });
+    }
+
+    function updateUIState() {
+      const hasFile = currentFile !== null;
+      
+      if (hasFile) {
+        // Hide initial state, show file selection buttons and file info
+        if (initialUploadState) initialUploadState.style.display = 'none';
+        if (fileSelectionButtons) fileSelectionButtons.style.display = 'flex';
+        if (fileInfo) fileInfo.style.display = 'block';
+        if (hintText) hintText.style.display = 'block';
+        if (fileUploadSection) fileUploadSection.classList.add('has-files');
+        if (fileName) fileName.textContent = currentFile.name;
+      } else {
+        // Show initial state, hide file selection buttons and file info
+        if (initialUploadState) initialUploadState.style.display = 'flex';
+        if (fileSelectionButtons) fileSelectionButtons.style.display = 'none';
+        if (fileInfo) fileInfo.style.display = 'none';
+        if (hintText) hintText.style.display = 'none';
+        if (fileUploadSection) fileUploadSection.classList.remove('has-files');
+        clearPages();
+      }
+    }
+
+    function removeCurrentFile() {
+      currentFile = null;
+      pdfDoc = null;
+      updateUIState();
+      setStatus('', '');
+      cropBtn.disabled = true;
+    }
+
+    function handleFileSelection(file) {
+      if (!file || file.type !== 'application/pdf') {
+        setStatus('Please select a valid PDF file.', 'error');
+        return;
+      }
+      
+      currentFile = file;
+      updateUIState();
+      
+      // Trigger the file input change handler
+      renderAllPages(file);
+    }
+
+    function setStatus(text, cls) {
+      statusEl.textContent = text;
+      statusEl.className = cls || '';
+    }
+
+    function clearPages() {
+      pdfContainer.innerHTML = '';
+      pageViews = [];
+      selection = null;
+      hideSelectionBox();
+    }
+
+    function hideSelectionBox() {
+      selectionBox.style.display = 'none';
+    }
+
+    function showSelectionBox() {
+      selectionBox.style.display = 'block';
+    }
+
+    function updateSelectionBox() {
+      if (!selection || activePageIndex == null) {
+        hideSelectionBox();
+        return;
+      }
+      const pageView = pageViews[activePageIndex];
+      if (!pageView) {
+        hideSelectionBox();
+        return;
+      }
+      const canvas = pageView.canvas;
+      const rect = canvas.getBoundingClientRect();
+      const { x, y, w, h } = selection;
+
+      selectionBox.style.display = 'block';
+      selectionBox.style.left = (rect.left + x) + 'px';
+      selectionBox.style.top = (rect.top + y) + 'px';
+      selectionBox.style.width = w + 'px';
+      selectionBox.style.height = h + 'px';
+    }
+
+    function canvasCoordsFromEvent(evt, canvas) {
+      const rect = canvas.getBoundingClientRect();
+      const x = evt.clientX - rect.left;
+      const y = evt.clientY - rect.top;
+      return { x, y };
+    }
+
+    function attachCanvasEvents(canvas, pageIndex) {
+      canvas.addEventListener('mousedown', (e) => {
+        if (!pdfDoc) return;
+        isDragging = true;
+        activePageIndex = pageIndex;
+        const { x, y } = canvasCoordsFromEvent(e, canvas);
+        const clampedX = Math.max(0, Math.min(canvas.width, x));
+        const clampedY = Math.max(0, Math.min(canvas.height, y));
+        dragStart = { x: clampedX, y: clampedY };
+        selection = { pageIndex, x: clampedX, y: clampedY, w: 0, h: 0 };
+        updateSelectionBox();
+        setStatus(`Drawing crop on page ${pageIndex + 1}...`, '');
+      });
+    }
+
+    window.addEventListener('mousemove', (e) => {
+      if (!isDragging || dragStart == null || activePageIndex == null) return;
+      const pageView = pageViews[activePageIndex];
+      if (!pageView) return;
+      const canvas = pageView.canvas;
+
+      const { x, y } = canvasCoordsFromEvent(e, canvas);
+      const clampedX = Math.max(0, Math.min(canvas.width, x));
+      const clampedY = Math.max(0, Math.min(canvas.height, y));
+      const startX = dragStart.x;
+      const startY = dragStart.y;
+
+      const left = Math.min(startX, clampedX);
+      const top = Math.min(startY, clampedY);
+      const width = Math.abs(clampedX - startX);
+      const height = Math.abs(clampedY - startY);
+
+      selection = { pageIndex: activePageIndex, x: left, y: top, w: width, h: height };
+      updateSelectionBox();
+    });
+
+    window.addEventListener('mouseup', () => {
+      if (!isDragging) return;
+      isDragging = false;
+      dragStart = null;
+
+      if (!selection || selection.w < 5 || selection.h < 5) {
+        selection = null;
+        hideSelectionBox();
+        setStatus('Selection too small. Drag again to define crop area.', 'error');
+      } else {
+        setStatus(`Crop area selected on page ${selection.pageIndex + 1}. Choose scope and click "Crop & Download PDF".`, 'success');
+      }
+    });
+
+    async function renderAllPages(file) {
+      if (!file) return;
+      
+      clearPages();
+      setStatus('Loading PDF...', '');
+      cropBtn.disabled = true;
+
+      try {
+        const arrayBuffer = await file.arrayBuffer();
+        pdfDoc = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+
+      const numPages = pdfDoc.numPages;
+      const maxCanvasWidth = 800;
+
+      for (let pageNum = 1; pageNum <= numPages; pageNum++) {
+        const page = await pdfDoc.getPage(pageNum);
+        const viewport1 = page.getViewport({ scale: 1 });
+        const widthPts = viewport1.width;
+        const heightPts = viewport1.height;
+
+        const scale = Math.min(maxCanvasWidth / viewport1.width, 2);
+        const viewport = page.getViewport({ scale });
+
+        const wrapper = document.createElement('div');
+        wrapper.className = 'pdf-page-wrapper';
+
+        const label = document.createElement('div');
+        label.className = 'pdf-page-label';
+        label.textContent = `Page ${pageNum}`;
+        wrapper.appendChild(label);
+
+        const canvas = document.createElement('canvas');
+        canvas.className = 'pdfCanvas';
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
+        wrapper.appendChild(canvas);
+
+        pdfContainer.appendChild(wrapper);
+
+        const ctx = canvas.getContext('2d');
+        await page.render({ canvasContext: ctx, viewport }).promise;
+
+        pageViews.push({
+          canvas,
+          ctx,
+          scale,
+          widthPts,
+          heightPts
+        });
+
+        attachCanvasEvents(canvas, pageNum - 1);
+      }
+
+        setStatus('PDF loaded. Drag on any page to define crop area.', '');
+        cropBtn.disabled = false;
+      } catch (err) {
+        console.error(err);
+        clearPages();
+        setStatus('Failed to load PDF.', 'error');
+        cropBtn.disabled = true;
+        removeCurrentFile();
+      }
+    }
+
+    fileInput.addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      handleFileSelection(file);
+      // Reset input to allow selecting the same file again
+      e.target.value = '';
+    });
+
+    // Initialize UI state
+    updateUIState();
+
+    function computeMarginsFromSelection() {
+      if (!selection) return null;
+      const pageIndex = selection.pageIndex;
+      const pv = pageViews[pageIndex];
+      if (!pv) return null;
+
+      const { x, y, w, h } = selection;
+      const { widthPts, heightPts, scale } = pv;
+
+      const leftPt = x / scale;
+      const rightPt = (x + w) / scale;
+      const topPtScreen = y / scale;
+      const bottomPtScreen = (y + h) / scale;
+
+      const leftMargin = leftPt;
+      const rightMargin = widthPts - rightPt;
+
+      const topMargin = topPtScreen;
+      const bottomMargin = heightPts - bottomPtScreen;
+
+      return { pageIndex, left: leftMargin, top: topMargin, right: rightMargin, bottom: bottomMargin };
+    }
+
+    cropBtn.addEventListener('click', async () => {
+      if (!currentFile) {
+        setStatus('Please select a PDF first.', 'error');
+        return;
+      }
+      if (!selection) {
+        setStatus('Please drag on a page to select crop area first.', 'error');
+        return;
+      }
+
+      const margins = computeMarginsFromSelection();
+      if (!margins) {
+        setStatus('Unable to compute crop margins.', 'error');
+        return;
+      }
+
+      const scope = document.querySelector('input[name="scope"]:checked')?.value || 'all';
+
+      cropBtn.disabled = true;
+      setStatus('Cropping PDF...', '');
+
+      const fd = new FormData();
+      fd.append('file', currentFile);
+      fd.append('left', margins.left.toString());
+      fd.append('top', margins.top.toString());
+      fd.append('right', margins.right.toString());
+      fd.append('bottom', margins.bottom.toString());
+      fd.append('mode', scope === 'current' ? 'single' : 'all');
+      fd.append('pageIndex', String(margins.pageIndex)); // 0-based
+
+      try {
+        const res = await fetch('/api/crop-pdf', {
+          method: 'POST',
+          body: fd
+        });
+
+        if (!res.ok) {
+          let data = {};
+          try { data = await res.json(); } catch (_) {}
+          console.error('Crop PDF failed:', data);
+          setStatus(data.error || data.reason || 'Crop PDF failed.', 'error');
+          cropBtn.disabled = false;
+          return;
+        }
+
+        const blob = await res.blob();
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+
+        const cd = res.headers.get('Content-Disposition') || '';
+        const match = cd.match(/filename="(.+?)"/);
+        const filename = match ? match[1] : 'cropped.pdf';
+
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+
+        setStatus('Done. Cropped PDF downloaded.', 'success');
+      } catch (err) {
+        console.error(err);
+        setStatus('Error contacting server.', 'error');
+      } finally {
+        cropBtn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>

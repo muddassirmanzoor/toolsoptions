@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Number PDF - I Love PDF</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Montserrat:wght@700&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link href="styles.css" rel="stylesheet">
+    <link href="../shared-styles.css" rel="stylesheet">
+</head>
+<body data-page-title="Page Number">
+    <!-- Shared Navbar -->
+    <div id="shared-navbar"></div>
+
+    <!-- Shared Hero Section -->
+    <div id="shared-hero"></div>
+
+    <!-- Shared Breadcrumb -->
+    <div id="shared-breadcrumb"></div>
+
+    <!-- Main Content (new design) -->
+    <main class="main-content">
+        <div class="container-fluid container-custom">
+            <div id="alertPlaceholder" class="mb-3"></div>
+
+            <div class="row g-4">
+                <!-- Left Side - PDF Upload Area -->
+                <div class="col-lg-6">
+                    <div class="upload-area">
+                        <!-- Hidden real file input used by JS -->
+                        <input type="file" id="pdfInput" accept="application/pdf" style="display:none;">
+
+                        <div id="fileList" class="file-list-container">
+                            <!-- Default state - 2 rows of 3 PDF icons each (6 total) -->
+                            <div class="upload-default" id="uploadDefault">
+                                <div class="pdf-icons-grid">
+                                    <div class="pdf-icon-placeholder">
+                                        <img src="../compressPDF/assets/pdf-icon.svg" alt="PDF" class="pdf-icon-small">
+                                    </div>
+                                    <div class="pdf-icon-placeholder">
+                                        <img src="../compressPDF/assets/pdf-icon.svg" alt="PDF" class="pdf-icon-small">
+                                    </div>
+                                    <div class="pdf-icon-placeholder">
+                                        <img src="../compressPDF/assets/pdf-icon.svg" alt="PDF" class="pdf-icon-small">
+                                    </div>
+                                    <div class="pdf-icon-placeholder">
+                                        <img src="../compressPDF/assets/pdf-icon.svg" alt="PDF" class="pdf-icon-small">
+                                    </div>
+                                    <div class="pdf-icon-placeholder">
+                                        <img src="../compressPDF/assets/pdf-icon.svg" alt="PDF" class="pdf-icon-small">
+                                    </div>
+                                    <div class="pdf-icon-placeholder">
+                                        <img src="../compressPDF/assets/pdf-icon.svg" alt="PDF" class="pdf-icon-small">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Side - Page Number Options -->
+                <div class="col-lg-6">
+                    <div class="options-panel">
+                        <h5 class="section-title"><strong>Page Number Options</strong></h5>
+
+                        <!-- Page Type Selection (visual only for now) -->
+                        <div class="page-type-selection mb-3">
+                            <div class="row g-2">
+                                <div class="col-6">
+                                    <div class="page-type-option active" data-type="single">
+                                        <span class="type-indicator" style="background-color: #5A26EF;"></span>
+                                        <span class="type-label">Single Page</span>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="page-type-option" data-type="facing">
+                                        <span class="type-indicator" style="background-color: #FFFFFF; border: 1px solid #E4E4E4;"></span>
+                                        <span class="type-label">Facing Page</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Position Selection -->
+                        <div class="position-selection mb-3">
+                            <h6 class="option-label">Positions:</h6>
+                            <div id="position" class="position-grid">
+                                <div class="position-box" data-position="top-left"></div>
+                                <div class="position-box" data-position="top-center"></div>
+                                <div class="position-box" data-position="top-right"></div>
+                                <div class="position-box" data-position="middle-left"></div>
+                                <div class="position-box active" data-position="middle-center"></div>
+                                <div class="position-box" data-position="middle-right"></div>
+                                <div class="position-box" data-position="bottom-left"></div>
+                                <div class="position-box" data-position="bottom-center"></div>
+                                <div class="position-box" data-position="bottom-right"></div>
+                            </div>
+                        </div>
+
+                        <!-- Page Margin (purely visual currently) -->
+                        <div class="page-margin-selection mb-3">
+                            <h6 class="option-label">Page Margin</h6>
+                            <div class="row g-2 mt-2">
+                                <div class="col-4">
+                                    <div class="margin-option">
+                                        <i class="fa-solid fa-image"></i>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="margin-option margin-option-selected">
+                                        <i class="fa-solid fa-image"></i>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="margin-option">
+                                        <i class="fa-solid fa-image"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Page Range (static display for now) -->
+                        <div class="page-range-selection mb-3">
+                            <h6 class="option-label">Page</h6>
+                            <div class="row g-2 mt-2">
+                                <div class="col-12">
+                                    <div class="page-number-display">
+                                        <span>1</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Which Pages to Number (static display for now) -->
+                        <div class="which-pages-selection mb-3">
+                            <h6 class="option-label">Which Page do You Want To Number</h6>
+                            <div class="row g-2 mt-2 align-items-center">
+                                <div class="col-5">
+                                    <div class="page-range-input">
+                                        <span>1</span>
+                                    </div>
+                                </div>
+                                <div class="col-2 text-center">
+                                    <span class="range-separator">to</span>
+                                </div>
+                                <div class="col-5">
+                                    <div class="page-range-input">
+                                        <span>5</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Text Input (visual only) -->
+                        <div class="text-input-selection mb-3">
+                            <h6 class="option-label">Text</h6>
+                            <div class="row g-2 mt-2">
+                                <div class="col-12">
+                                    <div class="text-input-wrapper">
+                                        <input type="text" class="form-control text-input-field" value="Page In" readonly>
+                                        <i class="fa-solid fa-chevron-down text-input-arrow"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Text Format (visual only) -->
+                        <div class="text-format-selection mb-3">
+                            <h6 class="option-label">Text Format</h6>
+                            <div class="row g-2 mt-2">
+                                <div class="col-12">
+                                    <div class="text-format-controls">
+                                        <select class="form-select format-select">
+                                            <option value="Arial">Arial</option>
+                                            <option value="Times">Times</option>
+                                            <option value="Courier">Courier</option>
+                                        </select>
+                                        <div class="format-buttons">
+                                            <button class="format-btn" type="button" title="Text Transform">TT</button>
+                                            <button class="format-btn" type="button" title="Bold"><strong>B</strong></button>
+                                            <button class="format-btn" type="button" title="Italic"><em>I</em></button>
+                                            <button class="format-btn" type="button" title="Underline"><u>U</u></button>
+                                            <button class="format-btn" type="button" title="Text Color">A</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Hidden inputs reused by existing JS -->
+                        <input type="range" class="form-control-range" id="transparency" min="0" max="100" value="50" style="display: none;">
+                        <input type="range" class="form-control-range" id="pageSize" min="10" max="40" value="12" style="display: none;">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add Page Number Button -->
+            <div class="row mt-3">
+                <div class="col-lg-6 offset-lg-6">
+                    <button id="addPageNumberBtn" class="btn-add-page-number" type="button">
+                        Add Page Numbers
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Floating Add Button -->
+    <button id="addBtn" class="floating-add-btn" type="button">
+        <img src="/assests/Group 89.png" alt="+" class="plus-icon">
+    </button>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../shared-components.js"></script>
+    <script src="../config.js"></script>
+    <script src="app.js"></script>
+    <script src="../main.js"></script>
+</body>
+</html>

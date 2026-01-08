@@ -1,0 +1,20 @@
+.custom-file-input ~ .custom-file-label::after {
+    content: 'Browse';
+}
+
+.custom-file-label {
+    border-radius: 0;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+}
+
+.alert-dismissible .close {
+    position: absolute;
+    z-index: 2;
+    padding: 0.75rem 1.25rem;
+    color: inherit;
+}
+
+.modal {
+    border-radius: 50px;
+}

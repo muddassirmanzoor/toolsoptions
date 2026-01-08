@@ -1,0 +1,50 @@
+# Laravel
+/vendor/
+/node_modules/
+/.venv/
+.env
+.env.backup
+.env.production
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project specific
+/uploads/
+/cache/
+*.zip
+*.pdf
+*.pptx
+*.docx
+*.xlsx
+archive.zip
+project.zip
+temp_*.pptx
+in.pdf
+example_password.txt
+
+# Backups
+modules_bkp_*/
+*.bkp
+*.bak
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+tmp/
+.cache/

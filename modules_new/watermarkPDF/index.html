@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Watermark PDF - I Love PDF</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Montserrat:wght@700&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand" href="/">
+                <img src="../compressPDF/assets/logo-ilovepdf.svg" alt="I Love PDF" class="logo-img">
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Browse Tools
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">All Tools</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">How It Works</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            All Tools PDF
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Compress PDF</a></li>
+                            <li><a class="dropdown-item" href="#">Merge PDF</a></li>
+                            <li><a class="dropdown-item" href="#">Split PDF</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Pricing Plan</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center gap-3">
+                    <a href="#" class="btn-login">Login</a>
+                    <a href="#" class="btn-signup">Sign Up Free</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-decorations">
+            <img src="../compressPDF/assets/triangle-orange-1.svg" alt="" class="decoration decoration-triangle-left">
+            <img src="../compressPDF/assets/star-orange.svg" alt="" class="decoration decoration-star-right">
+        </div>
+        <div class="container">
+            <h1 class="hero-title">Watermark PDF</h1>
+        </div>
+    </section>
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb-section">
+        <div class="container">
+            <div class="breadcrumb-decorations">
+                <img src="../compressPDF/assets/star-orange.svg" alt="" class="decoration decoration-star-left">
+                <img src="../compressPDF/assets/triangle-orange-1.svg" alt="" class="decoration decoration-triangle-right">
+            </div>
+            <div class="breadcrumb-content">
+                <a href="/" class="breadcrumb-link">Home</a>
+                <span class="breadcrumb-separator">|</span>
+                <a href="#" class="breadcrumb-link">Tools</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container-fluid container-custom">
+            <div class="row g-4">
+                <!-- Left Side - PDF Upload Area -->
+                <div class="col-lg-6">
+                    <div class="upload-area">
+                        <div id="fileList" class="file-list-container">
+                            <!-- Default state - 3x3 grid (3 rows, 3 columns = 9 PDFs) -->
+                            <div class="upload-default" id="uploadDefault">
+                                <div class="pdf-thumbnails-grid">
+                                    <!-- Row 1 -->
+                                    <div class="pdf-thumbnail-item selected">
+                                        <div class="pdf-thumbnail-box">
+                                            <img src="../compressPDF/assets/pdf-icon.svg" alt="PDF" class="pdf-thumbnail-icon">
+                                            <div class="pdf-label">PDF 1</div>
+                                        </div>
+                                        <div class="selected-options">
+                                            <div class="option-dot"></div>
+                                            <div class="option-dot"></div>
+                                            <div class="option-dot"></div>
+                                        </div>
+                                    </div>
+                                    <div class="pdf-thumbnail-item">
+                                        <div class="pdf-thumbnail-box">
+                                            <img src="../compressPDF/assets/pdf-icon.svg" alt="PDF" class="pdf-thumbnail-icon">
+                                            <div class="pdf-label">PDF 2</div>
+                                        </div>
+                                    </div>
+                                    <div class="pdf-thumbnail-item">
+                                        <div class="pdf-thumbnail-box">
+                                            <img src="../compressPDF/assets/pdf-icon.svg" alt="PDF" class="pdf-thumbnail-icon">
+                                            <div class="pdf-label">PDF 3</div>
+                                        </div>
+                                    </div>
+                                    <!-- Row 2 -->
+                                    <div class="pdf-thumbnail-item">
+                                        <div class="pdf-thumbnail-box">
+                                            <img src="../compressPDF/assets/pdf-icon.svg" alt="PDF" class="pdf-thumbnail-icon">
+                                            <div class="pdf-label">PDF 4</div>
+                                        </div>
+                                    </div>
+                                    <div class="pdf-thumbnail-item">
+                                        <div class="pdf-thumbnail-box">
+                                            <img src="../compressPDF/assets/pdf-icon.svg" alt="PDF" class="pdf-thumbnail-icon">
+                                            <div class="pdf-label">PDF 5</div>
+                                        </div>
+                                    </div>
+                                    <div class="pdf-thumbnail-item">
+                                        <div class="pdf-thumbnail-box">
+                                            <img src="../compressPDF/assets/pdf-icon.svg" alt="PDF" class="pdf-thumbnail-icon">
+                                            <div class="pdf-label">PDF 6</div>
+                                        </div>
+                                    </div>
+                                    <!-- Row 3 -->
+                                    <div class="pdf-thumbnail-item">
+                                        <div class="pdf-thumbnail-box">
+                                            <img src="../compressPDF/assets/pdf-icon.svg" alt="PDF" class="pdf-thumbnail-icon">
+                                            <div class="pdf-label">PDF 7</div>
+                                        </div>
+                                    </div>
+                                    <div class="pdf-thumbnail-item">
+                                        <div class="pdf-thumbnail-box">
+                                            <img src="../compressPDF/assets/pdf-icon.svg" alt="PDF" class="pdf-thumbnail-icon">
+                                            <div class="pdf-label">PDF 8</div>
+                                        </div>
+                                    </div>
+                                    <div class="pdf-thumbnail-item">
+                                        <div class="pdf-thumbnail-box">
+                                            <img src="../compressPDF/assets/pdf-icon.svg" alt="PDF" class="pdf-thumbnail-icon">
+                                            <div class="pdf-label">PDF 9</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- PDF thumbnails will be dynamically inserted here -->
+                        </div>
+                        <input type="file" id="pdfInput" class="file-upload" accept=".pdf" style="display:none;">
+                    </div>
+                </div>
+
+                <!-- Right Side - Watermark Options -->
+                <div class="col-lg-6">
+                    <div class="options-panel">
+                        <h5 class="section-title"><strong>Watermark Options</strong></h5>
+
+                        <!-- Watermark Type Tabs -->
+                        <div class="watermark-tabs mb-4">
+                            <div class="tab-buttons">
+                                <button class="tab-btn active" data-tab="text">Place Text</button>
+                                <button class="tab-btn" data-tab="image">Place Image</button>
+                            </div>
+                        </div>
+
+                        <!-- Text Watermark Tab -->
+                        <div class="tab-content active" id="textTab">
+                            <div class="watermark-text-section mb-4">
+                                <label for="watermarkText" class="option-label">Text:</label>
+                                <input type="text" id="watermarkText" class="form-control watermark-input" value="ILovePDF" placeholder="Enter watermark text">
+                            </div>
+
+                            <!-- Text Format -->
+                            <div class="text-format-section mb-4">
+                                <label class="option-label">Text Format:</label>
+                                <div class="format-controls">
+                                    <select class="form-select format-select">
+                                        <option selected>Arial</option>
+                                        <option>Times New Roman</option>
+                                        <option>Courier New</option>
+                                    </select>
+                                    <div class="format-buttons">
+                                        <button class="format-btn" title="Bold"><strong>B</strong></button>
+                                        <button class="format-btn" title="Italic"><em>I</em></button>
+                                        <button class="format-btn" title="Underline"><u>U</u></button>
+                                        <button class="format-btn" title="Text Color">A</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Image Watermark Tab -->
+                        <div class="tab-content" id="imageTab">
+                            <div class="watermark-image-section mb-4">
+                                <label for="imageInput" class="option-label">Image:</label>
+                                <input type="file" id="imageInput" class="form-control" accept="image/*">
+                                <div id="imagePreview" class="image-preview mt-2"></div>
+                            </div>
+                        </div>
+
+                        <!-- Position Selection -->
+                        <div class="position-selection mb-4">
+                            <div class="mosaic-checkbox mb-2">
+                                <input type="checkbox" id="mosaic" class="form-check-input">
+                                <label for="mosaic" class="form-check-label">Mosaic</label>
+                            </div>
+                            <label class="option-label">Positions:</label>
+                            <div id="position" class="position-grid">
+                                <div class="position-box" data-position="top-left"></div>
+                                <div class="position-box" data-position="top-center"></div>
+                                <div class="position-box" data-position="top-right"></div>
+                                <div class="position-box" data-position="middle-left"></div>
+                                <div class="position-box active" data-position="middle-center"></div>
+                                <div class="position-box" data-position="middle-right"></div>
+                                <div class="position-box" data-position="bottom-left"></div>
+                                <div class="position-box" data-position="bottom-center"></div>
+                                <div class="position-box" data-position="bottom-right"></div>
+                            </div>
+                        </div>
+
+                        <!-- Transparency and Rotation -->
+                        <div class="transparency-rotation-section mb-4">
+                            <div class="row g-2">
+                                <div class="col-6">
+                                    <label class="option-label">Transparency:</label>
+                                    <select id="transparency" class="form-select">
+                                        <option value="25">25%</option>
+                                        <option value="50" selected>50%</option>
+                                        <option value="75">75%</option>
+                                    </select>
+                                </div>
+                                <div class="col-6">
+                                    <label class="option-label">Rotation:</label>
+                                    <select id="rotation" class="form-select">
+                                        <option>Don't Rotate</option>
+                                        <option>90°</option>
+                                        <option>180°</option>
+                                        <option>270°</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pages Range -->
+                        <div class="pages-range-section mb-4">
+                            <label class="option-label">Pages:</label>
+                            <div class="range-inputs">
+                                <input type="number" id="fromPage" class="form-control range-input" placeholder="1" min="1">
+                                <input type="number" id="toPage" class="form-control range-input" placeholder="5" min="1">
+                            </div>
+                        </div>
+
+                        <!-- Layer Options -->
+                        <div class="layer-section mb-4">
+                            <label class="option-label">Layer:</label>
+                            <div class="layer-options">
+                                <div class="layer-option">
+                                    <input type="radio" name="layer" id="below" value="below" checked>
+                                    <label for="below">Below</label>
+                                </div>
+                                <div class="layer-option">
+                                    <input type="radio" name="layer" id="above" value="above">
+                                    <label for="above">Above</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Alert Placeholder -->
+                        <div id="alertPlaceholder" class="alert-container mb-3"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add Watermark Button -->
+            <div class="row mt-4">
+                <div class="col-lg-6 offset-lg-6">
+                    <button id="addWatermarkBtn" class="btn-watermark">Add Watermark</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Floating Add Button -->
+    <button id="addBtn" class="floating-add-btn" type="button">
+        <img src="/assests/Group 89.png" alt="+" class="plus-icon">
+    </button>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../config.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

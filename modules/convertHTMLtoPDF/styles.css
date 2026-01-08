@@ -1,0 +1,734 @@
+/*.custom-file-input ~ .custom-file-label::after {
+    content: 'Browse';
+}
+
+.custom-file-label {
+    border-radius: 0;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+}
+
+.alert-dismissible .close {
+    position: absolute;
+    z-index: 2;
+    padding: 0.75rem 1.25rem;
+    color: inherit;
+}
+
+.modal {
+    border-radius: 50px;
+}
+*/
+body {
+    font-family: 'Red Hat Display', sans-serif;
+}
+
+
+.pdf-section {
+    background-color: #f9f9f9;
+}
+
+.navbar-brand, .navbar-nav .nav-link {
+    font-family: 'Inter', sans-serif;
+}
+
+.pdf-section h1, .pdf-section p {
+    font-family: 'Red Hat Display', sans-serif;
+}
+
+
+.navbar-nav {
+    flex-direction: row;
+    margin-right: auto; /* Pushes the buttons to the right */
+}
+
+.nav-item {
+    margin-left: 15px; /* Adjust spacing between nav items */
+}
+
+.nav-link {
+    font-family: 'Inter', sans-serif;
+}
+
+.navbar-btns {
+    display: flex;
+    align-items: center;
+}
+
+.btn-create-account {
+
+    border: none;
+    color: black;
+    margin-left: 10px;
+    padding: 8px 15px;
+}
+
+.btn-start-trial {
+    background-color: #F56129;
+    ;
+    ;
+    border: none;
+    color: white;
+    margin-left: 10px;
+    padding: 8px 15px;
+}
+
+.navbar-toggler {
+    border: none;
+}
+
+
+
+.logo {
+    height: 40px; /* Adjust the height as needed */
+    max-width: 100%; /* Ensure the logo does not exceed its container width */
+}
+
+
+.main-image {
+    width: 100%;
+    height: auto;
+    max-width: 1200px;
+    border-radius: 15px;
+}
+
+.responsive-image {
+    width: 100%;
+    height: auto;
+    max-width: 1000px; /* Set a maximum width */
+    transform: scale(0.8); /* Scale the image to 80% of its original size */
+    transform-origin: center; /* Ensures the image scales from its center */
+}
+
+
+.store-logo {
+    height: 30px;
+    margin-right: 10px;
+}
+
+@media (max-width: 768px) {
+    .mobile-image {
+        right: -30px;
+        bottom: -20px;
+        width: 150px;
+    }
+
+    .pdf-section h1 {
+        font-size: 1.75rem;
+    }
+}
+
+* Full background image setup */
+#pdf-tool-section {
+    background: url('background-full.png') no-repeat center center fixed;
+    background-size: cover;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 100px 0;
+    color: #fff;
+    position: relative;
+    background:linear-gradient(to bottom,#007bff 50%,  #fff 50%) ;
+   
+  }
+ .section-in{
+  
+    height: 900px;
+    background-color: #5A26EF;
+    position: relative;
+    text-align: center;
+    padding-top: 100px;
+    color: white;
+    /* display: inline-block; */
+    clip-path: circle(83% at 51% 3%);
+
+ }
+
+  
+  
+/* Default Styles */
+.tablet-image img {
+  position: absolute;
+  top: 370px;
+  left: 100px; /* Corrected from padding-left to left */
+  max-width: 100%;
+  height: auto;
+}
+
+h1 {
+  font-weight: bold;
+}
+
+.btn-lg {
+  font-size: 1.2rem;
+}
+
+.col-md-8.offset-md-2 {
+  padding-top: 259px;
+}
+
+/* Responsive Styles */
+@media (max-width: 1199px) {
+  /* Styles for tablets and small screens */
+  .tablet-image img {
+      left: 50px; /* Adjust positioning for smaller screens */
+      top: 250px;
+  }
+}
+
+@media (max-width: 991px) {
+  /* Styles for large tablets and small desktops */
+  .tablet-image img {
+      left: 20px; /* Further adjust positioning */
+      top: 150px;
+  }
+  
+  .btn-lg {
+      font-size: 1rem; /* Adjust button font size for smaller devices */
+  }
+  
+  .col-md-8.offset-md-2 {
+      padding-top: 100px; /* Reduce padding for smaller screens */
+  }
+}
+
+@media (max-width: 767px) {
+  /* Styles for mobile screens */
+  .tablet-image img {
+      position: static; /* Let the image flow naturally */
+      top: auto; /* Remove absolute positioning */
+      left: auto; /* Remove left positioning */
+      margin: 0 auto; /* Center the image horizontally */
+      display: block; /* Ensure block display */
+      max-width: 90%; /* Adjust image width to fit mobile screens */
+  }
+  
+  h1 {
+      font-size: 1.5rem; /* Adjust font size for mobile screens */
+      text-align: center; /* Center the heading text */
+  }
+  
+  .btn-lg {
+      font-size: 1rem; /* Adjust button font size */
+      padding: 0.5rem 1rem; /* Adjust button padding */
+  }
+  
+  .col-md-8.offset-md-2 {
+      padding-top: 1rem; /* Reduce padding for mobile screens */
+  }
+}
+/* Custom header background and text styling */
+.custom-header {
+    background-color: #5f20da; /* Matching the purple background */
+    position: relative;
+    color: white;
+    font-family: Arial, sans-serif;
+    height: 300px; /* Adjust the height as per your design */
+    clip-path: polygon(0 0, 100% 0, 100% 75%, 50% 100%, 0 75%); /* V shape with straight sides */
+}
+
+/* Heading styling */
+.custom-header h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+/* Footer links */
+nav a {
+    color: #000;
+    text-decoration: none;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .custom-header h1 {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .custom-header h1 {
+        font-size: 1.5rem;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+/* Form Border Styling */
+.border-custom {
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Eye Icon */
+.eye-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.eye-img {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.form-check {
+    position: relative;
+}
+
+.btn-primary {
+    background-color: #ff6b00;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #e65a00;
+}
+
+
+
+.file-icon {
+    background-color: #f9f9f9;
+    border: 1px solid #eaeaea;
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+    position: relative;
+    cursor: pointer;
+}
+
+.file-icon img {
+    max-width: 50px;
+}
+
+.file-list {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap; /* Ensures items wrap on smaller screens */
+}
+
+.file-list .file-item {
+    width: 100px;
+}
+
+.add-file-btn {
+    font-size: 2rem;
+    color: #6c63ff;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.file-upload {
+    display: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .file-list {
+        justify-content: space-around;
+    }
+
+    .file-item {
+        width: 0px; /* Smaller icons on smaller screens */
+    }
+
+    .file-icon img {
+        max-width: 40px; /* Smaller image size for small screens */
+    }
+
+    .convert-btn {
+        padding: 8px;
+    }
+
+    .add-file-btn {
+        font-size: 1.5rem; /* Smaller plus icon for smaller screens */
+    }
+
+    .file-preview img {
+        max-width: 80px;
+    }
+}
+
+@media (max-width: 576px) {
+    .file-item {
+        width: 70px;
+    }
+
+    .file-icon img {
+        max-width: 35px;
+    }
+
+    .convert-btn {
+        padding: 6px;
+    }
+
+    .add-file-btn {
+        font-size: 1.25rem;
+    }
+
+    .file-preview img {
+        max-width: 70px;
+    }
+}
+
+
+
+
+
+
+
+/* Upload & initial state container (left column) */
+.col-md-6.position-relative {
+    padding-left: 0;
+    position: relative;
+    min-height: 500px;
+}
+
+/* When a file is loaded, push content right so it doesn't sit under FAB buttons */
+.col-md-6.position-relative.has-files {
+    padding-left: 80px;
+}
+
+/* ===================================
+   Initial Upload State
+   =================================== */
+.initial-upload-state {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border: 2px dashed #ddd;
+  border-radius: 12px;
+  padding: 40px 20px;
+  transition: all 0.3s ease;
+  z-index: 1;
+}
+
+.initial-upload-state.drag-over {
+  border-color: #F56129;
+  background-color: rgba(245, 97, 41, 0.05);
+}
+
+.upload-content {
+  text-align: center;
+  width: 100%;
+  max-width: 600px;
+}
+
+.upload-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 12px;
+  font-family: var(--font-sora, 'Sora', sans-serif);
+}
+
+.upload-subtitle {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 32px;
+  font-family: var(--font-sora, 'Sora', sans-serif);
+}
+
+.upload-buttons-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.btn-select-files {
+  background-color: #F56129;
+  color: white;
+  border: none;
+  padding: 16px 40px;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: var(--font-sora, 'Sora', sans-serif);
+  box-shadow: 0 4px 12px rgba(245, 97, 41, 0.3);
+}
+
+.btn-select-files:hover {
+  background-color: #e04f1f;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(245, 97, 41, 0.4);
+}
+
+.btn-select-files:active {
+  transform: translateY(0);
+}
+
+.cloud-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cloud-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  background-color: #F56129;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(245, 97, 41, 0.3);
+  transition: all 0.3s ease;
+  padding: 0;
+}
+
+.cloud-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 16px rgba(245, 97, 41, 0.4);
+}
+
+.cloud-btn:active {
+  transform: scale(0.95);
+}
+
+.cloud-btn svg {
+  width: 24px;
+  height: 24px;
+}
+
+.drop-hint {
+  font-size: 14px;
+  color: #666;
+  margin-top: 16px;
+  font-family: var(--font-sora, 'Sora', sans-serif);
+}
+
+/* ===================================
+   File Selection Buttons (floating FAB stack)
+   =================================== */
+
+.file-selection-buttons {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  z-index: 100;
+  padding: 0;
+}
+
+.file-select-btn {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: none;
+  background-color: #F56129;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(245, 97, 41, 0.3);
+  transition: all 0.3s ease;
+  position: relative;
+  padding: 0;
+}
+
+.file-select-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 16px rgba(245, 97, 41, 0.4);
+}
+
+.file-select-btn:active {
+  transform: scale(0.95);
+}
+
+.file-select-btn i {
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.file-select-btn svg {
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+
+/* Google Drive button icon styling */
+.google-drive-btn svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* Dropbox button icon styling */
+.dropbox-btn svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* File card + delete icon styling */ 
+.file-list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  padding: 20px;
+}
+
+.file-list:empty {
+  display: none;
+}
+
+.file-list .file-item {
+  position: relative;
+  width: 100%;
+  max-width: 240px;
+  padding: 20px 16px;
+  background-color: #ffffff;
+  border: 2px solid #f1f1f1;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  box-sizing: border-box;
+  margin: 0 auto;
+}
+
+.file-icon {
+  padding: 30px;
+  background-color: #f9f9f9;
+  border: 1px solid #eaeaea;
+  border-radius: 10px;
+  text-align: center;
+  position: relative;
+  cursor: pointer;
+  width: 100%;
+}
+
+.file-icon img {
+  max-width: 96px;
+  height: auto;
+}
+
+.pdf-file-name {
+  font-family: var(--font-sora, 'Sora', sans-serif);
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  max-width: 100%;
+  word-break: break-word;
+  margin-top: 10px;
+}
+
+.remove-file-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: #ff4444;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  transition: all 0.2s ease;
+  z-index: 5;
+}
+
+.remove-file-btn:hover {
+  background: #cc0000;
+  transform: scale(1.1);
+}
+
+/* Responsive styles for buttons & upload area */
+@media (max-width: 768px) {
+  .col-md-6.position-relative {
+    padding-left: 15px; /* Reset padding on mobile */
+  }
+  
+  .col-md-6.position-relative.has-files {
+    padding-left: 15px;
+  }
+  
+  .file-selection-buttons {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    flex-direction: column-reverse;
+  }
+  
+  .file-select-btn {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .file-select-btn i,
+  .file-select-btn svg {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+  }
+  
+  .upload-title {
+    font-size: 24px;
+  }
+  
+  .upload-subtitle {
+    font-size: 14px;
+  }
+  
+  .btn-select-files {
+    padding: 12px 30px;
+    font-size: 16px;
+  }
+  
+  .col-md-6.position-relative {
+    min-height: 400px;
+  }
+}

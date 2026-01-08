@@ -1,0 +1,1088 @@
+/* ===================================
+   Header / Navbar / Hero / Breadcrumb
+   (match Compress/Merge/Split pattern)
+   =================================== */
+body {
+    font-family: 'Sora', sans-serif;
+    background-color: #FFFFFF;
+    color: #000000;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+.navbar {
+    padding: 16px 0;
+    border-bottom: 1px solid #E4E4E4;
+}
+
+.logo-img {
+    height: 40px;
+    width: auto;
+}
+
+.navbar-nav .nav-link {
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: #000000;
+    padding: 8px 16px;
+    transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #5A26EF;
+}
+
+.navbar-nav .dropdown-toggle::after {
+    content: '';
+    display: inline-block;
+    width: 13px;
+    height: 6px;
+    background-image: url('../compressPDF/assets/dropdown-arrow.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    border: none;
+    margin-left: 8px;
+    vertical-align: middle;
+}
+
+.btn-login {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18.92px;
+    font-weight: 700;
+    color: #000000;
+    text-decoration: none;
+    padding: 8px 16px;
+    transition: color 0.3s ease;
+}
+
+.btn-login:hover {
+    color: #5A26EF;
+}
+
+.btn-signup {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 17.81px;
+    font-weight: 700;
+    color: #FFFFFF;
+    background-color: #F56129;
+    padding: 10px 24px;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.btn-signup:hover {
+    background-color: #e04f1f;
+    transform: translateY(-2px);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.navbar-toggler {
+    border: none;
+}
+
+/* Hero Section */
+.hero-section {
+    background-color: #5A26EF;
+    padding: 80px 0 120px;
+    position: relative;
+    overflow: hidden;
+    clip-path: polygon(0 0, 100% 0, 100% 85%, 50% 100%, 0 85%);
+}
+
+.hero-decorations {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+
+.decoration {
+    position: absolute;
+    width: auto;
+    height: auto;
+}
+
+.decoration-triangle-left {
+    left: 68px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 107px;
+    height: 107px;
+}
+
+.decoration-star-right {
+    right: 80px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 69px;
+    height: 70px;
+}
+
+.hero-title {
+    font-family: 'Mont', 'Montserrat', sans-serif;
+    font-size: 75px;
+    font-weight: 900;
+    color: #FFFFFF;
+    text-align: center;
+    text-transform: capitalize;
+    margin: 0;
+    padding: 20px 0;
+}
+
+/* Breadcrumb Section */
+.breadcrumb-section {
+    padding: 24px 0;
+    background-color: #FFFFFF;
+    position: relative;
+}
+
+.breadcrumb-decorations {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+
+.decoration-star-left {
+    left: 73px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 69px;
+    height: 70px;
+}
+
+.decoration-triangle-right {
+    right: 80px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 107px;
+    height: 107px;
+}
+
+.breadcrumb-content {
+    text-align: center;
+    font-family: 'Sora', sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.breadcrumb-link {
+    color: #000000;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.breadcrumb-link:hover {
+    color: #5A26EF;
+}
+
+.breadcrumb-separator {
+    margin: 0 12px;
+    color: #000000;
+}
+
+/* Main content */
+.main-content {
+    padding: 48px 0 80px;
+    background-color: #FFFFFF;
+}
+
+.alert-container {
+    max-width: 100%;
+    margin-bottom: 24px;
+}
+
+/* ===================================
+   PDF Grid
+   =================================== */
+.pdf-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+.pdf-thumbnail {
+    background-color: #FFFFFF;
+    border: 1px solid #E5E7EB;
+    border-radius: 8px;
+    padding: 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 160px;
+    min-height: 160px;
+    max-height: 160px;
+}
+
+.pdf-thumbnail:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.pdf-thumbnail.active {
+    background: linear-gradient(135deg, #5A26EF 0%, #7B3FFF 100%);
+    border-color: #5A26EF;
+}
+
+.pdf-thumbnail-inner {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+/* Active thumbnail with emojis */
+.emoji-indicators {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    display: flex;
+    gap: 4px;
+    font-size: 14px;
+}
+
+.pdf-icon-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.pdf-icon-container i {
+    font-size: 48px;
+    color: #FFFFFF;
+}
+
+.pdf-icon-container .pdf-label {
+    font-family: 'Sora', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: #FFFFFF;
+}
+
+/* Outline thumbnails */
+.pdf-icon-outline {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    height: 100%;
+}
+
+.pdf-icon-outline i {
+    font-size: 48px;
+    color: #374151;
+}
+
+.pdf-icon-outline .pdf-label {
+    font-family: 'Sora', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: #374151;
+}
+
+.pdf-page-label {
+    margin-top: 8px;
+    font-family: 'Sora', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: #374151;
+    margin-bottom: 0;
+}
+
+.pdf-thumbnail.active .pdf-page-label {
+    color: #FFFFFF;
+}
+
+/* Add Blank Page */
+.add-blank-page {
+    background-color: #FFFFFF;
+    border: 1px dashed #D1D5DB;
+}
+
+.add-blank-page:hover {
+    border-color: #F56129;
+    background-color: #FFF5F0;
+}
+
+.add-icon {
+    width: 48px;
+    height: 48px;
+    background-color: #F56129;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.add-icon i {
+    font-size: 24px;
+    color: #FFFFFF;
+}
+
+/* ===================================
+   Organize Panel (Right Side)
+   =================================== */
+.organize-panel {
+    background-color: #FFFFFF;
+    border: 1px solid #E5E7EB;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.total-pages-title {
+    font-family: 'Sora', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: #5A26EF;
+    margin-bottom: 24px;
+}
+
+.total-pages-title span {
+    font-weight: 700;
+}
+
+.range-section {
+    margin-bottom: 24px;
+}
+
+.range-label {
+    font-family: 'Sora', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: #000000;
+    display: block;
+    margin-bottom: 12px;
+}
+
+.range-inputs {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.range-input {
+    flex: 1;
+    padding: 12px 16px;
+    border: 1px solid #E5E7EB;
+    border-radius: 8px;
+    font-family: 'Sora', sans-serif;
+    font-size: 16px;
+    color: #374151;
+    text-align: center;
+    transition: border-color 0.3s ease;
+}
+
+.range-input:focus {
+    outline: none;
+    border-color: #5A26EF;
+    box-shadow: 0 0 0 3px rgba(90, 38, 239, 0.1);
+}
+
+.range-to {
+    font-family: 'Sora', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #6B7280;
+}
+
+/* Buttons */
+.btn-reset {
+    width: 100%;
+    padding: 14px 24px;
+    background-color: #FFFFFF;
+    border: 2px solid #000000;
+    border-radius: 50px;
+    font-family: 'Sora', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: #000000;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 12px;
+}
+
+.btn-reset:hover {
+    background-color: #F9FAFB;
+    transform: translateY(-1px);
+}
+
+.btn-organize {
+    width: 100%;
+    padding: 14px 24px;
+    background-color: #F56129;
+    border: none;
+    border-radius: 50px;
+    font-family: 'Sora', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: #FFFFFF;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(245, 97, 41, 0.3);
+}
+
+.btn-organize:hover {
+    background-color: #e04f1f;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(245, 97, 41, 0.4);
+}
+
+.btn-organize:active {
+    transform: translateY(0);
+}
+
+/* ===================================
+   Floating Add Button
+   =================================== */
+
+/* ===================================
+   Responsive Styles
+   =================================== */
+@media (max-width: 1200px) {
+    .pdf-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 992px) {
+    .hero-title {
+        font-size: 60px;
+    }
+    
+    .pdf-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .organize-panel {
+        margin-top: 24px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 48px;
+    }
+    
+    .hero-section {
+        padding: 60px 0 100px;
+    }
+    
+    .pdf-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+    }
+    
+    .pdf-thumbnail {
+        padding: 12px;
+    }
+    
+    .pdf-icon-outline i,
+    .pdf-icon-container i {
+        font-size: 36px;
+    }
+    
+    .floating-add-btn {
+        bottom: 20px;
+        left: 20px;
+        width: 44px;
+        height: 44px;
+    }
+    
+    .floating-add-btn .plus-icon {
+        width: 24px;
+        height: 24px;
+    }
+    
+    .decoration {
+        display: none;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero-title {
+        font-size: 36px;
+    }
+    
+    .pdf-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .navbar-nav .nav-link {
+        font-size: 14px;
+    }
+    
+    .btn-login,
+    .btn-signup {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+}
+
+/* Hero/Breadcrumb responsive tweaks */
+@media (max-width: 992px) {
+    .hero-title {
+        font-size: 60px;
+    }
+
+    .decoration-triangle-left,
+    .decoration-star-right,
+    .decoration-star-left,
+    .decoration-triangle-right {
+        width: 50px;
+        height: 50px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 48px;
+    }
+
+    .hero-section {
+        padding: 60px 0 100px;
+    }
+
+    .decoration {
+        display: none;
+    }
+}
+
+/* ===================================
+   Floating Add Button (same as Compress PDF)
+   =================================== */
+.floating-add-btn {
+    position: fixed;
+    bottom: 40px;
+    left: 40px;
+    width: 49px;
+    height: 49px;
+    background-color: #5A26EF;
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(90, 38, 239, 0.3);
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.floating-add-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(90, 38, 239, 0.4);
+}
+
+.floating-add-btn:active {
+    transform: scale(0.95);
+}
+
+.plus-icon {
+    width: 28px;
+    height: 28px;
+}
+
+/* ===================================
+   Organize PDF Main Content Styles
+   =================================== */
+.container-custom {
+    padding: 20px;
+}
+
+.section-title {
+    font-family: 'Sora', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 22px;
+    text-transform: capitalize;
+    margin-bottom: 12px;
+    color: #5A26EF;
+}
+
+.section-line {
+    border-color: #E4E4E4;
+    margin: 10px 0;
+}
+
+/* General Styles for PDF Pages */
+.pdf-page {
+    box-sizing: border-box;
+    width: 100%;
+    height: 180px;
+    background: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.21);
+    box-shadow: 0px 2.28113px 2.28113px rgba(0, 0, 0, 0.25);
+    border-radius: 4.59814px;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.pdf-page:hover {
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.pdf-page canvas,
+.pdf-page .pdf-placeholder-img {
+    max-width: 90.44px;
+    max-height: 90.44px;
+    width: auto;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+.pdf-page .pdf-placeholder-img {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.pdf-page.active {
+    background-color: #5A26EF;
+    border-color: #5A26EF;
+    box-shadow: 0px 2.28113px 2.28113px rgba(0, 0, 0, 0.25);
+}
+
+.pdf-page.active canvas {
+    filter: brightness(0) invert(1);
+}
+
+.pdf-page-label {
+    font-family: 'Sora', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14.3271px;
+    line-height: 18px;
+    text-align: center;
+    margin-top: 8px;
+    color: #000000;
+}
+
+.pdf-page.active .pdf-page-label {
+    color: #FFFFFF;
+}
+
+/* Page Icons */
+.page-icons {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+.page-icons img {
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    background-color: #F56129;
+    border-radius: 50%;
+    padding: 4px;
+}
+
+.page-icons img:hover {
+    transform: scale(1.2);
+}
+
+/* Add Blank Page */
+.add-blank-page {
+    box-sizing: border-box;
+    width: 100%;
+    height: 211.32px;
+    background: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 2.28113px 2.28113px rgba(0, 0, 0, 0.25);
+    border-radius: 4.59814px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.add-blank-page:hover {
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.add-blank-icon {
+    width: 43.18px;
+    height: 43.18px;
+    background: #F56129;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+}
+
+.add-blank-icon img {
+    width: 16.74px;
+    height: 16.74px;
+    filter: brightness(0) invert(1);
+}
+
+.add-blank-page p {
+    font-family: 'Sora', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14.1706px;
+    line-height: 18px;
+    text-align: center;
+    color: #000000;
+    margin: 0;
+}
+
+.card {
+    box-sizing: border-box;
+    width: 100%;
+    background: rgba(254, 254, 254, 0.25);
+    border: 1px solid #000000;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    padding: 16px !important;
+}
+
+.card label {
+    font-family: 'Mont', 'Montserrat', sans-serif;
+    font-style: normal;
+    font-weight: 800;
+    font-size: 25px;
+    line-height: 30px;
+    text-transform: capitalize;
+    color: #000000;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.range-label,
+label.range-label,
+.fw-bold.range-label {
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal;
+    font-weight: 700 !important;
+    font-size: 18px !important;
+    line-height: 22px;
+    text-transform: capitalize;
+    color: #000000;
+    margin-bottom: 8px;
+}
+
+.range-input {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 120px;
+    height: 40px;
+    background: #FAFAFA;
+    border: 1px solid #E4E4E4;
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-family: 'Sora', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 18px;
+    color: #0F0F0F;
+    text-align: center;
+}
+
+.range-input:focus {
+    border-color: #5A26EF;
+    box-shadow: 0 0 0 0.2rem rgba(90, 38, 239, 0.25);
+    outline: none;
+}
+
+.range-separator {
+    font-family: 'Sora', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 18px;
+    text-align: center;
+    color: #000000;
+    min-width: 25px;
+}
+
+.form-control {
+    border-radius: 8px;
+    border: 1px solid #E4E4E4;
+    padding: 10px;
+    font-family: 'Sora', sans-serif;
+    font-size: 14px;
+}
+
+.form-control:focus {
+    border-color: #5A26EF;
+    box-shadow: 0 0 0 0.2rem rgba(90, 38, 239, 0.25);
+}
+
+.btn-convert,
+#downloadBtn {
+    box-sizing: border-box;
+    width: 100%;
+    height: 38px !important;
+    background: #F56129;
+    border-radius: 6px;
+    border: none;
+    font-family: 'Sora', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 18px;
+    color: #FFFFFF;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-convert:hover,
+#downloadBtn:hover {
+    background-color: #e04f1f;
+    transform: translateY(-2px);
+    box-shadow: 0px 4px 8px rgba(245, 97, 41, 0.3);
+}
+
+.btn-convert:active,
+#downloadBtn:active {
+    transform: translateY(0);
+}
+
+.reset-btn,
+#resetBtn {
+    box-sizing: border-box;
+    width: 100%;
+    height: 38px !important;
+    border: 1px solid #000000;
+    border-radius: 6px;
+    background: transparent;
+    font-family: 'Sora', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 18px;
+    color: #000000;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.reset-btn:hover {
+    background-color: #f5f5f5;
+    transform: translateY(-2px);
+}
+
+.reset-btn:active {
+    transform: translateY(0);
+}
+
+.btn-outline-secondary {
+    border-radius: 6px;
+    font-family: 'Sora', sans-serif;
+    font-weight: 600;
+    height: 38px;
+    font-size: 14px;
+    line-height: 18px;
+}
+
+.file-upload {
+    display: none;
+}
+
+/* Responsive Layout for PDF Grid */
+@media (min-width: 1200px) {
+    .col-3 {
+        flex: 0 0 25%;
+        max-width: 25%;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+    .col-3 {
+        flex: 0 0 33.333%;
+        max-width: 33.333%;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .col-3 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+}
+
+@media (max-width: 767px) {
+    .col-3 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .container-custom {
+        padding: 16px;
+    }
+}
+
+@media (max-width: 768px) {
+    .pdf-page {
+        min-height: 150px;
+    }
+
+    .page-icons img {
+        width: 20px;
+        height: 20px;
+    }
+
+    .btn-convert {
+        font-size: 1rem;
+        height: 45px;
+    }
+
+    .floating-add-btn {
+        bottom: 20px;
+        left: 20px;
+        width: 44px;
+        height: 44px;
+    }
+
+    .floating-add-btn .plus-icon {
+        width: 24px;
+        height: 24px;
+    }
+}
+
+@media (max-width: 576px) {
+    .section-title {
+        font-size: 20px;
+    }
+
+    .pdf-page {
+        min-height: 120px;
+    }
+}
+
+.btn-outline-secondary {
+    border-radius: 6px;
+    font-family: 'Sora', sans-serif;
+    font-weight: 600;
+    height: 38px;
+    font-size: 14px;
+    line-height: 18px;
+}
+
+.file-upload {
+    display: none;
+}
+
+/* Responsive Layout for PDF Grid */
+@media (min-width: 1200px) {
+    .col-3 {
+        flex: 0 0 25%;
+        max-width: 25%;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+    .col-3 {
+        flex: 0 0 33.333%;
+        max-width: 33.333%;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .col-3 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+}
+
+@media (max-width: 767px) {
+    .col-3 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .container-custom {
+        padding: 16px;
+    }
+}
+
+@media (max-width: 768px) {
+    .pdf-page {
+        min-height: 150px;
+    }
+
+    .page-icons img {
+        width: 20px;
+        height: 20px;
+    }
+
+    .btn-convert {
+        font-size: 1rem;
+        height: 45px;
+    }
+
+    .floating-add-btn {
+        bottom: 20px;
+        left: 20px;
+        width: 44px;
+        height: 44px;
+    }
+
+    .floating-add-btn .plus-icon {
+        width: 24px;
+        height: 24px;
+    }
+}
+
+@media (max-width: 576px) {
+    .section-title {
+        font-size: 20px;
+    }
+
+    .pdf-page {
+        min-height: 120px;
+    }
+}
+
+
+
+
+
+

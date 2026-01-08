@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rotate PDF - I Love PDF</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Montserrat:wght@700&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand" href="/">
+                <img src="../compressPDF/assets/logo-ilovepdf.svg" alt="I Love PDF" class="logo-img">
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Browse Tools
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">All Tools</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">How It Works</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            All Tools PDF
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Compress PDF</a></li>
+                            <li><a class="dropdown-item" href="#">Merge PDF</a></li>
+                            <li><a class="dropdown-item" href="#">Split PDF</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Pricing Plan</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center gap-3">
+                    <a href="#" class="btn-login">Login</a>
+                    <a href="#" class="btn-signup">Sign Up Free</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-decorations">
+            <img src="../compressPDF/assets/triangle-orange-1.svg" alt="" class="decoration decoration-triangle-left">
+            <img src="../compressPDF/assets/star-orange.svg" alt="" class="decoration decoration-star-right">
+        </div>
+        <div class="container">
+            <h1 class="hero-title">Rotate Pages</h1>
+        </div>
+    </section>
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb-section">
+        <div class="container">
+            <div class="breadcrumb-decorations">
+                <img src="../compressPDF/assets/star-orange.svg" alt="" class="decoration decoration-star-left">
+                <img src="../compressPDF/assets/triangle-orange-1.svg" alt="" class="decoration decoration-triangle-right">
+            </div>
+            <div class="breadcrumb-content">
+                <a href="/" class="breadcrumb-link">Home</a>
+                <span class="breadcrumb-separator">|</span>
+                <a href="#" class="breadcrumb-link">Tools</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container-fluid container-custom">
+            <div class="row g-4">
+                <!-- Left Side - PDF Pages Thumbnails -->
+                <div class="col-lg-8">
+                    <div class="pdf-pages-container">
+                        <div class="row g-3" id="pdfPreviewContainer">
+                            <!-- PDF 1 -->
+                            <div class="col-6">
+                                <div class="pdf-thumbnail selected">
+                                    <img src="/assests/beautiful-young-woman-with-dog.png" alt="PDF 1" class="pdf-thumbnail-img">
+                                    <div class="pdf-title">PDF 1</div>
+                                    <div class="selected-icon">✔</div>
+                                </div>
+                            </div>
+                            <!-- PDF 2 -->
+                            <div class="col-6">
+                                <div class="pdf-thumbnail selected">
+                                    <img src="/assests/beautiful-young-woman-with-dog.png" alt="PDF 2" class="pdf-thumbnail-img">
+                                    <div class="pdf-title">PDF 2</div>
+                                    <div class="selected-icon">✔</div>
+                                </div>
+                            </div>
+                            <!-- PDF 3 -->
+                            <div class="col-6">
+                                <div class="pdf-thumbnail">
+                                    <img src="/assests/beautiful-young-woman-with-dog.png" alt="PDF 3" class="pdf-thumbnail-img">
+                                    <div class="pdf-title">PDF 3</div>
+                                </div>
+                            </div>
+                            <!-- Add Blank Page -->
+                            <div class="col-6">
+                                <div class="pdf-thumbnail add-page">
+                                    <div class="add-page-icon">+</div>
+                                    <div class="add-page-text">Add a Blank Page</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right Side - Organize PDF Options -->
+                <div class="col-lg-4">
+                    <div class="options-panel">
+                        <h5 class="section-title"><strong>Organize PDF</strong></h5>
+                        
+                        <!-- File List -->
+                        <div class="file-list-section mb-4">
+                            <div id="fileList" class="file-list-items">
+                                <!-- File items will be dynamically inserted here -->
+                                <!-- Example structure:
+                                <div class="file-list-item file-item-orange">
+                                    <span class="file-name">PDF 1.pdf</span>
+                                    <div class="file-actions">
+                                        <button class="move-btn" title="Move Up"><i class="fa-solid fa-chevron-up"></i></button>
+                                        <button class="move-btn" title="Move Down"><i class="fa-solid fa-chevron-down"></i></button>
+                                    </div>
+                                </div>
+                                -->
+                            </div>
+                        </div>
+
+                        <!-- Rotate PDF Section -->
+                        <div class="rotate-pdf-section mb-4">
+                            <label class="option-label">Rotate PDF:</label>
+                            <div class="rotate-degree-buttons">
+                                <button class="degree-btn" data-degree="90">90</button>
+                                <button class="degree-btn" data-degree="180">180</button>
+                                <button class="degree-btn" data-degree="270">270</button>
+                                <button class="degree-btn" data-degree="360">360</button>
+                            </div>
+                        </div>
+
+                        <!-- Sort PDF Section -->
+                        <div class="sort-pdf-section mb-4">
+                            <label class="option-label">Sort PDF:</label>
+                            <div class="sort-buttons">
+                                <button class="sort-btn" data-sort="atoz">A To Z</button>
+                                <button class="sort-btn" data-sort="ztoa">Z To A</button>
+                                <button class="sort-btn" data-sort="bydate">By Date</button>
+                            </div>
+                        </div>
+
+                        <!-- Alert Placeholder -->
+                        <div id="alertPlaceholder" class="alert-container mb-3"></div>
+
+                        <!-- Action Buttons -->
+                        <div class="action-buttons">
+                            <button id="resetBtn" class="btn-reset">Reset All</button>
+                            <button id="downloadBtn" class="btn-merge">Merge PDF</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Floating Add Button -->
+    <button id="addBtn" class="floating-add-btn" type="button">
+        <img src="/assests/Group 89.png" alt="+" class="plus-icon">
+    </button>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+    <script src="../config.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

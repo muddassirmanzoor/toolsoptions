@@ -1,0 +1,105 @@
+/* Global Styles */
+
+.navbar {
+    background-color: #ff4b4b;
+}
+.navbar-brand {
+    color: #fff;
+    font-weight: bold;
+}
+.navbar-nav .nav-link {
+    color: #fff;
+}
+
+/* Footer Styles */
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+}
+footer a {
+    color: #ff4b4b;
+    text-decoration: none;
+}
+footer a:hover {
+    text-decoration: underline;
+}
+
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+.container {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+/* Tool Module Grid */
+.module-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.module-box {
+    position: relative;
+    width: 100%;
+    max-width: 200px;
+    height: 200px;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: #333;
+    margin: 10px;
+}
+.module-box:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+.module-box i {
+    font-size: 40px;
+    margin-bottom: 15px;
+    color: #ff4b4b;
+}
+.module-box div {
+    font-size: 16px;
+    font-weight: bold;
+}
+/* Bootstrap default link styles override */
+a {
+    color: inherit; /* Inherit color from the parent element */
+    text-decoration: none; /* Remove underline */
+}
+
+a:hover {
+    color: inherit; /* Ensure color remains the same on hover */
+    text-decoration: none; /* Ensure underline is not added on hover */
+}
+
+/* For your specific case inside .module-box */
+.module-box a {
+    color: inherit; /* Inherit color from the parent element */
+    text-decoration: none; /* Remove underline */
+}
+
+.module-box a:hover {
+    color: inherit; /* Ensure color remains the same on hover */
+    text-decoration: none; /* Ensure underline is not added on hover */
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .module-box {
+        max-width: 100%;
+        height: 150px;
+    }
+}

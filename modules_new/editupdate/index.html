@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit PDF App</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link href="../main.css" rel="stylesheet">
+    <!-- PDF.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <!-- PDF-lib Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.16.0/pdf-lib.min.js"></script>
+<script src="https://unpkg.com/pdfjs-dist@3.1.81/build/pdf.min.js"></script>
+
+</head>
+
+<body>
+    <!-- Navbar -->
+    <div id="navbar"></div>
+
+    <div class="landing-page text-center mt-5">
+        <h1>Welcome to the Edit PDF App</h1>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#pdfEditModal">Edit PDF</button>
+    </div>
+
+    <!-- PDF Edit Modal -->
+    <div class="modal fade" id="pdfEditModal" tabindex="-1" role="dialog" aria-labelledby="pdfEditModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-white bg-danger">
+                    <h5 class="modal-title" id="pdfEditModalLabel">Edit PDF</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="custom-file mb-3">
+                        <input type="file" id="pdfInput" class="custom-file-input">
+                        <label class="custom-file-label" for="pdfInput">Choose PDF file</label>
+                    </div>
+                    <div class="edit-options">
+                        <button id="zoom-in-btn" class="btn btn-secondary">Zoom In</button>
+                        <button id="zoom-out-btn" class="btn btn-secondary">Zoom Out</button>
+                        <button id="add-text-btn" class="btn btn-secondary">Add Text</button>
+                        <button id="add-image-btn" class="btn btn-secondary" data-toggle="modal" data-target="#imageUploadModal">Add Image</button>
+                        <button id="add-rect-btn" class="btn btn-secondary">Add Rectangle</button>
+                        <button id="add-circle-btn" class="btn btn-secondary">Add Circle</button>
+                        <button id="add-line-btn" class="btn btn-secondary">Add Line</button>
+                    </div>
+                    <div class="form-group">
+                        <label for="page-select">Select Page:</label>
+                        <select id="page-select" class="form-control"></select>
+                    </div>
+                    <div id="canvas-container" class="canvas-container"></div>
+                    <div id="alertPlaceholder" class="mt-3"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="save-pdf-btn" class="btn btn-primary">Download Edited PDF</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Upload Modal -->
+    <div class="modal fade" id="imageUploadModal" tabindex="-1" role="dialog" aria-labelledby="imageUploadModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-white bg-danger">
+                    <h5 class="modal-title" id="imageUploadModalLabel">Upload Image</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="file" id="image-input" class="form-control">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="add-image-confirm-btn" class="btn btn-primary">Add Image</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Text Formatting Modal -->
+    <div class="modal fade" id="textFormattingModal" tabindex="-1" role="dialog" aria-labelledby="textFormattingModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-white bg-danger">
+                    <h5 class="modal-title" id="textFormattingModalLabel">Text Formatting</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <textarea id="text-content" class="form-control mb-3" rows="4" placeholder="Enter your text here"></textarea>
+                    <div class="form-group">
+                        <label for="font-size">Font Size:</label>
+                        <input type="number" id="font-size" class="form-control" value="16">
+                    </div>
+                    <div class="form-group">
+                        <label for="font-color">Text Color:</label>
+                        <input type="color" id="font-color" class="form-control" value="#000000">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="add-text-confirm-btn" class="btn btn-primary">Add Text</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="app.js"></script>
+    <script src="../main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redact Text in PDF</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+    <link href="../shared-styles.css" rel="stylesheet">
+    <link href="../main.css" rel="stylesheet">
+</head>
+
+<body data-page-title="Redact PDF">
+    <!-- Shared Navbar -->
+    <div id="shared-navbar"></div>
+
+    <!-- Shared Hero Section -->
+    <div id="shared-hero"></div>
+
+    <!-- Shared Breadcrumb -->
+    <div id="shared-breadcrumb"></div>
+
+    <div class="landing-page text-center mt-5">
+        <h1>Welcome to the PDF Redaction App</h1>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#redactionModal">Redact Text</button>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="redactionModal" tabindex="-1" aria-labelledby="redactionModalLabel" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header text-white bg-danger">
+                    <h5 class="modal-title" id="redactionModalLabel">Redact Text in PDF</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="pdfInput" accept="application/pdf">
+                        <label class="custom-file-label" for="pdfInput">Choose PDF</label>
+                    </div>
+                    <ul id="fileList" class="list-group mt-3"></ul>
+                    
+                    <div class="form-group mt-4">
+                        <label for="words">Words/Sentences to Redact (one per line):</label>
+                        <textarea class="form-control" id="words" rows="5" placeholder="Enter words or sentences to redact"></textarea>
+                    </div>
+                </div>
+                <div id="alertPlaceholder"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <button type="button" id="redactTextBtn" class="btn btn-primary">Redact Text</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="../shared-components.js"></script>
+    <script src="../config.js"></script>
+    <script src="app.js"></script>
+    <script src="../main.js"></script>
+</body>
+</html>

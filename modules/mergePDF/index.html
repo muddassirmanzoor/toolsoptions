@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merge PDF - I Love PDF</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Montserrat:wght@700&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link href="styles.css" rel="stylesheet">
+    <link href="../shared-styles.css" rel="stylesheet">
+</head>
+<body data-page-title="Merge PDF">
+    <!-- Shared Navbar -->
+    <div id="shared-navbar"></div>
+
+    <!-- Shared Hero Section -->
+    <div id="shared-hero"></div>
+
+    <!-- Shared Breadcrumb -->
+    <div id="shared-breadcrumb"></div>
+
+    <div class="container py-5">
+        <div class="row">
+          <!-- PDF Thumbnails Section -->
+          <div class="col-md-6 position-relative">
+            <!-- Initial Upload State -->
+            <div id="initialUploadState" class="initial-upload-state">
+              <div class="upload-content">
+                <h2 class="upload-title">Merge PDF files</h2>
+                <p class="upload-subtitle">Combine PDFs in the order you want with the easiest PDF merger available.</p>
+                <div class="upload-buttons-wrapper">
+                  <button id="selectFilesBtn" class="btn-select-files" type="button">
+                    Select PDF files
+                  </button>
+                  <div class="cloud-buttons">
+                    <button id="initialGoogleDriveBtn" class="cloud-btn" type="button" title="Select from Google Drive">
+                      <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                        <path d="M7.71 2.5L2.5 12.71l5.21 10.21L12.71 16l5.21-3.29L12.71 2.5H7.71z"/>
+                      </svg>
+                    </button>
+                    <button id="initialDropboxBtn" class="cloud-btn" type="button" title="Select from Dropbox">
+                      <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                        <path d="M6 2L0 6l6 4 6-4-6-4zm12 4l6-4-6-4-6 4 6 4zM0 14l6 4 6-4-6-4-6 4zm18-4l-6 4 6 4 6-4-6-4zM0 20l6 4 6-4-6-4-6 4zm12 0l6 4 6-4-6-4-6 4z"/>
+                      </svg>
+                    </button>
+              </div>
+                </div>
+                <p class="drop-hint">or drop PDFs here</p>
+              </div>
+            </div>
+
+            <!-- File Selection Buttons Group (shown after files are selected) -->
+            <div id="fileSelectionButtons" class="file-selection-buttons" style="display: none;">
+              <button id="addBtn" class="file-select-btn add-btn" type="button" title="Select PDF files">
+                <i class="fas fa-plus"></i>
+                <span class="file-count-badge" id="fileCountBadge">0</span>
+              </button>
+              <button id="computerBtn" class="file-select-btn computer-btn" type="button" title="Select from computer">
+                <i class="fas fa-desktop"></i>
+              </button>
+              <button id="googleDriveBtn" class="file-select-btn google-drive-btn" type="button" title="Select from Google Drive">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                  <path d="M7.71 2.5L2.5 12.71l5.21 10.21L12.71 16l5.21-3.29L12.71 2.5H7.71z"/>
+                </svg>
+              </button>
+              <button id="dropboxBtn" class="file-select-btn dropbox-btn" type="button" title="Select from Dropbox">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                  <path d="M6 2L0 6l6 4 6-4-6-4zm12 4l6-4-6-4-6 4 6 4zM0 14l6 4 6-4-6-4-6 4zm18-4l-6 4 6 4 6-4-6-4zM0 20l6 4 6-4-6-4-6 4zm12 0l6 4 6-4-6-4-6 4z"/>
+                </svg>
+              </button>
+            </div>
+            <input type="file" id="pdfInput" class="custom-file-input" multiple style="display:none;" accept="application/pdf">
+            <div id="fileList" class="row"></div>
+          </div>
+      
+          <!-- Merge PDF Section -->
+          <div class="col-md-6">
+            <h3>Merge PDF</h3>
+            <div id="alertPlaceholder"></div>
+            <div class="alert alert-primary">
+              <strong style=" color: #5A26EF;">Total Selected PDF: <span id="selected-count">0</span></strong>
+              <hr class="section-line">
+              <p>To change the order of your PDFs, drag and drop the files as you want.</p>
+            </div>
+            <button id="mergeBtn" class="btn w-100 mt-3" style="background-color: #F56129; color: #FFFFFF; border: none;">Merge PDF</button>
+          </div>
+        </div>
+      </div>
+      
+    <!-- Google API Client Library -->
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script src="https://accounts.google.com/gsi/client"></script>
+    <script src="https://apis.google.com/js/picker.js"></script>
+
+    <!-- Bootstrap Bundle with Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+    <script src="../shared-components.js"></script>
+    <script src="../config.js"></script>
+    <script src="app.js"></script>
+    <script src="../main.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,70 @@
+.custom-file-input ~ .custom-file-label::after {
+    content: 'Browse';
+}
+
+.custom-file-label {
+    border-radius: 0;
+    background-color: #ffffff;
+    border: 1px solid #ced4da;
+}
+
+.canvas-container {
+    position: relative;
+    border: 1px solid #ced4da;
+    margin-top: 20px;
+    overflow: auto;
+    max-height: 500px;
+    width: 100%;
+}
+
+.pdf-page-canvas {
+    display: block;
+    margin: 0 auto;
+    border: 1px solid #ced4da;
+}
+
+.draggable {
+    position: absolute;
+    cursor: move;
+}
+
+.text-element {
+    border: none; /* Remove border */
+    padding: 2px 4px;
+    background-color: transparent; /* Make background transparent */
+    z-index: 10;
+    color: black; /* Default text color if not specified */
+}
+
+.shape {
+    border-style: solid;
+    position: absolute;
+    cursor: move;
+    z-index: 10;
+}
+
+.shape.rect {
+    background-color: rgba(0, 123, 255, 0.1);
+}
+
+.shape.circle {
+    border-radius: 50%;
+    background-color: rgba(0, 123, 255, 0.1);
+}
+
+.shape.line {
+    background-color: black;
+    height: 2px;
+}
+
+.modal-backdrop {
+    display: none;
+}
+
+#alertPlaceholder .alert {
+    margin-top: 10px;
+}
+
+.edit-options {
+    margin-bottom: 10px;
+}

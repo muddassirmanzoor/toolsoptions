@@ -1,0 +1,196 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JPG's to PDF Converter</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+    <link href="../main.css" rel="stylesheet">
+    <link href="../shared-styles.css" rel="stylesheet">
+</head>
+<body data-page-title="JPG to PDF">
+    <div id="navbar"></div>
+
+    <div class="landing-page text-center mt-5">
+        <h1>Welcome to the JPG's to PDF App</h1>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#jpgToPdfModal">JPG's to PDF</button>
+    </div>
+
+    <div class="modal fade" id="jpgToPdfModal" tabindex="-1" aria-labelledby="jpgToPdfModalLabel" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header text-white bg-danger">
+                    <h5 class="modal-title" id="jpgToPdfModalLabel">Convert JPG's to PDF</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="jpgInput" accept="image/jpeg,image/jpg" multiple>
+                        <label class="custom-file-label" for="jpgInput">Choose Image Files</label>
+                    </div>
+                    <ul id="imageList" class="list-group mt-3"></ul>
+                </div>
+                <div id="alertPlaceholder"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <button type="button" id="convertBtn" class="btn btn-primary">Convert to PDF</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="../shared-components.js"></script>
+</body>
+</html>
+ -->
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JPG to PDF - I Love PDF</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Montserrat:wght@700&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link href="styles.css" rel="stylesheet">
+    <link href="../shared-styles.css" rel="stylesheet">
+</head>
+<body data-page-title="JPG to PDF">
+    <!-- Shared Navbar -->
+    <div id="shared-navbar"></div>
+
+    <!-- Shared Hero Section -->
+    <div id="shared-hero"></div>
+
+    <!-- Shared Breadcrumb -->
+    <div id="shared-breadcrumb"></div>
+
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-md-6 position-relative">
+                <!-- Initial Upload State -->
+                <div id="initialUploadState" class="initial-upload-state">
+                    <div class="upload-content">
+                        <h2 class="upload-title">JPG To PDF</h2>
+                        <p class="upload-subtitle">Convert your JPG images to PDF files easily.</p>
+                        <div class="upload-buttons-wrapper">
+                            <button id="selectFilesBtn" class="btn-select-files" type="button">
+                                Select JPG files
+                            </button>
+                            <div class="cloud-buttons">
+                                <button id="initialGoogleDriveBtn" class="cloud-btn" type="button" title="Select from Google Drive">
+                                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                                        <path d="M7.71 2.5L2.5 12.71l5.21 10.21L12.71 16l5.21-3.29L12.71 2.5H7.71z"/>
+                                    </svg>
+                                </button>
+                                <button id="initialDropboxBtn" class="cloud-btn" type="button" title="Select from Dropbox">
+                                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                                        <path d="M6 2L0 6l6 4 6-4-6-4zm12 4l6-4-6-4-6 4 6 4zM0 14l6 4 6-4-6-4-6 4zm18-4l-6 4 6 4 6-4-6-4zM0 20l6 4 6-4-6-4-6 4zm12 0l6 4 6-4-6-4-6 4z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <p class="drop-hint">or drop JPG files here</p>
+                    </div>
+                </div>
+
+                <!-- File Selection Buttons Group (shown after files are selected) -->
+                <div id="fileSelectionButtons" class="file-selection-buttons" style="display: none;">
+                    <button id="addBtn" class="file-select-btn add-btn" type="button" title="Add more JPG files">
+                        <i class="fas fa-plus"></i>
+                        <span class="file-count-badge" id="fileCountBadge">0</span>
+                    </button>
+                    <button id="computerBtn" class="file-select-btn computer-btn" type="button" title="Select from computer">
+                        <i class="fas fa-desktop"></i>
+                    </button>
+                    <button id="googleDriveBtn" class="file-select-btn google-drive-btn" type="button" title="Select from Google Drive">
+                        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                            <path d="M7.71 2.5L2.5 12.71l5.21 10.21L12.71 16l5.21-3.29L12.71 2.5H7.71z"/>
+                        </svg>
+                    </button>
+                    <button id="dropboxBtn" class="file-select-btn dropbox-btn" type="button" title="Select from Dropbox">
+                        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                            <path d="M6 2L0 6l6 4 6-4-6-4zm12 4l6-4-6-4-6 4 6 4zM0 14l6 4 6-4-6-4-6 4zm18-4l-6 4 6 4 6-4-6-4zM0 20l6 4 6-4-6-4-6 4zm12 0l6 4 6-4-6-4-6 4z"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="upload-area w-100">
+                    <div id="imageList" class="file-list">
+                        <!-- JPG files will be inserted here -->
+                    </div>
+                    
+                    <input type="file" id="jpgInput" accept="image/jpeg,image/jpg" multiple style="display:none;">
+                </div>
+                
+                <div id="alertPlaceholder" class="alert-container mb-4"></div>
+            </div>
+            <!-- Right Side - PDF Options -->
+            <div class="col-lg-6 col-md-12">
+                <div class="pdf-options">
+                    <h4>Image To PDF Options</h4>
+
+                    <!-- Page Orientation -->
+                    <div class="option my-3">
+                        <label>Page Orientation</label>
+                        <div class="d-flex justify-content-start">
+                            <button class="btn btn-primary me-2">Portrait</button>
+                            <button class="btn btn-outline-secondary">Landscape</button>
+                        </div>
+                    </div>
+
+                    <!-- Page Size -->
+                    <div class="option my-3">
+                        <label for="page-size">Page Size</label>
+                        <select id="page-size" class="form-select">
+                            <option selected>Fit (Same page size as image)</option>
+                            <option>A4</option>
+                            <option>Letter</option>
+                        </select>
+                    </div>
+
+                    <!-- Margins -->
+                    <div class="option my-3">
+                        <label>Margins</label>
+                        <div class="d-flex justify-content-start">
+                            <button class="btn btn-primary me-2">No</button>
+                            <button class="btn btn-outline-secondary me-2">Small</button>
+                            <button class="btn btn-outline-secondary">Big</button>
+                        </div>
+                    </div>
+
+                    <!-- Merge Option -->
+                    <div class="form-check mt-4">
+                        <input class="form-check-input" type="checkbox" id="merge-images" checked>
+                        <label class="form-check-label" for="merge-images">Merge all images in one PDF file</label>
+                    </div>
+
+                    <!-- Convert Button -->
+                    <div class="mt-4">
+                        <button id="convertBtn" class="btn btn-lg btn-warning w-100">Convert To PDF</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../shared-components.js"></script>
+    <script src="../config.js"></script>
+    <script src="app.js"></script>
+    <script src="../main.js"></script>
+
+</body>
+</html>
