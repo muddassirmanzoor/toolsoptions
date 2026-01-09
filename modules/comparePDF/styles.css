@@ -556,28 +556,44 @@ body {
    Compare Button
    =================================== */
 .btn-compare {
-    font-family: var(--font-sora);
-    font-size: 21.69px;
-    font-weight: 700;
-    color: var(--color-white);
-    background-color: var(--color-primary-orange);
-    padding: 18px var(--spacing-2xl);
-    border-radius: var(--radius-xl);
-    border: none;
     width: 100%;
-    max-width: 486px;
-    margin: 0 auto;
-    display: block;
+    padding: 14px;
+    background-color: #F56129;
+    border: none;
+    color: #FFFFFF;
+    border-radius: 8px;
+    font-family: 'Sora', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(245, 97, 41, 0.3);
-    text-align: center;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    display: block;
+    position: relative;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .btn-compare:hover {
     background-color: #e04f1f;
     transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(245, 97, 41, 0.4);
+    box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.3);
 }
 
 .btn-compare:active {
@@ -656,8 +672,14 @@ body {
     }
     
     .btn-compare {
-        font-size: 18px;
-        padding: 14px var(--spacing-lg);
+        padding: 12px;
+        font-size: 16px;
+    }
+    
+    .row .col-lg-4.offset-lg-4 {
+        margin-left: 0 !important;
+        flex: 0 0 100% !important;
+        max-width: 100% !important;
     }
     
     .floating-add-btn {
@@ -821,5 +843,22 @@ body {
     }    .pdf-upload-box,
     .pdf-preview-wrapper {
         min-height: 400px;
+    }
+}
+
+/* Override Bootstrap offset-lg-4 to set margin-left to 67% */
+.container-custom .row.mt-4 .col-lg-4.offset-lg-4,
+.main-content .row.mt-4 .col-lg-4.offset-lg-4,
+.row.mt-4 > .col-lg-4.offset-lg-4 {
+    margin-left: 67% !important;
+}
+
+@media (min-width: 992px) {
+    .container-custom .row.mt-4 .col-lg-4.offset-lg-4,
+    .main-content .row.mt-4 .col-lg-4.offset-lg-4,
+    .row.mt-4 > .col-lg-4.offset-lg-4 {
+        margin-left: 67% !important;
+        flex: 0 0 33.333333% !important;
+        max-width: 33.333333% !important;
     }
 }

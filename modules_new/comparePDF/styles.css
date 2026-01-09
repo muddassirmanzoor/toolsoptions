@@ -457,10 +457,11 @@ body {
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-md);
     padding: var(--spacing-xl);
-    height: 100%;
-    min-height: 500px;
+    height: 398px;
     display: flex;
     flex-direction: column;
+    position: relative;
+    margin-bottom: 20px;
 }
 
 .section-title {
@@ -605,22 +606,24 @@ body {
 }
 
 /* ===================================
-   Convert Button (matching convertExceltoPDF)
+   Convert Button (matching convertExceltoPDF exactly)
    =================================== */
 .convert-btn {
     width: 100%;
     padding: 14px;
-    background-color: var(--color-primary-orange);
+    background-color: #F56129;
     border: none;
-    color: var(--color-white);
-    border-radius: var(--radius-md);
-    font-family: var(--font-sora);
+    color: #FFFFFF;
+    border-radius: 8px;
+    font-family: 'Sora', sans-serif;
     font-size: 18px;
     font-weight: 700;
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     margin-top: 20px;
+    display: block;
+    position: relative;
 }
 
 .convert-btn:hover {
@@ -633,11 +636,58 @@ body {
     transform: translateY(0);
 }
 
-.convert-btn:disabled {
+/* ===================================
+   Compare Button (Download Report)
+   =================================== */
+.btn-compare {
+    width: 100%;
+    padding: 14px;
+    background-color: #F56129;
+    border: none;
+    color: #FFFFFF;
+    border-radius: 8px;
+    font-family: 'Sora', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    margin-left: 0;
+    display: block;
+}
+
+.btn-compare:hover {
+    background-color: #e04f1f;
+    transform: translateY(-2px);
+    box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.3);
+}
+
+.btn-compare:active {
+    transform: translateY(0);
+}
+
+.btn-compare:disabled {
     background-color: var(--color-gray-border);
     cursor: not-allowed;
     box-shadow: none;
     transform: none;
+}
+
+/* Override Bootstrap offset-lg-4 to set margin-left to 67% */
+.container-custom .row.mt-4 .col-lg-4.offset-lg-4,
+.main-content .row.mt-4 .col-lg-4.offset-lg-4,
+.row.mt-4 > .col-lg-4.offset-lg-4 {
+    margin-left: 67% !important;
+}
+
+@media (min-width: 992px) {
+    .container-custom .row.mt-4 .col-lg-4.offset-lg-4,
+    .main-content .row.mt-4 .col-lg-4.offset-lg-4,
+    .row.mt-4 > .col-lg-4.offset-lg-4 {
+        margin-left: 67% !important;
+        flex: 0 0 33.333333% !important;
+        max-width: 33.333333% !important;
+    }
 }
 
 /* ===================================
@@ -691,9 +741,13 @@ body {
         height: 50px;
     }
     
-    .pdf-upload-box,
-    .options-panel {
+    .pdf-upload-box {
         min-height: 400px;
+    }
+    
+    .options-panel {
+        height: auto;
+        min-height: 350px;
     }
 }
 
@@ -706,15 +760,31 @@ body {
         padding: 60px 0 100px;
     }
     
-    .pdf-upload-box,
-    .options-panel {
+    .pdf-upload-box {
         padding: var(--spacing-lg);
         min-height: 300px;
+    }
+    
+    .options-panel {
+        height: auto;
+        min-height: 350px;
+        padding: 20px;
     }
     
     .convert-btn {
         padding: 12px;
         font-size: 16px;
+    }
+    
+    .btn-compare {
+        padding: 12px;
+        font-size: 16px;
+    }
+    
+    .row .col-lg-4.offset-lg-4 {
+        margin-left: 0 !important;
+        flex: 0 0 100% !important;
+        max-width: 100% !important;
     }
     
     .floating-add-btn {
