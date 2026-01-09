@@ -247,6 +247,80 @@
       background: rgba(220, 53, 69, 0.1);
     }
 
+    .file-list-container {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 300px;
+      gap: 16px;
+    }
+
+    .pdf-thumbnail {
+      position: relative;
+      width: 100%;
+      max-width: 280px;
+      padding: 24px 16px;
+      background-color: #FFFFFF;
+      border: 2px solid #D3D3D3;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    }
+
+    .pdf-thumbnail img.pdf-icon-preview {
+      width: 120px;
+      height: 150px;
+      object-fit: contain;
+      margin-bottom: 12px;
+    }
+
+    .pdf-file-name {
+      font-family: var(--font-sora, 'Sora', sans-serif);
+      font-size: 14px;
+      color: #333333;
+      text-align: center;
+      word-break: break-word;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+    .delete-icon {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background-color: #F56129;
+      color: #FFFFFF;
+      padding: 8px;
+      border-radius: 50%;
+      cursor: pointer;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .delete-icon:hover {
+      background-color: #e04f1f;
+      transform: scale(1.1);
+    }
+
+    .delete-icon img {
+      width: 16px;
+      height: 16px;
+    }
+
     /* Initial Upload State */
     .initial-upload-state {
       min-height: 300px;
@@ -506,15 +580,9 @@
         <!-- File Input (hidden) -->
         <input type="file" id="fileInput" accept="application/pdf" style="display:none;" />
         
-        <!-- File Info (shown after file is selected) -->
-        <div id="fileInfo" class="file-info" style="display: none;">
-          <div class="file-info-content">
-            <i class="fas fa-file-pdf"></i>
-            <span id="fileName"></span>
-            <button id="removeFileBtn" class="remove-file-btn" type="button" title="Remove file">
-              <i class="fas fa-times"></i>
-            </button>
-          </div>
+        <!-- File List (shown after file is selected) -->
+        <div id="fileList" class="file-list-container" style="display: none;">
+          <!-- PDF file card will be inserted here -->
         </div>
       </div>
 
@@ -582,9 +650,7 @@
     const computerBtn = document.getElementById('computerBtn');
     const googleDriveBtn = document.getElementById('googleDriveBtn');
     const dropboxBtn = document.getElementById('dropboxBtn');
-    const fileInfo = document.getElementById('fileInfo');
-    const fileName = document.getElementById('fileName');
-    const removeFileBtn = document.getElementById('removeFileBtn');
+    const fileListContainer = document.getElementById('fileList');
     const hintText = document.getElementById('hintText');
     const fileUploadSection = document.querySelector('.file-upload-section');
 
@@ -627,9 +693,6 @@
         alert('Dropbox integration coming soon!');
       });
     }
-    if (removeFileBtn) {
-      removeFileBtn.addEventListener('click', removeCurrentFile);
-    }
 
     // Drag and drop for initial upload area
     if (initialUploadState) {
@@ -661,22 +724,57 @@
       const hasFile = currentFile !== null;
       
       if (hasFile) {
-        // Hide initial state, show file selection buttons and file info
+        // Hide initial state, show file selection buttons and file list
         if (initialUploadState) initialUploadState.style.display = 'none';
         if (fileSelectionButtons) fileSelectionButtons.style.display = 'flex';
-        if (fileInfo) fileInfo.style.display = 'block';
+        if (fileListContainer) {
+          fileListContainer.style.display = 'flex';
+          updateFileListDisplay();
+        }
         if (hintText) hintText.style.display = 'block';
         if (fileUploadSection) fileUploadSection.classList.add('has-files');
-        if (fileName) fileName.textContent = currentFile.name;
       } else {
-        // Show initial state, hide file selection buttons and file info
+        // Show initial state, hide file selection buttons and file list
         if (initialUploadState) initialUploadState.style.display = 'flex';
         if (fileSelectionButtons) fileSelectionButtons.style.display = 'none';
-        if (fileInfo) fileInfo.style.display = 'none';
+        if (fileListContainer) fileListContainer.style.display = 'none';
         if (hintText) hintText.style.display = 'none';
         if (fileUploadSection) fileUploadSection.classList.remove('has-files');
         clearPages();
       }
+    }
+
+    function updateFileListDisplay() {
+      if (!fileListContainer || !currentFile) return;
+      fileListContainer.innerHTML = '';
+      
+      const divItem = document.createElement('div');
+      divItem.className = 'pdf-thumbnail';
+      
+      const imgItem = document.createElement('img');
+      imgItem.src = '/assests/pdf 2.png';
+      imgItem.alt = currentFile.name;
+      imgItem.className = 'pdf-icon-preview';
+      
+      const nameDiv = document.createElement('div');
+      nameDiv.classList.add('pdf-file-name');
+      nameDiv.textContent = currentFile.name;
+      
+      const delDiv = document.createElement('div');
+      delDiv.classList.add('delete-icon');
+      const delImg = document.createElement('img');
+      delImg.src = '/assests/Group 85.png';
+      delImg.alt = 'Delete Icon';
+      delDiv.addEventListener('click', (e) => {
+        e.stopPropagation();
+        removeCurrentFile();
+      });
+      
+      divItem.appendChild(imgItem);
+      divItem.appendChild(nameDiv);
+      divItem.appendChild(delDiv);
+      delDiv.appendChild(delImg);
+      fileListContainer.appendChild(divItem);
     }
 
     function removeCurrentFile() {

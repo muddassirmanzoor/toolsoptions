@@ -15,9 +15,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const computerBtn = document.getElementById("computerBtn");
     const googleDriveBtn = document.getElementById("googleDriveBtn");
     const dropboxBtn = document.getElementById("dropboxBtn");
-    const fileInfo = document.getElementById("fileInfo");
-    const fileName = document.getElementById("fileName");
-    const removeFileBtn = document.getElementById("removeFileBtn");
     const fileContainer = document.querySelector('.col-lg-6.position-relative');
 
     let pdfFile = null;
@@ -50,19 +47,28 @@ document.addEventListener("DOMContentLoaded", () => {
         fileList.innerHTML = "";
         if (pdfFile) {
             const divItem = document.createElement("div");
-            divItem.className = 'col-6 col-sm-6 col-md-6 col-lg-6 mb-4 list-item';
-            const divScnd = document.createElement("div");
-            divScnd.className = 'pdf-card';
+            divItem.className = 'pdf-thumbnail';
             const imgItem = document.createElement("img");
             imgItem.src = '/assests/pdf 2.png';
             imgItem.alt = pdfFile.name;
+            imgItem.className = 'pdf-icon-preview';
             const nameDiv = document.createElement("div");
-            nameDiv.classList.add("pdf-name");
+            nameDiv.classList.add("pdf-file-name");
             nameDiv.textContent = pdfFile.name;
-
-            divScnd.appendChild(imgItem);
-            divScnd.appendChild(nameDiv);
-            divItem.appendChild(divScnd);
+            const delDiv = document.createElement("div");
+            delDiv.classList.add("delete-icon");
+            const delImg = document.createElement("img");
+            delImg.src = '/assests/Group 85.png';
+            delImg.alt = 'Delete Icon';
+            delDiv.addEventListener("click", (e) => {
+                e.stopPropagation();
+                removeFile();
+            });
+            
+            divItem.appendChild(imgItem);
+            divItem.appendChild(nameDiv);
+            divItem.appendChild(delDiv);
+            delDiv.appendChild(delImg);
             fileList.appendChild(divItem);
         }
     }
@@ -71,7 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const hasFile = pdfFile !== null;
         
         if (hasFile) {
-            // Hide initial state, show file selection buttons and file info
+            // Hide initial state, show file selection buttons
             if (initialUploadState) {
                 initialUploadState.style.display = 'none';
             }
@@ -80,25 +86,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 fileSelectionButtons.style.visibility = 'visible';
                 fileSelectionButtons.style.opacity = '1';
             }
-            if (fileInfo) {
-                fileInfo.style.display = 'block';
-            }
             if (fileContainer) {
                 fileContainer.classList.add('has-files');
             }
-            if (fileName && pdfFile) {
-                fileName.textContent = pdfFile.name;
-            }
         } else {
-            // Show initial state, hide file selection buttons and file info
+            // Show initial state, hide file selection buttons
             if (initialUploadState) {
                 initialUploadState.style.display = 'flex';
             }
             if (fileSelectionButtons) {
                 fileSelectionButtons.style.display = 'none';
-            }
-            if (fileInfo) {
-                fileInfo.style.display = 'none';
             }
             if (fileContainer) {
                 fileContainer.classList.remove('has-files');
@@ -142,11 +139,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (dropboxBtn) {
         dropboxBtn.addEventListener("click", () => {
             showAlert("Dropbox integration coming soon!", 'primary');
-        });
-    }
-    if (removeFileBtn) {
-        removeFileBtn.addEventListener("click", () => {
-            removeFile();
         });
     }
 
@@ -199,16 +191,19 @@ document.addEventListener("DOMContentLoaded", () => {
     unlockBtn.addEventListener("click", unlockPdf);
 
     async function unlockPdf() {
-
-        $(processingAlert).alert('close');
-        processingAlert = null;
+        // Close any existing processing alert using Bootstrap 5 API
+        if (processingAlert) {
+            const bsAlert = new bootstrap.Alert(processingAlert);
+            bsAlert.close();
+            processingAlert = null;
+        }
 
         if (!pdfFile) {
             showAlert("Please add a PDF file to unlock.", 'danger');
             return;
         }
 
-        const password = pdfPassword.value.trim();
+        const password = pdfPassword.value ? pdfPassword.value.trim() : '';
 
         // Disable the unlock button and show "Please Wait..." with spinner
         unlockBtn.disabled = true;
@@ -224,7 +219,9 @@ document.addEventListener("DOMContentLoaded", () => {
         // Update the alert message after 1 minute
         updateAlertTimeoutId = setTimeout(() => {
             if (processingAlert) {
-                processingAler = showAlert("<strong>Please do not close your browser.</strong> We are currently processing your request with our decryption method, but it may take a little longer. Your patience is appreciated, and it might take a few more minutes. Thank you! :)", 'warning', false);
+                const bsAlert = new bootstrap.Alert(processingAlert);
+                bsAlert.close();
+                processingAlert = showAlert("<strong>Please do not close your browser.</strong> We are currently processing your request with our decryption method, but it may take a little longer. Your patience is appreciated, and it might take a few more minutes. Thank you! :)", 'warning', false);
             }
         }, 60000); // 1 minute delay
 
@@ -266,7 +263,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 updateAlertTimeoutId = null;
             }
             if (processingAlert) {
-                $(processingAlert).alert('close');
+                const bsAlert = new bootstrap.Alert(processingAlert);
+                bsAlert.close();
                 processingAlert = null;
             }
         }
@@ -294,17 +292,16 @@ document.addEventListener("DOMContentLoaded", () => {
         alertDiv.role = 'alert';
         alertDiv.innerHTML = 
             `${message}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>`;
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>`;
         alertPlaceholder.innerHTML = ''; // Clear any existing alerts
         alertPlaceholder.appendChild(alertDiv);
 
         if (autoClose) {
-            // Automatically remove the alert after a timeout (optional)
+            // Automatically remove the alert after a timeout
             setTimeout(() => {
-                $(alertDiv).alert('close');
-            }, 7000); // Remove alert after 5 seconds
+                const bsAlert = new bootstrap.Alert(alertDiv);
+                bsAlert.close();
+            }, 7000);
         }
 
         return alertDiv; // Return the alert element so it can be manually updated or removed later

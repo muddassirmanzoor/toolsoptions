@@ -64,7 +64,10 @@ document.addEventListener("DOMContentLoaded", () => {
             delImg.src = "/assests/Group 85.png";
             delImg.alt = "Delete Icon";
             delDiv.appendChild(delImg);
-            delDiv.addEventListener("click", () => removeFile(index));
+            delDiv.addEventListener("click", (e) => {
+                e.stopPropagation();
+                removeFile(index);
+            });
 
             divItem.appendChild(iconWrapper);
             divItem.appendChild(nameDiv);

@@ -140,37 +140,19 @@
                     <div id="fileList" class="file-list"></div>
                 </div>
 
-                <!-- Right side with dropdowns and convert button -->
+                <!-- Right side with info alert and dropdowns (shown after file selection) -->
                 <div class="col-md-6">
                     <h4>Powerpoint To PDF</h4>
-                    <div class="dropdown-container border-box">
-                        <select class="form-select mb-3" aria-label="Select Word File">
-                            <option selected>powerPoint 1.pdf</option>
-                            <option value="1">powerPoint 2.pdf</option>
-                            <option value="2">powerPoint3.pdf</option>
-                            <option value="3">powerPoint 4.pdf</option>
-                        </select>
-                        <select class="form-select mb-3" aria-label="Select Word File">
-                            <option selected>powerPoint 2.pdf</option>
-                            <option value="1">powerPoint 1.pdf</option>
-                            <option value="2">powerPoint 3.pdf</option>
-                            <option value="3">powerPoint 4.pdf</option>
-                        </select>
-                        <select class="form-select mb-3" aria-label="Select Word File">
-                            <option selected>powerPoint 3.pdf</option>
-                            <option value="1">powerPoint 1.pdf</option>
-                            <option value="2">powerPoint 2.pdf</option>
-                            <option value="3">powerPoint 4.pdf</option>
-                        </select>
-                        <select class="form-select mb-3" aria-label="Select Word File">
-                            <option selected>powerPoint 4.pdf</option>
-                            <option value="1">powerPoint 1.pdf</option>
-                            <option value="2">powerPoint 2.pdf</option>
-                            <option value="3">powerPoint 3.pdf</option>
-                        </select>
+                    <!-- Info alert on first load, similar style to PDF to OCR page -->
+                    <div id="pptInfoAlert" class="alert alert-info text-center mb-3">
+                        Select your PPT/PPTX file on the left. After uploading, you can adjust the merge order of the resulting PDF files here.
                     </div>
-                    
-                    
+                    <div id="pptDropdownContainer" class="dropdown-container border-box" style="display: none;">
+                        <select class="form-select mb-3" aria-label="Select PPT File"></select>
+                        <select class="form-select mb-3" aria-label="Select PPT File"></select>
+                        <select class="form-select mb-3" aria-label="Select PPT File"></select>
+                        <select class="form-select mb-3" aria-label="Select PPT File"></select>
+                    </div>
                     <button id="convertBtn" class="convert-btn">Merge & Convert To PDF</button>
                 </div>
             </div>

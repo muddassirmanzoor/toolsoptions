@@ -663,6 +663,70 @@ nav a:hover {
     gap: 16px;
 }
 
+.pdf-thumbnail {
+    position: relative;
+    width: 100%;
+    max-width: 280px;
+    padding: var(--spacing-lg, 24px) var(--spacing-md, 16px);
+    background-color: var(--color-white, #FFFFFF);
+    border: 2px solid var(--color-gray-border, #D3D3D3);
+    border-radius: var(--radius-md, 8px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-md, 0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.pdf-thumbnail img.pdf-icon-preview {
+    width: 120px;
+    height: 150px;
+    object-fit: contain;
+    margin-bottom: 12px;
+}
+
+.pdf-file-name {
+    font-family: var(--font-sora, 'Sora', sans-serif);
+    font-size: 14px;
+    color: var(--color-gray-dark, #333333);
+    text-align: center;
+    word-break: break-word;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.delete-icon {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background-color: var(--color-primary-orange, #F56129);
+    color: var(--color-white, #FFFFFF);
+    padding: var(--spacing-xs, 8px);
+    border-radius: 50%;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.delete-icon:hover {
+    background-color: #e04f1f;
+    transform: scale(1.1);
+}
+
+.delete-icon img {
+    width: 16px;
+    height: 16px;
+}
+
 /* ===================================
    Protect Button (matching compressBtn and mergeBtn style)
    =================================== */

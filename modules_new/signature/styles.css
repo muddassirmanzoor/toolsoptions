@@ -313,6 +313,41 @@ body {
     color: var(--color-black);
 }
 
+.nav-btn {
+    width: 32px;
+    height: 32px;
+    background-color: var(--color-white);
+    border: 1px solid var(--color-gray-border);
+    border-radius: var(--radius-sm);
+    color: var(--color-black);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.nav-btn:hover:not(:disabled) {
+    background-color: var(--color-primary-purple);
+    border-color: var(--color-primary-purple);
+    color: var(--color-white);
+}
+
+.nav-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.page-number-input {
+    width: 50px;
+    padding: var(--spacing-xs);
+    border: 1px solid var(--color-gray-border);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-sora);
+    font-size: 14px;
+    text-align: center;
+}
+
 .nav-right {
     display: flex;
     align-items: center;
@@ -334,13 +369,20 @@ body {
     color: var(--color-gray-text);
 }
 
+/* Document Preview Wrapper */
+.document-preview-wrapper {
+    display: flex;
+    gap: var(--spacing-lg);
+    flex: 1;
+}
+
 /* Page Thumbnails Column */
 .page-thumbnails-column {
     display: flex;
     flex-direction: column;
     gap: var(--spacing-sm);
-    margin-bottom: var(--spacing-lg);
     width: 80px;
+    flex-shrink: 0;
 }
 
 .page-thumbnail-small {
@@ -381,6 +423,41 @@ body {
     border-radius: var(--radius-md);
     padding: var(--spacing-xl);
     min-height: 400px;
+    position: relative;
+    overflow: auto;
+}
+
+.upload-prompt {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-md);
+}
+
+.btn-upload-pdf {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background-color: var(--color-primary-purple);
+    border: none;
+    border-radius: var(--radius-md);
+    color: var(--color-white);
+    font-family: var(--font-sora);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-upload-pdf:hover {
+    background-color: #4a1fd0;
+    transform: translateY(-2px);
+}
+
+#pdfCanvas {
+    max-width: 100%;
+    height: auto;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background-color: var(--color-white);
 }
 
 .pdf-preview-placeholder {
@@ -813,4 +890,106 @@ body {
         width: 100%;
         order: 3;
     }
+}
+
+/* ===================================
+   Signature Modal Styles
+   =================================== */
+.modal {
+    z-index: 1050;
+}
+
+.modal-content {
+    border-radius: var(--radius-md);
+}
+
+.tabs {
+    display: flex;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-lg);
+    border-bottom: 2px solid var(--color-gray-border);
+}
+
+.tab-button {
+    padding: var(--spacing-sm) var(--spacing-md);
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    font-family: var(--font-sora);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-gray-text);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: -2px;
+}
+
+.tab-button:hover {
+    color: var(--color-primary-purple);
+}
+
+.tab-button.active {
+    color: var(--color-primary-purple);
+    border-bottom-color: var(--color-primary-purple);
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+canvas {
+    display: block;
+    margin: var(--spacing-md) auto;
+    max-width: 100%;
+    border: 1px solid var(--color-gray-border);
+    border-radius: var(--radius-md);
+    background-color: var(--color-white);
+}
+
+.signature-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+}
+
+.signature-option {
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: 1px solid var(--color-gray-border);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: var(--font-sora);
+    font-size: 14px;
+}
+
+.signature-option:hover {
+    background-color: var(--color-gray-light);
+    border-color: var(--color-primary-purple);
+}
+
+.history-image {
+    max-width: 200px;
+    margin: var(--spacing-sm);
+    border: 1px solid var(--color-gray-border);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.history-image:hover {
+    border-color: var(--color-primary-purple);
+    transform: scale(1.05);
+}
+
+#historyContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    max-height: 400px;
+    overflow-y: auto;
 }

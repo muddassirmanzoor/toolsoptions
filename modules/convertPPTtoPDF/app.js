@@ -13,6 +13,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const googleDriveBtn = document.getElementById("googleDriveBtn");
     const dropboxBtn = document.getElementById("dropboxBtn");
     const fileContainer = document.querySelector('.col-md-6.position-relative');
+    const pptDropdownContainer = document.getElementById("pptDropdownContainer");
+    const pptInfoAlert = document.getElementById("pptInfoAlert");
 
     let pptFiles = [];
 
@@ -137,6 +139,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         updateUIState();
+        updateDropdowns();
     }
 
     function updateUIState() {
@@ -147,11 +150,17 @@ document.addEventListener("DOMContentLoaded", () => {
             if (initialUploadState) initialUploadState.style.display = 'none';
             if (fileSelectionButtons) fileSelectionButtons.style.display = 'flex';
             if (fileContainer) fileContainer.classList.add('has-files');
+            // Show dropdowns and hide info alert on the right side
+            if (pptDropdownContainer) pptDropdownContainer.style.display = 'block';
+            if (pptInfoAlert) pptInfoAlert.style.display = 'none';
         } else {
             // Show initial state, hide file selection buttons
             if (initialUploadState) initialUploadState.style.display = 'flex';
             if (fileSelectionButtons) fileSelectionButtons.style.display = 'none';
             if (fileContainer) fileContainer.classList.remove('has-files');
+            // Hide dropdowns and show info alert when no files selected
+            if (pptDropdownContainer) pptDropdownContainer.style.display = 'none';
+            if (pptInfoAlert) pptInfoAlert.style.display = 'block';
         }
     }
 
@@ -161,6 +170,35 @@ document.addEventListener("DOMContentLoaded", () => {
     function removeFile(index) {
         pptFiles.splice(index, 1);
         updateFileList();
+    }
+
+    function updateDropdowns() {
+        if (!pptDropdownContainer) return;
+        const selects = pptDropdownContainer.querySelectorAll('select');
+
+        selects.forEach((select) => {
+            // Clear existing options
+            while (select.firstChild) {
+                select.removeChild(select.firstChild);
+            }
+
+            if (pptFiles.length === 0) {
+                const placeholder = document.createElement('option');
+                placeholder.textContent = 'No PPT file selected';
+                placeholder.value = '';
+                select.appendChild(placeholder);
+                return;
+            }
+
+            // Populate options based on currently selected PPT files
+            pptFiles.forEach((file, index) => {
+                const option = document.createElement('option');
+                option.value = index;
+                // Show the expected PDF name for clarity
+                option.textContent = generatePdfFileName(file.name);
+                select.appendChild(option);
+            });
+        });
     }
 
     convertBtn.addEventListener("click", convertToPDF);

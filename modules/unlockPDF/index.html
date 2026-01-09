@@ -145,43 +145,34 @@
                             <!-- PDF files will be inserted here -->
                         </div>
                         
-                        <!-- File Info (shown after file is selected) -->
-                        <div id="fileInfo" class="file-info" style="display: none;">
-                            <div class="file-info-content">
-                                <i class="fas fa-file-pdf"></i>
-                                <span id="fileName"></span>
-                                <button id="removeFileBtn" class="remove-file-btn" type="button" title="Remove file">
-                                    <i class="fas fa-times"></i>
-                                </button>
-                            </div>
-                        </div>
-                        
                         <input type="file" id="pdfInput" accept="application/pdf" style="display:none;">
                     </div>
                 </div>
       
                 <!-- Right: Unlock Options -->
-                <div class="col-lg-6 d-flex">
-                    <div class="options-panel w-100">
-            <div class="password-protect-section">
-                            <h3 style="font-family: var(--font-montserrat); font-size: 25px; font-weight: 800; margin-bottom: var(--spacing-lg);">Unlock PDF</h3>
-                <form>
-                                <div class="mb-3" id="passwordSection" style="display: none;">
-                                    <label for="pdfPassword" class="form-label" style="font-weight: 600;">Enter Password <br>(if required, or try to attempt to unlock without a password if you're unsure)</label>
-                                    <input type="password" class="form-control" id="pdfPassword" placeholder="Type Password" style="padding: 12px; border-radius: var(--radius-md);">
-                                </div>
-                            </form>
+                <div class="col-md-6">
+                    <div class="p-4">
+                        <h5>Unlock PDF</h5>
+                        <!-- Info Text -->
+                        <div class="alert alert-info text-center">
+                            Make sure you have the right to remove the password from this PDF. If the file is owner‑locked, you may still be able to unlock it without a password.
+                        </div>
+
+                        <!-- Password Section -->
+                        <form>
+                            <div class="mb-3" id="passwordSection" style="display: none;">
+                                <label for="pdfPassword" class="form-label" style="font-weight: 600;">Enter Password <br>(if required, or try to attempt to unlock without a password if you're unsure)</label>
+                                <input type="password" class="form-control" id="pdfPassword" placeholder="Type Password" style="padding: 12px; border-radius: var(--radius-md);">
+                            </div>
+                        </form>
+
+                        <!-- Unlock Button -->
+                        <div class="d-grid">
+                            <button id="unlockBtn" class="btn btn-lg" style="background: #F56129; color: white;">Unlock PDF</button>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <!-- Unlock Button -->
-            <div class="row mt-4">
-                <div class="col-lg-6 offset-lg-6">
-                    <button id="unlockBtn" class="btn-primary-action">Unlock PDF</button>
-          </div>
-        </div>
       </div>
     </main>
 

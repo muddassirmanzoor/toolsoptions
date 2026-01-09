@@ -3,10 +3,19 @@ document.addEventListener("DOMContentLoaded", () => {
     const fileList = document.getElementById("fileList");
     const convertBtn = document.getElementById("convertBtn");
     const alertPlaceholder = document.getElementById("alertPlaceholder");
+    const addBtn = document.getElementById("addBtn");
+    const excelInfoAlert = document.getElementById("excelInfoAlert");
+    const excelFileItems = document.getElementById("excelFileItems");
 
     let excelFiles = [];
 
-    excelInput.addEventListener("change", handleFileSelection);
+    if (excelInput) {
+        excelInput.addEventListener("change", handleFileSelection);
+    }
+
+    if (addBtn && excelInput) {
+        addBtn.addEventListener("click", () => excelInput.click());
+    }
 
     function handleFileSelection(event) {
         const files = Array.from(event.target.files);
@@ -25,29 +34,53 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function updateFileList() {
+        if (!fileList) return;
         fileList.innerHTML = "";
-        excelFiles.forEach((file, index) => {
+
+        if (excelFiles.length === 0) {
+            // No files selected: keep info alert visible and clear right-side items
+            if (excelInfoAlert) excelInfoAlert.style.display = "block";
+            if (excelFileItems) excelFileItems.innerHTML = "";
+            return;
+        }
+
+        // One file selected: hide info alert and show a single preview tile
+        if (excelInfoAlert) excelInfoAlert.style.display = "none";
+
+        excelFiles.forEach(() => {
             const divItem = document.createElement("div");
-            divItem.className = 'file-item';
+            divItem.className = "file-item";
+
             const divScnd = document.createElement("div");
-            divScnd.className = 'file-icon';
-            const img = document.createElement('img');
+            divScnd.className = "file-icon";
+
+            const img = document.createElement("img");
             img.src = "/assests/Vector.png";
 
             divScnd.appendChild(img);
             divItem.appendChild(divScnd);
             fileList.appendChild(divItem);
-
-            // const listItem = document.createElement("li");
-            // listItem.classList.add("list-group-item", "d-flex", "justify-content-between", "align-items-center");
-            // listItem.textContent = file.name;
-            // const removeBtn = document.createElement("button");
-            // removeBtn.textContent = "Remove";
-            // removeBtn.classList.add("btn", "btn-danger", "btn-sm");
-            // removeBtn.addEventListener("click", () => removeFile(index));
-            // listItem.appendChild(removeBtn);
-            // fileList.appendChild(listItem);
         });
+
+        // Update right-side file items box to show the resulting PDF name
+        if (excelFileItems) {
+            excelFileItems.innerHTML = "";
+            const file = excelFiles[0];
+            const item = document.createElement("div");
+            item.className = "file-list-item file-item-orange";
+
+            const nameSpan = document.createElement("span");
+            nameSpan.className = "file-name";
+            nameSpan.textContent = generatePdfFileName(file.name);
+
+            const dragSpan = document.createElement("span");
+            dragSpan.className = "drag-handle";
+            dragSpan.textContent = "⋮⋮";
+
+            item.appendChild(nameSpan);
+            item.appendChild(dragSpan);
+            excelFileItems.appendChild(item);
+        }
     }
 
     function removeFile(index) {
@@ -55,7 +88,9 @@ document.addEventListener("DOMContentLoaded", () => {
         updateFileList();
     }
 
-    convertBtn.addEventListener("click", convertToPdf);
+    if (convertBtn) {
+        convertBtn.addEventListener("click", convertToPdf);
+    }
 
     async function convertToPdf() {
         if (excelFiles.length === 0) {
@@ -90,7 +125,7 @@ document.addEventListener("DOMContentLoaded", () => {
         } finally {
             // Re-enable the convert button and revert to original text
             convertBtn.disabled = false;
-            convertBtn.innerHTML = 'Convert to PDF';
+            convertBtn.innerHTML = 'Convert To PDF';
         }
     }
 

@@ -14,9 +14,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const computerBtn = document.getElementById("computerBtn");
     const googleDriveBtn = document.getElementById("googleDriveBtn");
     const dropboxBtn = document.getElementById("dropboxBtn");
-    const fileInfo = document.getElementById("fileInfo");
-    const fileName = document.getElementById("fileName");
-    const removeFileBtn = document.getElementById("removeFileBtn");
     const fileContainer = document.querySelector('.col-md-6.position-relative');
 
     let excelFiles = [];
@@ -60,8 +57,20 @@ document.addEventListener("DOMContentLoaded", () => {
             nameDiv.textContent = displayName;
             nameDiv.title = file.name;
 
+            const delDiv = document.createElement("div");
+            delDiv.classList.add("delete-icon");
+            const delImg = document.createElement("img");
+            delImg.src = "/assests/Group 85.png";
+            delImg.alt = "Delete Icon";
+            delDiv.appendChild(delImg);
+            delDiv.addEventListener("click", (e) => {
+                e.stopPropagation();
+                removeFile(index);
+            });
+
             divItem.appendChild(iconWrapper);
             divItem.appendChild(nameDiv);
+            divItem.appendChild(delDiv);
             fileList.appendChild(divItem);
         });
     }
@@ -70,7 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const hasFiles = excelFiles.length > 0;
         
         if (hasFiles) {
-            // Hide initial state, show file selection buttons and file info
+            // Hide initial state, show file selection buttons
             if (initialUploadState) {
                 initialUploadState.style.display = 'none';
             }
@@ -79,25 +88,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 fileSelectionButtons.style.visibility = 'visible';
                 fileSelectionButtons.style.opacity = '1';
             }
-            if (fileInfo) {
-                fileInfo.style.display = 'block';
-            }
             if (fileContainer) {
                 fileContainer.classList.add('has-files');
             }
-            if (fileName && excelFiles.length > 0) {
-                fileName.textContent = excelFiles[0].name;
-            }
         } else {
-            // Show initial state, hide file selection buttons and file info
+            // Show initial state, hide file selection buttons
             if (initialUploadState) {
                 initialUploadState.style.display = 'flex';
             }
             if (fileSelectionButtons) {
                 fileSelectionButtons.style.display = 'none';
-            }
-            if (fileInfo) {
-                fileInfo.style.display = 'none';
             }
             if (fileContainer) {
                 fileContainer.classList.remove('has-files');
@@ -141,11 +141,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (dropboxBtn) {
         dropboxBtn.addEventListener("click", () => {
             showAlert("Dropbox integration coming soon!", 'primary');
-        });
-    }
-    if (removeFileBtn) {
-        removeFileBtn.addEventListener("click", () => {
-            removeFile(0);
         });
     }
 
