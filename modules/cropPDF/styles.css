@@ -1,20 +1,548 @@
-.custom-file-input ~ .custom-file-label::after {
-    content: 'Browse';
+/* ===================================
+   Crop PDF Specific Styles
+   =================================== */
+
+/* ===================================
+   Upload Area Base Styles (matching theme)
+   =================================== */
+.upload-area {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-black);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    padding: var(--spacing-2xl);
+    height: 100%;
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
 }
 
-.custom-file-label {
-    border-radius: 0;
-    background-color: #fff;
-    border: 1px solid #ced4da;
+/* Hide solid border when no files are selected (only show dashed initial state) */
+.col-lg-6.position-relative:not(.has-files) .upload-area {
+    border-color: transparent;
 }
 
-.alert-dismissible .close {
+/* Upload area when file is selected - adjust layout */
+.col-lg-6.position-relative.has-files .upload-area {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    padding: var(--spacing-md);
+}
+
+/* File Info Section */
+.file-info {
+    margin: 0 0 var(--spacing-md) 0;
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: #f8f9fa;
+    border-radius: var(--radius-md);
+    border: 1px solid #e9ecef;
+    position: relative;
+    z-index: 10;
+    width: 100%;
+}
+
+.file-info-content {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.file-info-content i.fa-file-pdf {
+    color: #e34c26;
+    font-size: 20px;
+    flex-shrink: 0;
+}
+
+.file-info-content span {
+    flex: 1;
+    font-weight: 500;
+    color: #333;
+    word-break: break-word;
+    font-family: var(--font-sora);
+    font-size: 14px;
+}
+
+.remove-file-btn {
+    background: transparent;
+    border: none;
+    color: #dc3545;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: var(--radius-sm);
+    transition: background 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+}
+
+.remove-file-btn:hover {
+    background: rgba(220, 53, 69, 0.1);
+}
+
+.remove-file-btn i {
+    font-size: 16px;
+}
+
+/* Initial Upload State */
+.initial-upload-state {
     position: absolute;
-    z-index: 2;
-    padding: 0.75rem 1.25rem;
-    color: inherit;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    border: 2px dashed #ddd;
+    border-radius: 12px;
+    padding: 40px 20px;
+    transition: all 0.3s ease;
+    z-index: 1;
 }
 
-.modal {
-    border-radius: 50px;
+.initial-upload-state.drag-over {
+    border-color: #F56129;
+    background-color: rgba(245, 97, 41, 0.05);
+}
+
+.upload-content {
+    text-align: center;
+    width: 100%;
+    max-width: 600px;
+}
+
+.upload-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 12px;
+    font-family: var(--font-sora, 'Sora', sans-serif);
+}
+
+.upload-subtitle {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 32px;
+    font-family: var(--font-sora, 'Sora', sans-serif);
+}
+
+.upload-buttons-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+.btn-select-files {
+    background-color: #F56129;
+    color: white;
+    border: none;
+    padding: 16px 40px;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: var(--font-sora, 'Sora', sans-serif);
+    box-shadow: 0 4px 12px rgba(245, 97, 41, 0.3);
+}
+
+.btn-select-files:hover {
+    background-color: #e04f1f;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(245, 97, 41, 0.4);
+}
+
+.btn-select-files:active {
+    transform: translateY(0);
+}
+
+.cloud-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.cloud-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: none;
+    background-color: #F56129;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(245, 97, 41, 0.3);
+    transition: all 0.3s ease;
+    padding: 0;
+}
+
+.cloud-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(245, 97, 41, 0.4);
+}
+
+.cloud-btn:active {
+    transform: scale(0.95);
+}
+
+.cloud-btn svg {
+    width: 24px;
+    height: 24px;
+}
+
+.drop-hint {
+    font-size: 14px;
+    color: #666;
+    margin-top: 16px;
+    font-family: var(--font-sora, 'Sora', sans-serif);
+}
+
+/* File Selection Buttons */
+.col-lg-6.position-relative {
+    padding-left: 0;
+}
+
+.col-lg-6.position-relative.has-files {
+    padding-left: 80px;
+}
+
+.file-selection-buttons {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    z-index: 100;
+    padding: 0;
+}
+
+.file-select-btn {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    border: none;
+    background-color: #F56129;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(245, 97, 41, 0.25);
+    transition: all 0.3s ease;
+    position: relative;
+    padding: 0;
+}
+
+.file-select-btn:hover {
+    transform: scale(1.08);
+    box-shadow: 0 4px 12px rgba(245, 97, 41, 0.35);
+    background-color: #e04f1f;
+}
+
+.file-select-btn:active {
+    transform: scale(0.96);
+    box-shadow: 0 2px 6px rgba(245, 97, 41, 0.3);
+}
+
+.file-select-btn i {
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.file-select-btn svg {
+    width: 24px;
+    height: 24px;
+    display: block;
+}
+
+.google-drive-btn svg,
+.dropbox-btn svg {
+    width: 24px;
+    height: 24px;
+}
+
+/* Options Panel */
+.options-panel {
+    background-color: rgba(254, 254, 254, 0.25);
+    border: 1px solid var(--color-black);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    padding: var(--spacing-xl);
+    height: 100%;
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* PDF Pages Container */
+.pdf-pages-container {
+    width: 100%;
+    padding: var(--spacing-md);
+    background: #f5f5f5;
+    border-radius: var(--radius-md);
+    max-height: 60vh;
+    overflow-y: auto;
+    margin-top: var(--spacing-md);
+    align-self: flex-start;
+}
+
+.hint-text {
+    font-size: 14px;
+    color: var(--color-gray-text);
+    font-family: var(--font-sora);
+    text-align: center;
+    margin-bottom: var(--spacing-md);
+}
+
+/* PDF Page Wrapper */
+.pdf-page-wrapper {
+    position: relative;
+    display: inline-block;
+    background: #fff;
+    margin-bottom: var(--spacing-md);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    width: 100%;
+    text-align: center;
+}
+
+.pdf-page-label {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: rgba(0,0,0,0.7);
+    color: #fff;
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    z-index: 5;
+    font-family: var(--font-sora);
+    font-weight: 600;
+}
+
+canvas.pdfCanvas {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+    cursor: crosshair;
+}
+
+/* Selection Box */
+#selectionBox {
+    position: fixed;
+    border: 2px dashed #F56129;
+    background: rgba(245, 97, 41, 0.15);
+    pointer-events: none;
+    display: none;
+    z-index: 1000;
+    box-sizing: border-box;
+}
+
+/* Crop Scope Options */
+.crop-scope-section {
+    margin-bottom: var(--spacing-xl);
+}
+
+.scope-label {
+    font-family: var(--font-sora);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-gray-dark);
+    margin-bottom: var(--spacing-md);
+}
+
+.scope-options {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.scope-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-md);
+    border: 1px solid var(--color-gray-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: var(--color-white);
+}
+
+.scope-option:hover {
+    border-color: #F56129;
+    background-color: rgba(245, 97, 41, 0.05);
+}
+
+.scope-option.active {
+    border-color: #F56129;
+    background-color: rgba(245, 97, 41, 0.1);
+}
+
+.scope-option .option-text {
+    font-family: var(--font-sora);
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--color-gray-dark);
+}
+
+.scope-option.active .option-text {
+    color: var(--color-black);
+    font-weight: 600;
+}
+
+.scope-option .checkmark-icon {
+    flex-shrink: 0;
+}
+
+.scope-option .checkmark-icon svg {
+    width: 31px;
+    height: 31px;
+}
+
+/* Status Message */
+.status-message {
+    font-family: var(--font-sora);
+    font-size: 14px;
+    padding: var(--spacing-sm);
+    border-radius: var(--radius-sm);
+    min-height: 20px;
+    word-wrap: break-word;
+}
+
+.status-message.error {
+    color: #b91c1c;
+    background-color: rgba(185, 28, 28, 0.1);
+}
+
+.status-message.success {
+    color: #15803d;
+    background-color: rgba(21, 128, 61, 0.1);
+}
+
+.status-message:empty {
+    display: none;
+}
+
+/* Reset Selection Button */
+.btn-reset-selection {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: var(--font-sora);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-reset-selection:hover {
+    background-color: #5a6268;
+    transform: translateY(-1px);
+}
+
+.btn-reset-selection i {
+    font-size: 14px;
+}
+
+/* Crop Button */
+.btn-compress {
+    background-color: #F56129;
+    color: white;
+    border: none;
+    padding: 16px 40px;
+    border-radius: var(--radius-md);
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: var(--font-sora);
+    box-shadow: 0 4px 12px rgba(245, 97, 41, 0.3);
+    width: 100%;
+}
+
+.btn-compress:hover:not(:disabled) {
+    background-color: #e04f1f;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(245, 97, 41, 0.4);
+}
+
+.btn-compress:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.btn-compress:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .col-lg-6.position-relative.has-files {
+        padding-left: 15px;
+    }
+    
+    .file-selection-buttons {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        flex-direction: column-reverse;
+    }
+    
+    .file-select-btn {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .pdf-pages-container {
+        max-height: 60vh;
+        padding: var(--spacing-sm);
+    }
+    
+    .scope-option {
+        padding: var(--spacing-sm);
+    }
+    
+    .scope-option .option-text {
+        font-size: 14px;
+    }
+    
+    .btn-compress {
+        padding: 14px 30px;
+        font-size: 16px;
+    }
+    
+    .upload-area,
+    .options-panel {
+        padding: var(--spacing-lg);
+        min-height: 400px;
+    }
 }
