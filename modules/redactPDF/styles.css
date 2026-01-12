@@ -1,28 +1,670 @@
-.custom-file-input ~ .custom-file-label::after {
-    content: 'Browse';
+/* ===================================
+   CSS Variables / Design Tokens
+   =================================== */
+:root {
+    /* Colors */
+    --color-primary-purple: #5A26EF;
+    --color-primary-orange: #F56129;
+    --color-white: #FFFFFF;
+    --color-black: #000000;
+    --color-gray-light: #FAFAFA;
+    --color-gray-border: #E4E4E4;
+    --color-gray-text: #666666;
+    --color-gray-dark: #333333;
+    
+    /* Typography */
+    --font-poppins: 'Poppins', sans-serif;
+    --font-montserrat: 'Montserrat', sans-serif;
+    --font-sora: 'Sora', sans-serif;
+    
+    /* Spacing */
+    --spacing-xs: 8px;
+    --spacing-sm: 12px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+    --spacing-2xl: 48px;
+    
+    /* Border Radius */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 50px;
+    
+    /* Shadows */
+    --shadow-sm: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    --shadow-lg: 0px 4px 12px rgba(90, 38, 239, 0.3);
 }
 
-.custom-file-label {
-    border-radius: 0;
-    background-color: #fff;
-    border: 1px solid #ced4da;
-    display: inline-block;
-    margin-top: 0;
+/* ===================================
+   Global Styles
+   =================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-sora);
+    background-color: var(--color-white);
+    color: var(--color-black);
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+.alert-dismissible .close {
+    position: absolute;
+    z-index: 2;
+    padding: 0.75rem 1.25rem;
+    color: inherit;
+}
+
+/* ===================================
+   Main Content
+   =================================== */
+.main-content {
+    padding: var(--spacing-2xl) 0 80px;
+    background-color: var(--color-white);
+}
+
+.section-title {
+    font-family: 'Mont', var(--font-montserrat);
+    font-size: 30px;
+    font-weight: 800;
+    color: var(--color-black);
+    text-align: center;
+    text-transform: capitalize;
+    margin-bottom: var(--spacing-2xl);
+}
+
+.alert-container {
+    max-width: 100%;
+}
+
+/* ===================================
+   Upload Area
+   =================================== */
+.upload-area {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-black);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    padding: var(--spacing-2xl);
+    height: 100%;
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+/* Hide solid border when no files are selected (only show dashed initial state) */
+.col-lg-6.position-relative:not(.has-files) .upload-area {
+    border-color: transparent;
+}
+
+.file-list-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+    gap: 16px;
+}
+
+.upload-default {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.pdf-icon-large {
+    width: 80px;
+    height: 99px;
+}
+
+/* PDF Thumbnail */
+.pdf-thumbnail {
+    position: relative;
+    width: 100%;
+    max-width: 280px;
+    padding: var(--spacing-lg) var(--spacing-md);
+    background-color: var(--color-white);
+    border: 2px solid var(--color-gray-border);
+    border-radius: var(--radius-md);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.pdf-thumbnail img.pdf-icon-preview {
+    width: 120px;
+    height: 150px;
+    object-fit: contain;
+    margin-bottom: 12px;
+}
+
+.pdf-file-name {
+    font-family: var(--font-sora);
+    font-size: 14px;
+    color: var(--color-gray-dark);
+    text-align: center;
+    word-break: break-word;
+    padding: 0 8px;
+    margin-top: 8px;
+}
+
+.delete-icon {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background-color: var(--color-primary-orange);
+    color: var(--color-white);
+    padding: var(--spacing-xs);
+    border-radius: 50%;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    box-shadow: var(--shadow-sm);
+}
+
+.delete-icon:hover {
+    background-color: #e04f1f;
+    transform: scale(1.1);
+}
+
+.delete-icon img {
+    width: 16px;
+    height: 16px;
+}
+
+/* ===================================
+   Options Panel
+   =================================== */
+.options-panel {
+    background-color: rgba(254, 254, 254, 0.25);
+    border: 1px solid var(--color-black);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    padding: var(--spacing-xl);
+    height: 100%;
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+/* Redaction Options */
+.redaction-options {
+    width: 100%;
+}
+
+.redaction-label {
+    font-family: 'Mont', var(--font-montserrat);
+    font-size: 25px;
+    font-weight: 800;
+    line-height: 30px;
+    color: var(--color-black);
+    text-transform: capitalize;
+    display: block;
+    margin-bottom: var(--spacing-md);
+}
+
+.redaction-hint {
+    font-family: var(--font-sora);
+    font-size: 14px;
+    color: var(--color-gray-text);
+    margin-bottom: var(--spacing-md);
     line-height: 1.5;
 }
 
-.custom-file {
+.redaction-textarea {
+    width: 100%;
+    min-height: 350px;
+    padding: var(--spacing-md);
+    border: 1px solid var(--color-gray-border);
+    border-radius: var(--radius-md);
+    font-family: var(--font-sora);
+    font-size: 16px;
+    color: var(--color-black);
+    resize: vertical;
+    background-color: var(--color-white);
+    transition: border-color 0.3s ease;
+}
+
+.redaction-textarea:focus {
+    outline: none;
+    border-color: var(--color-primary-purple);
+    box-shadow: 0 0 0 3px rgba(90, 38, 239, 0.1);
+}
+
+.redaction-textarea::placeholder {
+    color: var(--color-gray-text);
+    font-family: var(--font-sora);
+}
+
+/* ===================================
+   Redact Button
+   =================================== */
+.btn-redact {
+    font-family: var(--font-sora, 'Sora', sans-serif);
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--color-white, #FFFFFF);
+    background-color: var(--color-primary-orange, #F56129);
+    padding: 14px;
+    border-radius: 8px;
+    border: none;
+    width: 100%;
+    max-width: 486px;
+    margin: 0 auto;
+    display: block;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(245, 97, 41, 0.3);
+    text-align: center;
+}
+
+.btn-redact:hover {
+    background-color: #e04f1f;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(245, 97, 41, 0.4);
+}
+
+.btn-redact:active {
+    transform: translateY(0);
+}
+
+.btn-redact:disabled {
+    background-color: var(--color-gray-border);
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+
+/* ===================================
+   Initial Upload State
+   =================================== */
+.initial-upload-state {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     display: flex;
     align-items: center;
-    margin-top: 10px;
+    justify-content: center;
+    background: #fff;
+    border: 2px dashed #ddd;
+    border-radius: 12px;
+    padding: 40px 20px;
+    transition: all 0.3s ease;
+    z-index: 1;
 }
 
-/* Adjust modal and alert styles */
-.modal {
-    border-radius: 10px;
+.initial-upload-state.drag-over {
+    border-color: #F56129;
+    background-color: rgba(245, 97, 41, 0.05);
 }
 
-/* Alert styles */
-#alertPlaceholder {
-    margin-top: 10px;
+.upload-content {
+    text-align: center;
+    width: 100%;
+    max-width: 600px;
+}
+
+.upload-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 12px;
+    font-family: var(--font-sora, 'Sora', sans-serif);
+}
+
+.upload-subtitle {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 32px;
+    font-family: var(--font-sora, 'Sora', sans-serif);
+}
+
+.upload-buttons-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+.btn-select-files {
+    background-color: #F56129;
+    color: white;
+    border: none;
+    padding: 16px 40px;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: var(--font-sora, 'Sora', sans-serif);
+    box-shadow: 0 4px 12px rgba(245, 97, 41, 0.3);
+}
+
+.btn-select-files:hover {
+    background-color: #e04f1f;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(245, 97, 41, 0.4);
+}
+
+.btn-select-files:active {
+    transform: translateY(0);
+}
+
+.cloud-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.cloud-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: none;
+    background-color: #F56129;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(245, 97, 41, 0.3);
+    transition: all 0.3s ease;
+    padding: 0;
+}
+
+.cloud-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(245, 97, 41, 0.4);
+}
+
+.cloud-btn:active {
+    transform: scale(0.95);
+}
+
+.cloud-btn svg {
+    width: 24px;
+    height: 24px;
+}
+
+.drop-hint {
+    font-size: 14px;
+    color: #666;
+    margin-top: 16px;
+    font-family: var(--font-sora, 'Sora', sans-serif);
+}
+
+/* ===================================
+   File Selection Buttons
+   =================================== */
+.col-lg-6.position-relative {
+    padding-left: 0;
+}
+
+.col-lg-6.position-relative.has-files {
+    padding-left: 80px;
+}
+
+.file-selection-buttons {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    z-index: 100;
+    padding: 0;
+}
+
+.file-select-btn {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    border: none;
+    background-color: #F56129;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(245, 97, 41, 0.25);
+    transition: all 0.3s ease;
+    position: relative;
+    padding: 0;
+}
+
+.file-select-btn:hover {
+    transform: scale(1.08);
+    box-shadow: 0 4px 12px rgba(245, 97, 41, 0.35);
+    background-color: #e04f1f;
+}
+
+.file-select-btn:active {
+    transform: scale(0.96);
+    box-shadow: 0 2px 6px rgba(245, 97, 41, 0.3);
+}
+
+.file-select-btn i {
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.file-select-btn svg {
+    width: 24px;
+    height: 24px;
+    display: block;
+}
+
+.google-drive-btn svg {
+    width: 24px;
+    height: 24px;
+}
+
+.dropbox-btn svg {
+    width: 24px;
+    height: 24px;
+}
+
+/* ===================================
+   Alert Styles
+   =================================== */
+.alert-primary {
+    background-color: #e7f3ff;
+    border: 1px solid #b3d9ff;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 20px;
+}
+
+.alert-primary strong {
+    color: #5A26EF;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.alert-primary p {
+    margin: 0;
+    color: #333;
+    font-size: 14px;
+}
+
+/* ===================================
+   PDF Preview Styles
+   =================================== */
+.pdf-preview-container {
+    width: 100%;
+    padding: var(--spacing-md);
+}
+
+.pdf-controls {
+    padding: var(--spacing-sm) 0;
+    border-bottom: 1px solid var(--color-gray-border);
+    margin-bottom: var(--spacing-md);
+}
+
+.pdf-canvas-wrapper {
+    width: 100%;
+    overflow: auto;
+    max-height: 600px;
+    border: 1px solid var(--color-gray-border);
+    border-radius: var(--radius-md);
+    background-color: #f5f5f5;
+    padding: var(--spacing-md);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    position: relative;
+}
+
+.pdf-canvas {
+    max-width: 100%;
+    height: auto;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    position: relative;
+    z-index: 1;
+    display: block;
+}
+
+.pdf-highlights-info {
+    padding: var(--spacing-sm);
+    font-family: var(--font-sora);
+    font-size: 13px;
+}
+
+.pdf-controls .form-select {
+    display: inline-block;
+    width: auto;
+    min-width: 100px;
+}
+
+.pdf-controls .btn-secondary {
+    background-color: var(--color-gray-light);
+    border-color: var(--color-gray-border);
+    color: var(--color-black);
+}
+
+.pdf-controls .btn-secondary:hover {
+    background-color: var(--color-gray-border);
+    border-color: var(--color-gray-border);
+}
+
+/* ===================================
+   Responsive Styles
+   =================================== */
+@media (max-width: 992px) {
+    .section-title {
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 768px) {
+    .section-title {
+        font-size: 20px;
+    }
+    
+    .upload-area,
+    .options-panel {
+        padding: var(--spacing-lg);
+        min-height: 400px;
+    }
+    
+    .btn-redact {
+        font-size: 18px;
+        padding: 14px var(--spacing-lg);
+    }
+    
+    .col-lg-6.position-relative.has-files {
+        padding-left: 15px;
+    }
+    
+    .file-selection-buttons {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        flex-direction: column-reverse;
+    }
+    
+    .file-select-btn {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .file-select-btn i,
+    .file-select-btn svg {
+        font-size: 20px;
+        width: 20px;
+        height: 20px;
+    }
+    
+    .upload-title {
+        font-size: 24px;
+    }
+    
+    .upload-subtitle {
+        font-size: 14px;
+    }
+    
+    .btn-select-files {
+        padding: 12px 30px;
+        font-size: 16px;
+    }
+    
+    .redaction-label {
+        font-size: 20px;
+    }
+    
+    .redaction-textarea {
+        min-height: 250px;
+    }
+}
+
+@media (max-width: 576px) {
+    .redaction-label {
+        font-size: 18px;
+    }
+    
+    .redaction-textarea {
+        font-size: 14px;
+        min-height: 200px;
+    }
+    
+    .pdf-canvas-wrapper {
+        max-height: 400px;
+        padding: var(--spacing-sm);
+    }
+    
+    .pdf-controls {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+    
+    .pdf-controls > div {
+        width: 100%;
+        justify-content: space-between;
+    }
 }

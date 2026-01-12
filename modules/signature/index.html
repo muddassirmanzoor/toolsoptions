@@ -16,6 +16,8 @@
 
     <!-- PDF.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <!-- PDF-lib Library for embedding signatures -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
     <script>
         // Configure PDF.js worker immediately when library loads
         window.addEventListener('load', function() {
@@ -72,26 +74,63 @@
                             </div>
                         </div>
 
-                        <div class="document-preview-wrapper">
-                            <!-- Page Thumbnails Column (Left) -->
-                            <div class="page-thumbnails-column" id="pageThumbnailsColumn">
-                                <!-- Thumbnails will be dynamically generated -->
-                                <button class="floating-add-thumbnail" id="addPageBtn" title="Add Page" style="display: none;">
-                                    <i class="fa-solid fa-plus"></i>
+                        <div class="document-preview-wrapper position-relative">
+                            <!-- Initial Upload State -->
+                            <div id="initialUploadState" class="initial-upload-state">
+                                <div class="upload-content">
+                                    <h2 class="upload-title">Sign PDF</h2>
+                                    <p class="upload-subtitle">Your tool to eSign documents. Upload a PDF file to get started.</p>
+                                    <div class="upload-buttons-wrapper">
+                                        <button id="selectFilesBtn" class="btn-select-files" type="button">
+                                            Select PDF file
+                                        </button>
+                                        <div class="cloud-buttons">
+                                            <button id="initialGoogleDriveBtn" class="cloud-btn" type="button" title="Select from Google Drive">
+                                                <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                                                    <path d="M7.71 2.5L2.5 12.71l5.21 10.21L12.71 16l5.21-3.29L12.71 2.5H7.71z"/>
+                                                </svg>
+                                            </button>
+                                            <button id="initialDropboxBtn" class="cloud-btn" type="button" title="Select from Dropbox">
+                                                <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                                                    <path d="M6 2L0 6l6 4 6-4-6-4zm12 4l6-4-6-4-6 4 6 4zM0 14l6 4 6-4-6-4-6 4zm18-4l-6 4 6 4 6-4-6-4zM0 20l6 4 6-4-6-4-6 4zm12 0l6 4 6-4-6-4-6 4z"/>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <p class="drop-hint">or drop PDF here</p>
+                                </div>
+                            </div>
+
+                            <!-- File Selection Buttons Group (shown after file is selected) -->
+                            <div id="fileSelectionButtons" class="file-selection-buttons" style="display: none;">
+                                <button id="addBtn" class="file-select-btn add-btn" type="button" title="Select PDF file">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                                <button id="computerBtn" class="file-select-btn computer-btn" type="button" title="Select from computer">
+                                    <i class="fas fa-desktop"></i>
+                                </button>
+                                <button id="googleDriveBtn" class="file-select-btn google-drive-btn" type="button" title="Select from Google Drive">
+                                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                                        <path d="M7.71 2.5L2.5 12.71l5.21 10.21L12.71 16l5.21-3.29L12.71 2.5H7.71z"/>
+                                    </svg>
+                                </button>
+                                <button id="dropboxBtn" class="file-select-btn dropbox-btn" type="button" title="Select from Dropbox">
+                                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                                        <path d="M6 2L0 6l6 4 6-4-6-4zm12 4l6-4-6-4-6 4 6 4zM0 14l6 4 6-4-6-4-6 4zm18-4l-6 4 6 4 6-4-6-4zM0 20l6 4 6-4-6-4-6 4zm12 0l6 4 6-4-6-4-6 4z"/>
+                                    </svg>
                                 </button>
                             </div>
 
-                            <!-- Main Document Preview Area (Center) -->
-                            <div class="document-preview-area">
-                                <div id="pdfPreviewArea" class="pdf-preview-placeholder">
-                                    <div class="upload-prompt">
-                                        <i class="fa-regular fa-file-pdf pdf-icon-large"></i>
-                                        <span class="pdf-label">PDF</span>
-                                        <input type="file" id="pdfInput" accept=".pdf" style="display: none;">
-                                        <button class="btn-upload-pdf" id="uploadPdfBtn">Upload PDF</button>
-                                    </div>
-                                </div>
-                                <canvas id="pdfCanvas" style="display: none;"></canvas>
+                            <input type="file" id="pdfInput" class="custom-file-input" style="display:none;" accept="application/pdf">
+
+                            <!-- Page Thumbnails Column (Left) - shown after file is uploaded -->
+                            <div class="page-thumbnails-column" id="pageThumbnailsColumn" style="display: none;">
+                                <!-- Thumbnails will be dynamically generated -->
+                            </div>
+
+                            <!-- Main Document Preview Area (Center) - shown after file is uploaded -->
+                            <div class="document-preview-area" id="documentPreviewArea" style="display: none;">
+                                <canvas id="pdfCanvas" style="max-width: 100%; height: auto;"></canvas>
                             </div>
                         </div>
                     </div>
@@ -214,10 +253,10 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Sign PDF Button -->
+            
+            <!-- Sign PDF Button - Outside of columns, matching redact module design -->
             <div class="row mt-4">
-                <div class="col-lg-8 offset-lg-4">
+                <div class="col-lg-4 offset-lg-8">
                     <button id="signPdfBtn" class="btn-sign-pdf">Sign PDF</button>
                 </div>
             </div>
@@ -243,36 +282,38 @@
                     <div class="tab-content active" id="typeTab">
                         <input type="text" id="nameInput" placeholder="Type your name" class="form-control mb-3">
                         <button type="button" class="btn btn-primary mb-3" id="generateBtn">Generate Signatures</button>
-                        <div id="signaturePreviews"></div>
-                        <canvas id="signatureCanvas"></canvas>
-                        <div class="mt-3">
-                            <button type="button" class="btn btn-success" id="saveSignatureBtn">Save as Image</button>
-                        </div>
+                        <div id="signaturePreviews" class="mb-3"></div>
+                        <canvas id="signatureCanvas" style="border: 1px solid #ddd; background: white; display: block; margin: 0 auto;"></canvas>
                     </div>
                     
                     <div class="tab-content" id="drawTab">
-                        <canvas id="drawCanvas"></canvas>
-                        <div class="mt-3">
+                        <div style="text-align: center; margin-bottom: 10px;">
+                            <small class="text-muted">Draw your signature here</small>
+                        </div>
+                        <canvas id="drawCanvas" style="border: 1px solid #ddd; background: white; display: block; margin: 0 auto; cursor: crosshair;"></canvas>
+                        <div class="mt-3 text-center">
                             <button type="button" class="btn btn-danger" id="undoBtn">Undo</button>
-                            <button type="button" class="btn btn-success" id="saveDrawBtn">Save as Image</button>
+                            <button type="button" class="btn btn-secondary" id="clearDrawBtn">Clear</button>
                         </div>
                     </div>
                     
                     <div class="tab-content" id="uploadTab">
-                        <input type="file" id="imageUpload" class="form-control mb-3" accept="image/*">
-                        <canvas id="uploadCanvas"></canvas>
-                        <div class="mt-3">
+                        <input type="file" id="imageUpload" class="form-control mb-3" accept="image/png,image/jpeg,image/jpg,image/svg+xml">
+                        <small class="text-muted mb-2 d-block">Accepted formats: PNG, JPG and SVG</small>
+                        <canvas id="uploadCanvas" style="border: 1px solid #ddd; background: white; display: block; margin: 0 auto;"></canvas>
+                        <div class="mt-3 text-center">
                             <button type="button" class="btn btn-danger" id="undoBtnUpload">Undo</button>
-                            <button type="button" class="btn btn-success" id="saveUploadBtn">Save as Image</button>
+                            <button type="button" class="btn btn-secondary" id="clearUploadBtn">Clear</button>
                         </div>
                     </div>
                     
                     <div class="tab-content" id="historyTab">
-                        <div id="historyContainer"></div>
+                        <div id="historyContainer" style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; max-height: 400px; overflow-y: auto;"></div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="applySignatureBtn">Apply</button>
                 </div>
             </div>
         </div>

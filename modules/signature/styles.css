@@ -177,8 +177,12 @@
 /* Document Preview Wrapper */
 .document-preview-wrapper {
     display: flex;
-    gap: var(--spacing-lg);
+    gap: var(--spacing-sm);
     flex: 1;
+    position: relative;
+    min-height: 500px;
+    padding: 0;
+    margin: 0;
 }
 
 /* Page Thumbnails Column */
@@ -246,15 +250,23 @@
 .document-preview-area {
     flex: 1;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     background-color: var(--color-gray-light);
     border: 1px solid var(--color-gray-border);
     border-radius: var(--radius-md);
-    padding: var(--spacing-xl);
+    padding: var(--spacing-sm);
     min-height: 400px;
     position: relative;
     overflow: auto;
+    transition: all 0.3s ease;
+}
+
+.document-preview-area.drag-over {
+    border-color: var(--color-primary-purple);
+    background-color: rgba(90, 38, 239, 0.05);
+    border-style: dashed;
+    border-width: 2px;
 }
 
 .pdf-preview-placeholder {
@@ -264,6 +276,11 @@
     justify-content: center;
     gap: var(--spacing-md);
     width: 100%;
+    transition: all 0.3s ease;
+}
+
+.pdf-preview-placeholder.drag-over {
+    opacity: 0.8;
 }
 
 .upload-prompt {
@@ -272,6 +289,12 @@
     align-items: center;
     justify-content: center;
     gap: var(--spacing-md);
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.upload-prompt.drag-over {
+    transform: scale(1.05);
 }
 
 .pdf-icon-large {
@@ -311,6 +334,8 @@
     height: auto;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     background-color: var(--color-white);
+    display: block;
+    margin: 0 auto;
 }
 
 /* ===================================
@@ -385,6 +410,12 @@
     background-color: var(--color-primary-purple);
     border-color: var(--color-primary-purple);
     color: var(--color-white);
+}
+
+.type-btn:not(.active) {
+    background-color: var(--color-white);
+    border-color: var(--color-gray-border);
+    color: var(--color-black);
 }
 
 .type-btn i {
@@ -522,27 +553,31 @@
 }
 
 /* ===================================
-   Sign PDF Button
+   Sign PDF Button - Matching redact module design
    =================================== */
 .btn-sign-pdf {
-    width: 100%;
-    padding: var(--spacing-md) var(--spacing-lg);
-    background-color: var(--color-primary-orange);
-    border: none;
-    border-radius: var(--radius-md);
-    font-family: var(--font-sora);
+    font-family: var(--font-sora, 'Sora', sans-serif);
     font-size: 18px;
-    font-weight: 700;
-    color: var(--color-white);
+    font-weight: 600;
+    color: var(--color-white, #FFFFFF);
+    background-color: var(--color-primary-orange, #F56129);
+    padding: 14px;
+    border-radius: 8px;
+    border: none;
+    width: 100%;
+    max-width: 486px;
+    margin: 0 auto;
+    display: block;
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 4px 12px rgba(245, 97, 41, 0.3);
+    text-align: center;
 }
 
 .btn-sign-pdf:hover {
     background-color: #e04f1f;
     transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(245, 97, 41, 0.4);
+    box-shadow: 0 4px 12px rgba(245, 97, 41, 0.4);
 }
 
 .btn-sign-pdf:active {
@@ -568,6 +603,19 @@
    =================================== */
 .modal {
     z-index: 1050;
+}
+
+.modal-backdrop {
+    z-index: 1040;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal.show {
+    display: block;
+}
+
+.modal.show .modal-dialog {
+    transform: none;
 }
 
 .modal-content {
@@ -612,13 +660,22 @@
     display: block;
 }
 
-canvas {
+#signatureModal canvas {
     display: block;
     margin: var(--spacing-md) auto;
     max-width: 100%;
-    border: 1px solid var(--color-gray-border);
+    border: 2px solid var(--color-gray-border);
     border-radius: var(--radius-md);
     background-color: var(--color-white);
+    touch-action: none;
+}
+
+#drawCanvas {
+    cursor: crosshair;
+}
+
+#drawCanvas:active {
+    cursor: crosshair;
 }
 
 .signature-options {
@@ -628,19 +685,39 @@ canvas {
     margin-bottom: var(--spacing-md);
 }
 
+#signaturePreviews {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+    max-height: 200px;
+    overflow-y: auto;
+    padding: var(--spacing-sm);
+    border: 1px solid var(--color-gray-border);
+    border-radius: var(--radius-sm);
+    background-color: var(--color-gray-light);
+}
+
 .signature-option {
     padding: var(--spacing-sm) var(--spacing-md);
-    border: 1px solid var(--color-gray-border);
+    border: 2px solid var(--color-gray-border);
     border-radius: var(--radius-sm);
     cursor: pointer;
     transition: all 0.3s ease;
     font-family: var(--font-sora);
-    font-size: 14px;
+    font-size: 16px;
+    background-color: var(--color-white);
+    min-width: 100px;
+    text-align: center;
+    font-weight: 500;
 }
 
 .signature-option:hover {
-    background-color: var(--color-gray-light);
+    background-color: var(--color-primary-purple);
     border-color: var(--color-primary-purple);
+    color: var(--color-white);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
 }
 
 .history-image {
@@ -663,6 +740,89 @@ canvas {
     gap: var(--spacing-sm);
     max-height: 400px;
     overflow-y: auto;
+}
+
+/* Draggable Signature Fields */
+.draggable-signature-field {
+    cursor: grab !important;
+    transition: opacity 0.2s ease;
+}
+
+.draggable-signature-field:hover {
+    background-color: rgba(90, 38, 239, 0.05) !important;
+    border-color: var(--color-primary-purple) !important;
+}
+
+.draggable-signature-field:active {
+    cursor: grabbing !important;
+}
+
+/* PDF Canvas Container - Drop Zone */
+.pdf-canvas-container {
+    position: relative;
+    display: inline-block;
+    transition: all 0.2s ease;
+}
+
+.pdf-canvas-container[dragover] {
+    border: 2px dashed var(--color-primary-purple) !important;
+    background-color: rgba(90, 38, 239, 0.05) !important;
+}
+
+/* Signature Overlay - For movable signatures on PDF */
+.signature-overlay {
+    position: absolute;
+    z-index: 10;
+    pointer-events: auto;
+    user-select: none;
+}
+
+.signature-overlay img {
+    pointer-events: none;
+}
+
+/* Text Field Overlay - For editable text fields on PDF */
+.text-field-overlay {
+    position: absolute;
+    z-index: 10;
+    pointer-events: auto;
+}
+
+.text-field-overlay .pdf-text-input {
+    pointer-events: auto;
+    cursor: text;
+}
+
+.text-field-overlay .text-field-drag-handle {
+    pointer-events: auto;
+}
+
+.text-field-overlay:hover .text-field-drag-handle {
+    background-color: rgba(90, 38, 239, 0.1);
+}
+
+.signature-delete-btn {
+    z-index: 1001;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
+}
+
+.signature-delete-btn:hover {
+    background: #cc0000 !important;
+    transform: scale(1.1);
+}
+
+/* Active field state - when field is selected for placement */
+.field-item.field-active {
+    background-color: rgba(90, 38, 239, 0.1) !important;
+    border-color: var(--color-primary-purple) !important;
+    border-width: 2px;
+}
+
+.field-item.field-active .field-text,
+.field-item.field-active .field-label {
+    color: var(--color-primary-purple) !important;
+    font-weight: 600;
 }
 
 /* ===================================
@@ -729,6 +889,208 @@ canvas {
     .decoration {
         display: none;
     }
+}
+
+/* ===================================
+   Initial Upload State (Merge PDF Style)
+   =================================== */
+.initial-upload-state {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    border: 2px dashed #ddd;
+    border-radius: 12px;
+    padding: 40px 20px;
+    transition: all 0.3s ease;
+    z-index: 1;
+}
+
+.initial-upload-state.drag-over {
+    border-color: #F56129;
+    background-color: rgba(245, 97, 41, 0.05);
+}
+
+.upload-content {
+    text-align: center;
+    width: 100%;
+    max-width: 600px;
+}
+
+.upload-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 12px;
+    font-family: var(--font-sora, 'Sora', sans-serif);
+}
+
+.upload-subtitle {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 32px;
+    font-family: var(--font-sora, 'Sora', sans-serif);
+}
+
+.upload-buttons-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+.btn-select-files {
+    background-color: #F56129;
+    color: white;
+    border: none;
+    padding: 16px 40px;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: var(--font-sora, 'Sora', sans-serif);
+    box-shadow: 0 4px 12px rgba(245, 97, 41, 0.3);
+}
+
+.btn-select-files:hover {
+    background-color: #e04f1f;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(245, 97, 41, 0.4);
+}
+
+.btn-select-files:active {
+    transform: translateY(0);
+}
+
+.cloud-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.cloud-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: none;
+    background-color: #F56129;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(245, 97, 41, 0.3);
+    transition: all 0.3s ease;
+    padding: 0;
+}
+
+.cloud-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(245, 97, 41, 0.4);
+}
+
+.cloud-btn:active {
+    transform: scale(0.95);
+}
+
+.cloud-btn svg {
+    width: 24px;
+    height: 24px;
+}
+
+.drop-hint {
+    font-size: 14px;
+    color: #666;
+    margin-top: 16px;
+    font-family: var(--font-sora, 'Sora', sans-serif);
+}
+
+/* ===================================
+   File Selection Buttons (Merge PDF Style)
+   =================================== */
+.file-selection-buttons {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    z-index: 100;
+    padding: 0;
+}
+
+.file-select-btn {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: none;
+    background-color: #F56129;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(245, 97, 41, 0.3);
+    transition: all 0.3s ease;
+    position: relative;
+    padding: 0;
+}
+
+.file-select-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(245, 97, 41, 0.4);
+}
+
+.file-select-btn:active {
+    transform: scale(0.95);
+}
+
+.file-select-btn i {
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.file-select-btn svg {
+    width: 24px;
+    height: 24px;
+    display: block;
+}
+
+/* Google Drive and Dropbox button icon styling */
+.google-drive-btn svg,
+.dropbox-btn svg {
+    width: 24px;
+    height: 24px;
+}
+
+/* Update document preview wrapper when file is selected */
+.document-preview-wrapper.has-file {
+    padding-left: 80px;
+}
+
+.document-preview-wrapper.has-file .initial-upload-state {
+    display: none;
+}
+
+.document-preview-wrapper.has-file .file-selection-buttons {
+    display: flex;
+}
+
+.document-preview-wrapper.has-file .page-thumbnails-column,
+.document-preview-wrapper.has-file .document-preview-area {
+    display: flex;
 }
 
 @media (max-width: 576px) {

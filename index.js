@@ -452,21 +452,89 @@ app.post('/api/compare-pdfs', upload.fields([{ name: 'pdf1', maxCount: 1 }, { na
 
 // Redact PDF
 app.post('/api/redact-pdf', upload.single('pdf'), (req, res) => {
-    const textToRedact = req.body.textToRedact;
+    console.log('Redact PDF request received');
+    console.log('Request body keys:', Object.keys(req.body));
+    console.log('File uploaded:', req.file ? req.file.filename : 'none');
+    
+    const textToRedact = req.body.textToRedact || '';
+    console.log('textToRedact:', textToRedact);
 
-    // Validate the presence of the file and the text to redact
+    // Validate the presence of the file
     if (!req.file) {
+        console.error('No file uploaded');
         return res.status(400).send('PDF file is required.');
     }
-    if (!textToRedact) {
-        return res.status(400).send('Text to redact is required.');
+    
+    // Validate that text is provided
+    if (!textToRedact || textToRedact.trim().length === 0) {
+        console.error('Validation failed: No text to redact provided');
+        return res.status(400).json({
+            error: 'Text to redact is required. Please enter words or sentences to redact.'
+        });
     }
 
     const inputPath = req.file.path;
     const outputPath = path.join(__dirname, 'uploads', `${req.file.filename}_redacted.pdf`);
-    const redactionCommand = `python redact_pdf.py "${inputPath.replace(/\\/g, '/')}" "${outputPath.replace(/\\/g, '/')}" "${textToRedact}"`;
+    
+    // Prepare command arguments
+    const safeTextToRedact = textToRedact.replace(/"/g, '\\"'); // Escape quotes
+    const redactionArgs = `"${inputPath.replace(/\\/g, '/')}" "${outputPath.replace(/\\/g, '/')}" "${safeTextToRedact}" ""`;
+    
+    // Use pythonPath from environment or default to 'python'
+    const pythonCmd = pythonPath || 'python';
+    const scriptPath = path.join(__dirname, 'redact_pdf.py').replace(/\\/g, '/');
+    const redactionCommand = `${pythonCmd} "${scriptPath}" ${redactionArgs}`;
+    
+    console.log('Executing redaction command:', redactionCommand);
+    console.log('Python path:', pythonCmd);
+    console.log('Script path:', scriptPath);
 
-    handleFileConversion(req, res, redactionCommand, '_redacted.pdf');
+    exec(redactionCommand, { maxBuffer: 10 * 1024 * 1024 }, (error, stdout, stderr) => {
+        if (error) {
+            console.error('Redaction Error:', error);
+            console.error('Error code:', error.code);
+            console.error('stderr:', stderr);
+            console.error('stdout:', stdout);
+            
+            // Check if it's a Python script error (exit code 1)
+            if (error.code === 1 || stderr) {
+                const errorMsg = stderr || stdout || error.message;
+                return res.status(500).send('Redaction failed: ' + errorMsg);
+            }
+            return res.status(500).send('Redaction failed: ' + (stderr || error.message));
+        }
+        
+        // Check if output file exists
+        fsNormal.access(outputPath, fsNormal.constants.F_OK, (accessErr) => {
+            if (accessErr) {
+                console.error('Output file not found:', accessErr);
+                console.error('stdout:', stdout);
+                return res.status(500).send('Failed to generate the redacted PDF. Check server logs.');
+            }
+            
+            // Send the redacted PDF file
+            res.sendFile(outputPath, (sendErr) => {
+                if (sendErr) {
+                    console.error('Error sending file:', sendErr);
+                    return res.status(500).send('Error sending redacted PDF.');
+                }
+                
+                // Clean up after a delay to ensure file is sent
+                setTimeout(() => {
+                    try {
+                        if (fsNormal.existsSync(outputPath)) {
+                            fsNormal.unlinkSync(outputPath);
+                        }
+                        if (fsNormal.existsSync(inputPath)) {
+                            fsNormal.unlinkSync(inputPath);
+                        }
+                    } catch (cleanupError) {
+                        console.error('Error cleaning up files:', cleanupError);
+                    }
+                }, 5000);
+            });
+        });
+    });
 });
 
 // PDF to JPG API route
