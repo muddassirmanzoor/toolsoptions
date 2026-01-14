@@ -194,7 +194,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (generateIconsBtn) {
-        generateIconsBtn.addEventListener("click", generateIcons);
+    generateIconsBtn.addEventListener("click", generateIcons);
     }
 
     async function generateIcons() {
@@ -208,36 +208,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Disable the generate button and show "Please Wait..." with spinner
         if (generateIconsBtn) {
-            generateIconsBtn.disabled = true;
+        generateIconsBtn.disabled = true;
             const originalText = generateIconsBtn.innerHTML;
-            generateIconsBtn.innerHTML = 'Please Wait... <span id="spinner" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>';
+        generateIconsBtn.innerHTML = 'Please Wait... <span id="spinner" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>';
 
-            const formData = new FormData();
-            formData.append("image", imageFiles[0]);
-            formData.append("option", iconOption); // Append the selected option
+        const formData = new FormData();
+        formData.append("image", imageFiles[0]);
+        formData.append("option", iconOption); // Append the selected option
 
-            try {
-                const SERVER_NAME = window.env.PUBLIC_SERVER_URL; // Access the server name from config.js
-                const response = await fetch(`${SERVER_NAME}/api/generate-icons`, {
-                    method: "POST",
-                    body: formData
-                });
+        try {
+            const SERVER_NAME = window.env.PUBLIC_SERVER_URL; // Access the server name from config.js
+            const response = await fetch(`${SERVER_NAME}/api/generate-icons`, {
+                method: "POST",
+                body: formData
+            });
 
-                if (!response.ok) {
-                    throw new Error("Failed to generate icons.");
-                }
+            if (!response.ok) {
+                throw new Error("Failed to generate icons.");
+            }
 
-                const blob = await response.blob();
-                const originalFileName = imageFiles[0].name.split('.').slice(0, -1).join('.'); // Remove extension
-                const zipFileName = `${originalFileName}-icons.zip`; // Append '-icons' to the file name
-                downloadIconsZip(blob, zipFileName);
-            } catch (error) {
-                showAlert("An error occurred during icon generation: " + error.message, 'danger');
-                console.error("Icon generation error:", error);
-            } finally {
-                // Re-enable the generate button and revert to original text
+            const blob = await response.blob();
+            const originalFileName = imageFiles[0].name.split('.').slice(0, -1).join('.'); // Remove extension
+            const zipFileName = `${originalFileName}-icons.zip`; // Append '-icons' to the file name
+            downloadIconsZip(blob, zipFileName);
+        } catch (error) {
+            showAlert("An error occurred during icon generation: " + error.message, 'danger');
+            console.error("Icon generation error:", error);
+        } finally {
+            // Re-enable the generate button and revert to original text
                 if (generateIconsBtn) {
-                    generateIconsBtn.disabled = false;
+            generateIconsBtn.disabled = false;
                     generateIconsBtn.innerHTML = originalText || 'Generate Icons';
                 }
             }
@@ -261,16 +261,16 @@ document.addEventListener("DOMContentLoaded", () => {
         if (alertPlaceholder) {
             alertPlaceholder.innerHTML = '';
             
-            const alertDiv = document.createElement('div');
-            alertDiv.classList.add('alert', `alert-${type}`, 'alert-dismissible', 'fade', 'show');
-            alertDiv.role = 'alert';
-            alertDiv.innerHTML = 
-                `${message}
+        const alertDiv = document.createElement('div');
+        alertDiv.classList.add('alert', `alert-${type}`, 'alert-dismissible', 'fade', 'show');
+        alertDiv.role = 'alert';
+        alertDiv.innerHTML = 
+            `${message}
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>`;
-            alertPlaceholder.appendChild(alertDiv);
+        alertPlaceholder.appendChild(alertDiv);
 
             // Automatically remove the alert after a timeout
-            setTimeout(() => {
+        setTimeout(() => {
                 const bsAlert = new bootstrap.Alert(alertDiv);
                 bsAlert.close();
             }, 7000);

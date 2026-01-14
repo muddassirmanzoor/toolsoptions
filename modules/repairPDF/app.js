@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const fileList = document.getElementById("fileList");
     const repairBtn = document.getElementById("repairBtn");
     const alertPlaceholder = document.getElementById("alertPlaceholder");
-    
+
     // UI State Elements
     const initialUploadState = document.getElementById("initialUploadState");
     const fileSelectionButtons = document.getElementById("fileSelectionButtons");
@@ -162,7 +162,7 @@ document.addEventListener("DOMContentLoaded", () => {
     updateUIState();
 
     if (repairBtn) {
-        repairBtn.addEventListener("click", repairPDF);
+    repairBtn.addEventListener("click", repairPDF);
     }
 
     async function repairPDF() {
@@ -175,34 +175,34 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Disable the repair button and show "Please Wait..." with spinner
         if (repairBtn) {
-            repairBtn.disabled = true;
+        repairBtn.disabled = true;
             const originalText = repairBtn.innerHTML;
-            repairBtn.innerHTML = 'Please Wait... <span id="spinner" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>';
+        repairBtn.innerHTML = 'Please Wait... <span id="spinner" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>';
 
-            const formData = new FormData();
-            formData.append("pdf", pdfFiles[0]);
+        const formData = new FormData();
+        formData.append("pdf", pdfFiles[0]);
 
-            try {
-                const SERVER_NAME = window.env.PUBLIC_SERVER_URL; // Access the server name from config.js
-                const response = await fetch(`${SERVER_NAME}/api/repair-pdf`, {
-                    method: "POST",
-                    body: formData
-                });
+        try {
+            const SERVER_NAME = window.env.PUBLIC_SERVER_URL; // Access the server name from config.js
+            const response = await fetch(`${SERVER_NAME}/api/repair-pdf`, {
+                method: "POST",
+                body: formData
+            });
 
-                if (!response.ok) {
-                    throw new Error("Failed to repair PDF. Also We can't process damaged or corrupted files");
-                }
+            if (!response.ok) {
+                throw new Error("Failed to repair PDF. Also We can't process damaged or corrupted files");
+            }
 
-                const blob = await response.blob();
-                const fileName = generateRepairedFileName(pdfFiles[0].name);
-                downloadRepairedFile(blob, fileName);
-            } catch (error) {
-                showAlert("An error occurred during repair: " + error.message, 'danger');
-                console.error("Repair error:", error);
-            } finally {
-                // Re-enable the repair button and revert to original text
+            const blob = await response.blob();
+            const fileName = generateRepairedFileName(pdfFiles[0].name);
+            downloadRepairedFile(blob, fileName);
+        } catch (error) {
+            showAlert("An error occurred during repair: " + error.message, 'danger');
+            console.error("Repair error:", error);
+        } finally {
+            // Re-enable the repair button and revert to original text
                 if (repairBtn) {
-                    repairBtn.disabled = false;
+            repairBtn.disabled = false;
                     repairBtn.innerHTML = originalText || 'Repair PDF';
                 }
             }
@@ -231,16 +231,16 @@ document.addEventListener("DOMContentLoaded", () => {
         if (alertPlaceholder) {
             alertPlaceholder.innerHTML = '';
             
-            const alertDiv = document.createElement('div');
-            alertDiv.classList.add('alert', `alert-${type}`, 'alert-dismissible', 'fade', 'show');
-            alertDiv.role = 'alert';
-            alertDiv.innerHTML = 
-                `${message}
+        const alertDiv = document.createElement('div');
+        alertDiv.classList.add('alert', `alert-${type}`, 'alert-dismissible', 'fade', 'show');
+        alertDiv.role = 'alert';
+        alertDiv.innerHTML = 
+            `${message}
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>`;
-            alertPlaceholder.appendChild(alertDiv);
+        alertPlaceholder.appendChild(alertDiv);
 
             // Automatically remove the alert after a timeout
-            setTimeout(() => {
+        setTimeout(() => {
                 const bsAlert = new bootstrap.Alert(alertDiv);
                 bsAlert.close();
             }, 7000);

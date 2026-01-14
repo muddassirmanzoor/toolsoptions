@@ -1,20 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit PDF App</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-    <link href="../shared-styles.css" rel="stylesheet">
-    <link href="../main.css" rel="stylesheet">
+    <title>Edit PDF - I Love PDF</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Montserrat:wght@700&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <!-- PDF.js Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <!-- PDF-lib Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
-</head>
 
+    <!-- Custom CSS -->
+    <link href="styles.css" rel="stylesheet">
+    <link href="../shared-styles.css" rel="stylesheet">
+</head>
 <body data-page-title="Edit PDF">
     <!-- Shared Navbar -->
     <div id="shared-navbar"></div>
@@ -25,107 +33,268 @@
     <!-- Shared Breadcrumb -->
     <div id="shared-breadcrumb"></div>
 
-
-    <!-- Navbar -->
-    <div id="navbar"></div>
-
-    <div class="landing-page text-center mt-5">
-        <h1>Welcome to the Edit PDF App</h1>
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#pdfEditModal">Edit PDF</button>
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <h2 class="section-title">Edit PDF</h2>
+            
+            <div id="alertPlaceholder" class="alert-container mb-4"></div>
+            
+            <!-- Upload Section (shown initially) -->
+            <div id="uploadSection" class="upload-section">
+                <div class="row g-4 align-items-stretch">
+                    <!-- Left: File Upload Area -->
+                    <div class="col-lg-6 d-flex position-relative">
+                        <!-- Initial Upload State -->
+                        <div id="initialUploadState" class="initial-upload-state">
+                            <div class="upload-content">
+                                <h2 class="upload-title">Edit PDF</h2>
+                                <p class="upload-subtitle">Edit your PDF by selecting and editing text, adding shapes, images, and annotations.</p>
+                                <div class="upload-buttons-wrapper">
+                                    <button id="selectFilesBtn" class="btn-select-files" type="button">
+                                        Select PDF file
+                                    </button>
+                                    <div class="cloud-buttons">
+                                        <button id="initialGoogleDriveBtn" class="cloud-btn" type="button" title="Select from Google Drive">
+                                            <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                                                <path d="M7.71 2.5L2.5 12.71l5.21 10.21L12.71 16l5.21-3.29L12.71 2.5H7.71z"/>
+                                            </svg>
+                                        </button>
+                                        <button id="initialDropboxBtn" class="cloud-btn" type="button" title="Select from Dropbox">
+                                            <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                                                <path d="M6 2L0 6l6 4 6-4-6-4zm12 4l6-4-6-4-6 4 6 4zM0 14l6 4 6-4-6-4-6 4zm18-4l-6 4 6 4 6-4-6-4zM0 20l6 4 6-4-6-4-6 4zm12 0l6 4 6-4-6-4-6 4z"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                                <p class="drop-hint">or drop PDF here</p>
+                            </div>
     </div>
 
-    <!-- PDF Edit Modal -->
-    <div class="modal fade" id="pdfEditModal" tabindex="-1" role="dialog" aria-labelledby="pdfEditModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header text-white bg-danger">
-                    <h5 class="modal-title" id="pdfEditModalLabel">Edit PDF</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+                        <!-- File Selection Buttons Group (shown after file is selected) -->
+                        <div id="fileSelectionButtons" class="file-selection-buttons" style="display: none;">
+                            <button id="addBtn" class="file-select-btn add-btn" type="button" title="Select PDF file">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                            <button id="computerBtn" class="file-select-btn computer-btn" type="button" title="Select from computer">
+                                <i class="fas fa-desktop"></i>
+                            </button>
+                            <button id="googleDriveBtn" class="file-select-btn google-drive-btn" type="button" title="Select from Google Drive">
+                                <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                                    <path d="M7.71 2.5L2.5 12.71l5.21 10.21L12.71 16l5.21-3.29L12.71 2.5H7.71z"/>
+                                </svg>
+                            </button>
+                            <button id="dropboxBtn" class="file-select-btn dropbox-btn" type="button" title="Select from Dropbox">
+                                <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                                    <path d="M6 2L0 6l6 4 6-4-6-4zm12 4l6-4-6-4-6 4 6 4zM0 14l6 4 6-4-6-4-6 4zm18-4l-6 4 6 4 6-4-6-4zM0 20l6 4 6-4-6-4-6 4zm12 0l6 4 6-4-6-4-6 4z"/>
+                                </svg>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <div class="custom-file mb-3">
-                        <input type="file" id="pdfInput" class="custom-file-input">
-                        <label class="custom-file-label" for="pdfInput">Choose PDF file</label>
+
+                        <div class="upload-area w-100">
+                            <div id="fileList" class="file-list-container">
+                                <!-- PDF thumbnail will be inserted here -->
+                            </div>
+                            <input type="file" id="pdfInput" name="pdfInput" accept="application/pdf" style="display:none;">
+                        </div>
                     </div>
-                    <div class="edit-options">
-                        <button id="zoom-in-btn" class="btn btn-secondary">Zoom In</button>
-                        <button id="zoom-out-btn" class="btn btn-secondary">Zoom Out</button>
-                        <button id="add-text-btn" class="btn btn-secondary">Add Text</button>
-                        <button id="add-image-btn" class="btn btn-secondary" data-toggle="modal" data-target="#imageUploadModal">Add Image</button>
-                        <button id="add-rect-btn" class="btn btn-secondary">Add Rectangle</button>
-                        <button id="add-circle-btn" class="btn btn-secondary">Add Circle</button>
-                        <button id="add-line-btn" class="btn btn-secondary">Add Line</button>
+          
+                    <!-- Right: Information Panel -->
+                    <div class="col-lg-6 d-flex">
+                        <div class="options-panel w-100">
+                            <div class="info-section">
+                                <h3 class="info-title">About PDF Editing</h3>
+                                <div class="info-content">
+                                    <p class="info-text">
+                                        Edit your PDF documents with our powerful editor. You can:
+                                    </p>
+                                    <ul class="info-list">
+                                        <li>Select text in the PDF to edit it</li>
+                                        <li>Add new text, shapes, and images</li>
+                                        <li>Draw annotations and highlights</li>
+                                        <li>Edit multiple pages</li>
+                                    </ul>
+                                    <div class="info-note">
+                                        <i class="fas fa-info-circle"></i>
+                                        <p><strong>Tip:</strong> After uploading, select text on the PDF to edit it. Use the toolbar to add new elements.</p>
+                                    </div>
+                                </div>
+                            </div>
                     </div>
-                    <div class="form-group">
-                        <label for="page-select">Select Page:</label>
-                        <select id="page-select" class="form-control"></select>
                     </div>
-                    <div id="canvas-container" class="canvas-container"></div>
-                    <div id="alertPlaceholder" class="mt-3"></div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" id="save-pdf-btn" class="btn btn-primary">Download Edited PDF</button>
+            </div>
+
+            <!-- Editing Interface (shown after file upload) -->
+            <div id="editingSection" class="editing-section" style="display: none;">
+                <div class="row g-4">
+                    <!-- Left: PDF Preview with Tools -->
+                    <div class="col-lg-8">
+                        <div class="preview-section">
+                            <div class="editor-toolbar">
+                                <div class="toolbar-group">
+                                    <button id="addTextBtn" class="toolbar-btn" title="Add Text">
+                                        <i class="fas fa-font"></i> Text
+                                    </button>
+                                    <button id="addImageBtn" class="toolbar-btn" title="Add Image">
+                                        <i class="fas fa-image"></i> Image
+                                    </button>
+                                    <button id="addRectBtn" class="toolbar-btn" title="Add Rectangle">
+                                        <i class="fas fa-square"></i> Rectangle
+                                    </button>
+                                    <button id="addCircleBtn" class="toolbar-btn" title="Add Circle">
+                                        <i class="fas fa-circle"></i> Circle
+                                    </button>
+                                    <button id="addLineBtn" class="toolbar-btn" title="Add Line">
+                                        <i class="fas fa-minus"></i> Line
+                                    </button>
+                                </div>
+                                <div class="toolbar-group">
+                                    <button id="zoomInBtn" class="toolbar-btn" title="Zoom In">
+                                        <i class="fas fa-search-plus"></i>
+                                    </button>
+                                    <button id="zoomOutBtn" class="toolbar-btn" title="Zoom Out">
+                                        <i class="fas fa-search-minus"></i>
+                                    </button>
+                                    <button id="resetPdfBtn" class="toolbar-btn-secondary" title="Reset">
+                                        <i class="fas fa-redo"></i> Reset
+                                    </button>
+                                </div>
+                            </div>
+                            <!-- Text Formatting Toolbar (shown when text is selected) -->
+                            <div id="textFormatToolbar" class="text-format-toolbar" style="display: none;">
+                                <div class="format-toolbar-group">
+                                    <select id="fontFamilySelect" class="format-select" title="Font Family">
+                                        <option value="Arial">Arial</option>
+                                        <option value="Helvetica">Helvetica</option>
+                                        <option value="Times New Roman">Times New Roman</option>
+                                        <option value="Courier New">Courier New</option>
+                                        <option value="Verdana">Verdana</option>
+                                        <option value="Georgia">Georgia</option>
+                                        <option value="Palatino">Palatino</option>
+                                        <option value="Garamond">Garamond</option>
+                                    </select>
+                                    <select id="fontSizeSelect" class="format-select" title="Font Size">
+                                        <option value="8">8</option>
+                                        <option value="10">10</option>
+                                        <option value="12">12</option>
+                                        <option value="14">14</option>
+                                        <option value="16" selected>16</option>
+                                        <option value="18">18</option>
+                                        <option value="20">20</option>
+                                        <option value="24">24</option>
+                                        <option value="28">28</option>
+                                        <option value="32">32</option>
+                                        <option value="36">36</option>
+                                        <option value="48">48</option>
+                                    </select>
+                                </div>
+                                <div class="format-toolbar-group">
+                                    <button id="boldBtn" class="format-btn" title="Bold">
+                                        <strong>B</strong>
+                                    </button>
+                                    <button id="italicBtn" class="format-btn" title="Italic">
+                                        <em>I</em>
+                                    </button>
+                                    <button id="underlineBtn" class="format-btn" title="Underline">
+                                        <u>U</u>
+                                    </button>
+                                </div>
+                                <div class="format-toolbar-group">
+                                    <button id="alignLeftBtn" class="format-btn" title="Align Left">
+                                        <i class="fas fa-align-left"></i>
+                                    </button>
+                                    <button id="alignCenterBtn" class="format-btn" title="Align Center">
+                                        <i class="fas fa-align-center"></i>
+                                    </button>
+                                    <button id="alignRightBtn" class="format-btn" title="Align Right">
+                                        <i class="fas fa-align-right"></i>
+                                    </button>
+                                </div>
+                                <div class="format-toolbar-group">
+                                    <input type="color" id="textColorPicker" class="format-color-picker" title="Text Color" value="#000000">
+                                    <button id="deleteTextBtn" class="format-btn format-btn-danger" title="Delete">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <h4 class="preview-title">PDF Preview</h4>
+                            <div id="canvasContainer" class="canvas-container scrollable-pages">
+                                <!-- All PDF pages will be rendered here -->
+            </div>
+        </div>
+    </div>
+
+                    <!-- Right: Info Panel -->
+                    <div class="col-lg-4">
+                        <div class="editor-tools-section">
+                            <div class="info-section">
+                                <h3 class="info-title">Editing Tools</h3>
+                                <div class="info-content">
+                                    <ul class="info-list">
+                                        <li><strong>Text:</strong> Click any text in PDF to edit, or use Text button to add new text</li>
+                                        <li><strong>Image:</strong> Insert images into the PDF</li>
+                                        <li><strong>Shapes:</strong> Draw rectangles, circles, and lines</li>
+                                        <li><strong>Zoom:</strong> Adjust the view size</li>
+                                    </ul>
+                                    <div class="info-note">
+                                        <i class="fas fa-info-circle"></i>
+                                        <p><strong>Tip:</strong> Click any text in the PDF preview to edit it directly. All pages are scrollable. New text/shapes added via toolbar will appear on the current page.</p>
+                                    </div>
+                </div>
+                </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Image Upload Modal -->
-    <div class="modal fade" id="imageUploadModal" tabindex="-1" role="dialog" aria-labelledby="imageUploadModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+            <!-- Floating Download Button (Right Side) -->
+            <button id="downloadPdfBtn" class="floating-download-btn" title="Download PDF" style="display: none;">
+                <i class="fas fa-download"></i>
+                <span>Download PDF</span>
+            </button>
+
+            <!-- Text Input Modal -->
+            <div class="modal fade" id="textModal" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header text-white bg-danger">
-                    <h5 class="modal-title" id="imageUploadModalLabel">Upload Image</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                        <div class="modal-header">
+                            <h5 class="modal-title">Edit Text</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <input type="file" id="image-input" class="form-control">
+                            <div class="mb-3">
+                                <label class="form-label">Text Content:</label>
+                                <textarea id="textContent" class="form-control" rows="5"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Font Size:</label>
+                                <input type="number" id="textFontSize" class="form-control" value="16" min="8" max="72">
+                    </div>
+                            <div class="mb-3">
+                                <label class="form-label">Text Color:</label>
+                                <input type="color" id="textColor" class="form-control" value="#000000">
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="add-image-confirm-btn" class="btn btn-primary">Add Image</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" id="confirmTextBtn" class="btn btn-primary">Save Changes</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Text Formatting Modal -->
-    <div class="modal fade" id="textFormattingModal" tabindex="-1" role="dialog" aria-labelledby="textFormattingModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header text-white bg-danger">
-                    <h5 class="modal-title" id="textFormattingModalLabel">Text Formatting</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <textarea id="text-content" class="form-control mb-3" rows="4" placeholder="Enter your text here"></textarea>
-                    <div class="form-group">
-                        <label for="font-size">Font Size:</label>
-                        <input type="number" id="font-size" class="form-control" value="16">
-                    </div>
-                    <div class="form-group">
-                        <label for="font-color">Text Color:</label>
-                        <input type="color" id="font-color" class="form-control" value="#000000">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" id="add-text-confirm-btn" class="btn btn-primary">Add Text</button>
-                </div>
-            </div>
+            <!-- Image Upload Input (hidden) -->
+            <input type="file" id="imageInput" accept="image/*" style="display:none;">
         </div>
-    </div>
+    </main>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Bootstrap Bundle with Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../shared-components.js"></script>
+    <script src="../config.js"></script>
     <script src="app.js"></script>
     <script src="../main.js"></script>
-</body>
 
+</body>
 </html>

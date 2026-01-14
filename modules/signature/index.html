@@ -163,9 +163,11 @@
                                 <div class="drag-handle">
                                     <i class="fa-solid fa-grip-vertical"></i>
                                 </div>
+                                <div class="field-icon">
+                                    <i class="fa-solid fa-pen"></i>
+                                </div>
                                 <div class="field-content">
-                                    <label class="field-label">Signature:</label>
-                                    <input type="text" class="field-input" id="signatureInput" value="" placeholder="Click edit to create signature" readonly>
+                                    <span class="field-text">Signature</span>
                                 </div>
                                 <button class="field-edit-btn" id="editSignatureBtn" title="Edit Signature">
                                     <i class="fa-solid fa-pen"></i>
@@ -186,8 +188,7 @@
                                         <i class="fa-solid fa-pen"></i>
                                     </div>
                                     <div class="field-content">
-                                        <label class="field-label">Initials:</label>
-                                        <input type="text" class="field-input" id="initialsInput" value="" placeholder="Click edit to create" readonly>
+                                        <span class="field-text">Initials</span>
                                     </div>
                                     <button class="field-edit-btn" id="editInitialsBtn" title="Edit Initials">
                                         <i class="fa-solid fa-pen"></i>
@@ -233,17 +234,20 @@
                                     </div>
                                 </div>
 
-                                <!-- Company Setup Field -->
+                                <!-- Company Stamp Field -->
                                 <div class="field-item optimal-field" id="companyField">
                                     <div class="drag-handle">
                                         <i class="fa-solid fa-grip-vertical"></i>
                                     </div>
                                     <div class="field-icon">
-                                        <i class="fa-solid fa-user-gear"></i>
+                                        <i class="fa-solid fa-stamp"></i>
                                     </div>
                                     <div class="field-content">
-                                        <span class="field-text">Company Setup</span>
+                                        <span class="field-text">Company Stamp</span>
                                     </div>
+                                    <button class="field-edit-btn" id="editCompanyStampBtn" title="Edit Company Stamp">
+                                        <i class="fa-solid fa-pen"></i>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -276,6 +280,7 @@
                         <button type="button" class="tab-button" data-tab="type">Type</button>
                         <button type="button" class="tab-button active" data-tab="draw">Draw</button>
                         <button type="button" class="tab-button" data-tab="upload">Upload</button>
+                        <button type="button" class="tab-button" data-tab="companyStamp">Company Stamp</button>
                         <button type="button" class="tab-button" data-tab="history">History</button>
                     </div>
                     
@@ -292,8 +297,8 @@
                         </div>
                         <canvas id="drawCanvas" style="border: 1px solid #ddd; background: white; display: block; margin: 0 auto; cursor: crosshair;"></canvas>
                         <div class="mt-3 text-center">
-                            <button type="button" class="btn btn-danger" id="undoBtn">Undo</button>
-                            <button type="button" class="btn btn-secondary" id="clearDrawBtn">Clear</button>
+                            <button type="button" class="btn-undo" id="undoBtn">Undo</button>
+                            <button type="button" class="btn-clear" id="clearDrawBtn">Clear</button>
                         </div>
                     </div>
                     
@@ -302,9 +307,19 @@
                         <small class="text-muted mb-2 d-block">Accepted formats: PNG, JPG and SVG</small>
                         <canvas id="uploadCanvas" style="border: 1px solid #ddd; background: white; display: block; margin: 0 auto;"></canvas>
                         <div class="mt-3 text-center">
-                            <button type="button" class="btn btn-danger" id="undoBtnUpload">Undo</button>
-                            <button type="button" class="btn btn-secondary" id="clearUploadBtn">Clear</button>
+                            <button type="button" class="btn-undo" id="undoBtnUpload">Undo</button>
+                            <button type="button" class="btn-clear" id="clearUploadBtn">Clear</button>
                         </div>
+                    </div>
+                    
+                    <div class="tab-content" id="companyStampTab">
+                        <div class="company-stamp-upload-area">
+                            <input type="file" id="companyStampUpload" class="form-control mb-3" accept="image/png,image/jpeg,image/jpg,image/svg+xml" style="display: none;">
+                            <button type="button" class="btn-upload-company-stamp" id="uploadCompanyStampBtn">Upload company stamp</button>
+                            <p class="text-muted mb-2">or drop file here</p>
+                            <small class="text-muted">Accepted formats: <strong>PNG</strong>, <strong>JPG</strong> and <strong>SVG</strong></small>
+                        </div>
+                        <canvas id="companyStampCanvas" style="border: 1px solid #ddd; background: white; display: block; margin: 0 auto; max-width: 100%;"></canvas>
                     </div>
                     
                     <div class="tab-content" id="historyTab">
@@ -312,8 +327,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary" id="applySignatureBtn">Apply</button>
+                    <button type="button" class="btn-cancel" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn-apply" id="applySignatureBtn">Apply</button>
                 </div>
             </div>
         </div>

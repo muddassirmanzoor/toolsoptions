@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remove PDF Pages - I Love PDF</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Red+Hat+Display:wght@400;500;700&family=Poppins:wght@700&family=Montserrat:wght@700&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link href="styles.css" rel="stylesheet">
+    <link href="../shared-styles.css" rel="stylesheet">
+</head>
+<body data-page-title="Remove PDF Pages">
+    <!-- Shared Navbar -->
+    <div id="shared-navbar"></div>
+
+    <!-- Shared Hero Section -->
+    <div id="shared-hero"></div>
+
+    <!-- Shared Breadcrumb -->
+    <div id="shared-breadcrumb"></div>
+
+    <!-- Hidden functional elements for JavaScript -->
+    <input type="file" id="pdfInputRemove" class="custom-file-input" style="display:none;" accept="application/pdf">
+    <div id="alertPlaceholder"></div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container my-5 remove-pdf-section">
+            <h2 class="section-title text-center mb-5">Remove PDF Pages</h2>
+            
+            <div id="alertPlaceholder" class="alert-container mb-4"></div>
+            
+            <div class="row g-4 align-items-stretch">
+                <!-- Left: PDF Preview Section -->
+                <div class="col-lg-6 col-md-6 col-sm-12 position-relative">
+                    <!-- Initial Upload State -->
+                    <div id="initialUploadState" class="initial-upload-state">
+                        <div class="upload-content">
+                            <h2 class="upload-title">Remove PDF Pages</h2>
+                            <p class="upload-subtitle">Select and remove the PDF pages you don't need. Get a new file without your deleted pages.</p>
+                            <div class="upload-buttons-wrapper">
+                                <button id="selectFilesBtn" class="btn-select-files" type="button">
+                                    Select PDF file
+                                </button>
+                                <div class="cloud-buttons">
+                                    <button id="initialGoogleDriveBtn" class="cloud-btn" type="button" title="Select from Google Drive">
+                                        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                                            <path d="M7.71 2.5L2.5 12.71l5.21 10.21L12.71 16l5.21-3.29L12.71 2.5H7.71z"/>
+                                        </svg>
+                                    </button>
+                                    <button id="initialDropboxBtn" class="cloud-btn" type="button" title="Select from Dropbox">
+                                        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                                            <path d="M6 2L0 6l6 4 6-4-6-4zm12 4l6-4-6-4-6 4 6 4zM0 14l6 4 6-4-6-4-6 4zm18-4l-6 4 6 4 6-4-6-4zM0 20l6 4 6-4-6-4-6 4zm12 0l6 4 6-4-6-4-6 4z"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <p class="drop-hint">or drop PDF file here</p>
+                        </div>
+                    </div>
+
+                    <!-- File Selection Buttons Group (shown after file is selected) -->
+                    <div id="fileSelectionButtons" class="file-selection-buttons" style="display: none;">
+                        <button id="addBtn" class="file-select-btn add-btn" type="button" title="Change PDF file">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                        <button id="computerBtn" class="file-select-btn computer-btn" type="button" title="Select from computer">
+                            <i class="fas fa-desktop"></i>
+                        </button>
+                        <button id="googleDriveBtn" class="file-select-btn google-drive-btn" type="button" title="Select from Google Drive">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                                <path d="M7.71 2.5L2.5 12.71l5.21 10.21L12.71 16l5.21-3.29L12.71 2.5H7.71z"/>
+                            </svg>
+                        </button>
+                        <button id="dropboxBtn" class="file-select-btn dropbox-btn" type="button" title="Select from Dropbox">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                                <path d="M6 2L0 6l6 4 6-4-6-4zm12 4l6-4-6-4-6 4 6 4zM0 14l6 4 6-4-6-4-6 4zm18-4l-6 4 6 4 6-4-6-4zM0 20l6 4 6-4-6-4-6 4zm12 0l6 4 6-4-6-4-6 4z"/>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <div class="upload-area w-100">
+                        <div class="text-center pdf-preview" id="pdfPreview">
+                            <div class="row g-3">
+                                <!-- PDF Page Cards will be dynamically generated -->
+                            </div>
+                        </div>
+                        
+                        <!-- File Info (shown after file is selected) -->
+                        <div id="fileInfo" class="file-info" style="display: none;">
+                            <div class="file-info-content">
+                                <i class="fas fa-file-pdf"></i>
+                                <span id="fileName"></span>
+                                <button id="removeFileBtn" class="remove-file-btn" type="button" title="Remove file">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Options Section -->
+                <div class="col-lg-6 col-md-6 col-sm-12 options-section">
+                    <div class="options-panel w-100">
+                        <h5 class="options-title">Click on pages to remove from document</h5>
+                        <p class="options-hint">You can use "Shift" key to set ranges</p>
+                        
+                        <!-- Page Statistics -->
+                        <div class="page-stats mt-3 mb-3">
+                            <div class="stat-item">
+                                <span class="stat-label">Total pages:</span>
+                                <span class="stat-value" id="totalPages">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Pages to remove:</span>
+                                <span class="stat-value text-danger" id="pagesToRemove">0</span>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="action-buttons mt-4">
+                            <button id="selectAllBtn" class="btn btn-outline-secondary btn-sm mb-2" style="display: none;">
+                                Select All
+                            </button>
+                            <button id="deselectAllBtn" class="btn btn-outline-secondary btn-sm mb-2" style="display: none;">
+                                Deselect All
+                            </button>
+                        </div>
+
+                        <!-- Remove Pages Button -->
+                        <button id="removePagesBtn" class="btn btn-warning w-100 mt-3" style="background-color: #F56129; color: white; display: none;">
+                            Remove Pages
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Google API Scripts -->
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script src="https://accounts.google.com/gsi/client"></script>
+    <script src="https://apis.google.com/js/picker.js"></script>
+    
+    <!-- Dropbox Chooser -->
+    <script type="text/javascript">
+        const dropboxAppKey = window.env?.DROPBOX_APP_KEY || 'YOUR_DROPBOX_APP_KEY';
+        const dropboxScript = document.createElement('script');
+        dropboxScript.type = 'text/javascript';
+        dropboxScript.src = 'https://www.dropbox.com/static/api/2/dropins.js';
+        dropboxScript.id = 'dropboxjs';
+        dropboxScript.setAttribute('data-app-key', dropboxAppKey);
+        document.head.appendChild(dropboxScript);
+    </script>
+
+    <!-- Bootstrap Bundle with Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="../shared-components.js"></script>
+    <script src="../config.js"></script>
+    <script src="app.js"></script>
+    <script src="../main.js"></script>
+</body>
+</html>
