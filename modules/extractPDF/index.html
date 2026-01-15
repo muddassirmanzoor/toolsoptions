@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extract PDF - I Love PDF</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Red+Hat+Display:wght@400;500;700&family=Poppins:wght@700&family=Montserrat:wght@700&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link href="styles.css" rel="stylesheet">
+    <link href="../shared-styles.css" rel="stylesheet">
+</head>
+<body data-page-title="Extract PDF">
+    <!-- Shared Navbar -->
+    <div id="shared-navbar"></div>
+
+    <!-- Shared Hero Section -->
+    <div id="shared-hero"></div>
+
+    <!-- Shared Breadcrumb -->
+    <div id="shared-breadcrumb"></div>
+
+    <!-- Hidden functional elements for JavaScript -->
+    <input type="file" id="pdfInputExtract" class="custom-file-input" style="display:none;" accept="application/pdf">
+    <div id="alertPlaceholder"></div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container my-5 extract-pdf-section">
+            <h2 class="section-title text-center mb-5">Extract PDF</h2>
+            
+            <div id="alertPlaceholder" class="alert-container mb-4"></div>
+            
+            <div class="row g-4 align-items-stretch">
+                <!-- Left: PDF Preview Section -->
+                <div class="col-lg-6 col-md-6 col-sm-12 position-relative">
+                    <!-- Initial Upload State -->
+                    <div id="initialUploadState" class="initial-upload-state">
+                        <div class="upload-content">
+                            <h2 class="upload-title">Extract PDF</h2>
+                            <p class="upload-subtitle">Separate one page or a whole set for easy conversion into independent PDF files.</p>
+                            <div class="upload-buttons-wrapper">
+                                <button id="selectFilesBtn" class="btn-select-files" type="button">
+                                    Select PDF file
+                                </button>
+                                <div class="cloud-buttons">
+                                    <button id="initialGoogleDriveBtn" class="cloud-btn" type="button" title="Select from Google Drive">
+                                        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                                            <path d="M7.71 2.5L2.5 12.71l5.21 10.21L12.71 16l5.21-3.29L12.71 2.5H7.71z"/>
+                                        </svg>
+                                    </button>
+                                    <button id="initialDropboxBtn" class="cloud-btn" type="button" title="Select from Dropbox">
+                                        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                                            <path d="M6 2L0 6l6 4 6-4-6-4zm12 4l6-4-6-4-6 4 6 4zM0 14l6 4 6-4-6-4-6 4zm18-4l-6 4 6 4 6-4-6-4zM0 20l6 4 6-4-6-4-6 4zm12 0l6 4 6-4-6-4-6 4z"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <p class="drop-hint">or drop PDF file here</p>
+                        </div>
+                    </div>
+
+                    <!-- File Selection Buttons Group (shown after file is selected) -->
+                    <div id="fileSelectionButtons" class="file-selection-buttons" style="display: none;">
+                        <button id="addBtn" class="file-select-btn add-btn" type="button" title="Change PDF file">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                        <button id="computerBtn" class="file-select-btn computer-btn" type="button" title="Select from computer">
+                            <i class="fas fa-desktop"></i>
+                        </button>
+                        <button id="googleDriveBtn" class="file-select-btn google-drive-btn" type="button" title="Select from Google Drive">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                                <path d="M7.71 2.5L2.5 12.71l5.21 10.21L12.71 16l5.21-3.29L12.71 2.5H7.71z"/>
+                            </svg>
+                        </button>
+                        <button id="dropboxBtn" class="file-select-btn dropbox-btn" type="button" title="Select from Dropbox">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                                <path d="M6 2L0 6l6 4 6-4-6-4zm12 4l6-4-6-4-6 4 6 4zM0 14l6 4 6-4-6-4-6 4zm18-4l-6 4 6 4 6-4-6-4zM0 20l6 4 6-4-6-4-6 4zm12 0l6 4 6-4-6-4-6 4z"/>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <div class="upload-area w-100">
+                        <div class="text-center pdf-preview" id="pdfPreview">
+                            <div class="row g-3">
+                                <!-- PDF Page Cards will be dynamically generated -->
+                            </div>
+                        </div>
+                        
+                        <!-- File Info (shown after file is selected) -->
+                        <div id="fileInfo" class="file-info" style="display: none;">
+                            <div class="file-info-content">
+                                <i class="fas fa-file-pdf"></i>
+                                <div class="file-info-details">
+                                    <span id="fileName"></span>
+                                    <small class="file-meta" id="fileMeta"></small>
+                                </div>
+                                <button id="removeFileBtn" class="remove-file-btn" type="button" title="Remove file">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Extract Options Section -->
+                <div class="col-lg-6 col-md-6 col-sm-12 options-section">
+                    <div class="options-panel w-100">
+                        <!-- Tab Navigation -->
+                        <div class="extract-tabs mb-4">
+                            <button class="extract-tab active" data-tab="range" id="rangeTab">
+                                <i class="fas fa-list"></i> Range
+                            </button>
+                            <button class="extract-tab" data-tab="pages" id="pagesTab">
+                                <i class="fas fa-file"></i> Pages
+                            </button>
+                            <button class="extract-tab" data-tab="size" id="sizeTab">
+                                <i class="fas fa-weight"></i> Size
+                            </button>
+                        </div>
+
+                        <!-- Range Mode -->
+                        <div id="rangeMode" class="extract-mode active">
+                            <h5 class="mode-title">Range Mode:</h5>
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="radio" name="rangeModeType" id="customRanges" checked>
+                                <label class="form-check-label" for="customRanges">Custom ranges</label>
+                            </div>
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="radio" name="rangeModeType" id="fixedRanges">
+                                <label class="form-check-label" for="fixedRanges">Fixed ranges</label>
+                            </div>
+
+                            <!-- Custom Ranges Section -->
+                            <div id="customRangesSection" class="ranges-container">
+                                <div class="ranges-list" id="rangesList">
+                                    <!-- Range items will be added here -->
+                                </div>
+                                <button type="button" class="btn btn-outline-primary btn-sm w-100 mb-3" id="addRangeBtn">
+                                    <i class="fas fa-plus"></i> Add Range
+                                </button>
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="checkbox" id="mergeRanges">
+                                    <label class="form-check-label" for="mergeRanges">Merge all ranges in one PDF file.</label>
+                                </div>
+                            </div>
+
+                            <!-- Fixed Ranges Section -->
+                            <div id="fixedRangesSection" class="fixed-range-section" style="display: none;">
+                                <label for="extractRange" class="form-label">Extract into page ranges of:</label>
+                                <div class="input-group mb-3">
+                                    <button class="btn btn-outline-secondary" id="decreaseRange" type="button">-</button>
+                                    <input type="number" class="form-control text-center" value="2" id="extractRange" min="1">
+                                    <button class="btn btn-outline-secondary" id="increaseRange" type="button">+</button>
+                                </div>
+                            </div>
+
+                            <!-- Range Info Text -->
+                            <div class="range-info bg-light p-3 rounded mb-3" id="rangeInfoText">
+                                <small>Upload a PDF file to get started.</small>
+                            </div>
+                        </div>
+
+                        <!-- Pages Mode (Extract) -->
+                        <div id="pagesMode" class="extract-mode" style="display: none;">
+                            <h5 class="mode-title">Extract Mode:</h5>
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="radio" name="extractMode" id="extractAll" checked>
+                                <label class="form-check-label" for="extractAll">Extract all pages</label>
+                            </div>
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="radio" name="extractMode" id="selectPages">
+                                <label class="form-check-label" for="selectPages">Select pages</label>
+                            </div>
+
+                            <!-- Select Pages Input -->
+                            <div id="selectPagesSection" style="display: none;">
+                                <label for="pagesInput" class="form-label">Pages to extract:</label>
+                                <input type="text" class="form-control mb-3" id="pagesInput" placeholder="e.g., 1,3-5,8,10-12">
+                                <small class="text-muted">Enter page numbers or ranges separated by commas (e.g., 1,3-5,8)</small>
+                            </div>
+
+                            <div class="form-check mb-3 mt-3">
+                                <input class="form-check-input" type="checkbox" id="mergeExtracted">
+                                <label class="form-check-label" for="mergeExtracted">Merge extracted pages into one PDF file.</label>
+                            </div>
+
+                            <!-- Extract Info Text -->
+                            <div class="range-info bg-light p-3 rounded mb-3" id="extractInfoText">
+                                <small>Upload a PDF file to get started.</small>
+                            </div>
+                        </div>
+
+                        <!-- Size Mode -->
+                        <div id="sizeMode" class="extract-mode" style="display: none;">
+                            <h5 class="mode-title">Extract by Size:</h5>
+                            <div class="mb-3">
+                                <label for="maxSize" class="form-label">Maximum size per file:</label>
+                                <div class="input-group mb-2">
+                                    <input type="number" class="form-control" id="maxSize" value="1" min="0.1" step="0.1">
+                                    <select class="form-select" id="sizeUnit" style="max-width: 100px;">
+                                        <option value="KB">KB</option>
+                                        <option value="MB" selected>MB</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="checkbox" id="allowCompression">
+                                <label class="form-check-label" for="allowCompression">Allow compression</label>
+                            </div>
+                            <div class="range-info bg-light p-3 rounded mb-3" id="sizeInfoText">
+                                <small>Upload a PDF file to get started.</small>
+                            </div>
+                        </div>
+
+                        <!-- Extract Button -->
+                        <button id="extractBtn" class="btn btn-warning w-100 mt-3" style="background-color: #F56129; color: white; display: none;">
+                            Extract PDF
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Google API Scripts -->
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script src="https://accounts.google.com/gsi/client"></script>
+    <script src="https://apis.google.com/js/picker.js"></script>
+    
+    <!-- Dropbox Chooser -->
+    <script type="text/javascript">
+        const dropboxAppKey = window.env?.DROPBOX_APP_KEY || 'YOUR_DROPBOX_APP_KEY';
+        const dropboxScript = document.createElement('script');
+        dropboxScript.type = 'text/javascript';
+        dropboxScript.src = 'https://www.dropbox.com/static/api/2/dropins.js';
+        dropboxScript.id = 'dropboxjs';
+        dropboxScript.setAttribute('data-app-key', dropboxAppKey);
+        document.head.appendChild(dropboxScript);
+    </script>
+
+    <!-- Bootstrap Bundle with Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="../shared-components.js"></script>
+    <script src="../config.js"></script>
+    <script src="app.js"></script>
+    <script src="../main.js"></script>
+</body>
+</html>
