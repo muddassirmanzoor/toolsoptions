@@ -353,7 +353,7 @@ body.dashboard-body {
 .account-grid {
     display: grid;
     /* Desktop 2-column like Figma */
-    grid-template-columns: minmax(0, 1fr) minmax(320px, 420px);
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 420px);
     gap: 24px;
     align-items: start;
 }
@@ -696,13 +696,6 @@ body.dashboard-body {
         padding: 20px;
     }
 
-    .account-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-/* Stack on tablet/smaller; keep 2-col on common desktops */
-@media (max-width: 992px) {
     .account-grid {
         grid-template-columns: 1fr;
     }
