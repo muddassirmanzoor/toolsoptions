@@ -352,8 +352,8 @@ body.dashboard-body {
   =================================== */
 .account-grid {
     display: grid;
-    /* Wide-screen layout like Figma */
-    grid-template-columns: minmax(520px, 1fr) minmax(340px, 420px);
+    /* Desktop 2-column like Figma */
+    grid-template-columns: minmax(0, 1fr) minmax(320px, 420px);
     gap: 24px;
     align-items: start;
 }
@@ -701,8 +701,8 @@ body.dashboard-body {
     }
 }
 
-/* Prevent “disturbed/squeezed” 2-column on smaller viewports */
-@media (max-width: 1200px) {
+/* Stack on tablet/smaller; keep 2-col on common desktops */
+@media (max-width: 992px) {
     .account-grid {
         grid-template-columns: 1fr;
     }
