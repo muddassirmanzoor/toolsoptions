@@ -2,15 +2,19 @@
    Dashboard CSS Variables
    =================================== */
 :root {
-    --dashboard-purple: #6366f1;
-    --dashboard-purple-dark: #4f46e5;
+    /* Theme */
+    --dashboard-purple: #5B2CFF;
+    --dashboard-purple-dark: #4b22e6;
     --dashboard-orange: #F56129;
     --dashboard-white: #FFFFFF;
+    --dashboard-canvas: #EEF3FB;
     --dashboard-gray-light: #F9FAFB;
     --dashboard-gray-border: #E5E7EB;
     --dashboard-gray-text: #6B7280;
     --dashboard-gray-dark: #111827;
     --dashboard-black: #000000;
+    /* Default; updated at runtime from `.dashboard-header` height */
+    --dashboard-header-height: 72px;
 }
 
 /* ===================================
@@ -22,6 +26,11 @@ html {
     padding: 0;
     width: 100%;
     overflow-x: hidden;
+    overflow-y: auto; /* ensure the document scrolls (no inner scroll panels) */
+}
+
+body.dashboard-body {
+    background-color: var(--dashboard-canvas);
 }
 
 /* ===================================
@@ -29,7 +38,7 @@ html {
    =================================== */
 .dashboard-wrapper {
     min-height: 100vh;
-    background-color: var(--dashboard-gray-light);
+    background-color: var(--dashboard-canvas);
     font-family: 'Poppins', sans-serif;
     width: 100%;
     overflow-x: hidden;
@@ -80,7 +89,7 @@ html {
     background-color: var(--dashboard-orange);
     color: var(--dashboard-white);
     padding: 10px 20px;
-    border-radius: 8px;
+    border-radius: 999px;
     text-decoration: none;
     font-weight: 600;
     font-size: 14px;
@@ -116,13 +125,13 @@ html {
 }
 
 .banner-link {
-    color: var(--dashboard-orange);
+    color: var(--dashboard-purple);
     text-decoration: underline;
     font-weight: 600;
 }
 
 .banner-link:hover {
-    color: #e04a1f;
+    color: var(--dashboard-purple-dark);
 }
 
 /* ===================================
@@ -130,8 +139,9 @@ html {
    =================================== */
 .dashboard-container {
     display: flex;
-    min-height: calc(100vh - 120px);
-    align-items: flex-start;
+    /* Sidebar should extend with page height */
+    min-height: calc(100vh - var(--dashboard-header-height));
+    align-items: stretch;
     width: 100%;
     margin: 0;
     padding: 0;
@@ -144,22 +154,24 @@ html {
     width: 280px;
     min-width: 280px;
     max-width: 280px;
-    background-color: var(--dashboard-purple);
+    background: linear-gradient(180deg, var(--dashboard-purple) 0%, #6B33FF 100%);
     color: var(--dashboard-white);
     padding: 0;
-    position: sticky;
-    top: 120px;
-    height: calc(100vh - 120px);
-    overflow-y: auto;
-    overflow-x: hidden;
+    /* Full-length sidebar that grows with the page (no sticky/fixed) */
+    position: relative;
+    top: 0;
+    height: auto;
+    min-height: calc(100vh - var(--dashboard-header-height));
+    /* No internal sidebar scrolling; page scroll only */
+    overflow: visible;
     flex-shrink: 0;
 }
 
 .sidebar-content {
     display: flex;
     flex-direction: column;
-    height: 100%;
-    min-height: 100%;
+    height: auto;
+    min-height: 0;
     width: 100%;
 }
 
@@ -217,10 +229,15 @@ html {
 .sidebar-nav {
     flex: 1;
     padding: 0;
-    overflow-y: auto;
+    overflow-y: visible;
     overflow-x: hidden;
     display: flex;
     flex-direction: column;
+}
+
+/* intl-tel-input (dashboard) */
+.iti {
+    width: 100%;
 }
 
 .nav-section {
@@ -229,12 +246,12 @@ html {
 }
 
 .nav-section-title {
-    font-size: 11px;
+    font-size: 18px;
     font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    color: rgba(255, 255, 255, 0.7);
-    margin-bottom: 16px;
+    text-transform: none;
+    letter-spacing: 0;
+    color: rgba(255, 255, 255, 0.95);
+    margin-bottom: 12px;
     padding: 0;
 }
 
@@ -291,8 +308,8 @@ html {
     width: 100%;
     background-color: var(--dashboard-orange);
     color: var(--dashboard-white);
-    padding: 14px 20px;
-    border-radius: 8px;
+    padding: 16px 22px;
+    border-radius: 999px;
     text-decoration: none;
     font-weight: 600;
     text-align: center;
@@ -312,15 +329,15 @@ html {
 .dashboard-main {
     flex: 1;
     min-width: 0;
-    background-color: var(--dashboard-white);
-    padding: 40px;
-    overflow-y: auto;
+    background-color: var(--dashboard-canvas);
+    padding: 28px 32px 40px;
+    overflow-y: visible;
     width: 100%;
 }
 
 .main-content-wrapper {
-    max-width: 900px;
-    margin: 0 auto;
+    max-width: 1100px;
+    margin: 0;
 }
 
 .page-title {
@@ -331,14 +348,41 @@ html {
 }
 
 /* ===================================
+  Page Layout (My Account)
+  =================================== */
+.account-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 420px;
+    gap: 24px;
+    align-items: start;
+}
+
+.account-col-left {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.account-col-right {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* ===================================
    Account Sections
    =================================== */
 .account-section {
     background-color: var(--dashboard-white);
-    border: 1px solid var(--dashboard-gray-border);
+    border: 1px solid rgba(17, 24, 39, 0.06);
     border-radius: 12px;
     padding: 32px;
     margin-bottom: 24px;
+    box-shadow: 0 6px 18px rgba(17, 24, 39, 0.06);
+}
+
+.account-grid .account-section {
+    margin-bottom: 0;
 }
 
 .section-header {
@@ -366,16 +410,16 @@ html {
 }
 
 .tab-btn:hover {
-    color: var(--dashboard-purple);
+    color: var(--dashboard-orange);
 }
 
 .tab-btn.active {
-    color: var(--dashboard-purple);
-    border-bottom-color: var(--dashboard-purple);
+    color: var(--dashboard-orange);
+    border-bottom-color: var(--dashboard-orange);
 }
 
 .edit-link {
-    color: var(--dashboard-purple);
+    color: var(--dashboard-orange);
     text-decoration: none;
     font-size: 14px;
     font-weight: 500;
@@ -386,7 +430,7 @@ html {
 }
 
 .edit-link:hover {
-    color: var(--dashboard-purple-dark);
+    color: #e04a1f;
 }
 
 .section-title {
@@ -417,10 +461,27 @@ html {
     margin-bottom: 8px;
 }
 
+/* Match the Figma screen: placeholder-first fields (keep labels for a11y) */
+.dashboard-page .form-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.dashboard-page .form-group {
+    position: relative;
+}
+
 .form-control {
     width: 100%;
     padding: 12px 16px;
-    border: 1px solid var(--dashboard-gray-border);
+    border: 1px solid rgba(17, 24, 39, 0.12);
     border-radius: 8px;
     font-size: 14px;
     color: var(--dashboard-gray-dark);
@@ -428,10 +489,19 @@ html {
     transition: border-color 0.2s;
 }
 
+.form-control::placeholder {
+    color: rgba(17, 24, 39, 0.45);
+}
+
+.dashboard-page .form-control {
+    padding: 14px 16px;
+    border-radius: 10px;
+}
+
 .form-control:focus {
     outline: none;
-    border-color: var(--dashboard-purple);
-    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    border-color: var(--dashboard-orange);
+    box-shadow: 0 0 0 3px rgba(245, 97, 41, 0.18);
 }
 
 .form-control:read-only {
@@ -485,15 +555,14 @@ html {
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 16px;
-    background-color: var(--dashboard-gray-light);
-    border-radius: 8px;
+    padding: 0;
+    background-color: transparent;
+    border-radius: 0;
     margin-bottom: 24px;
 }
 
 .social-email i {
-    color: var(--dashboard-purple);
-    font-size: 18px;
+    display: none;
 }
 
 .social-email span {
@@ -515,13 +584,13 @@ html {
 
 .social-icons {
     display: flex;
-    gap: 16px;
+    gap: 20px;
 }
 
 .social-icon {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
+    width: auto;
+    height: auto;
+    border-radius: 0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -530,22 +599,27 @@ html {
 }
 
 .social-icon:hover {
-    transform: scale(1.1);
+    transform: translateY(-1px);
 }
 
 .social-icon.facebook {
-    background-color: #1877F2;
-    color: var(--dashboard-white);
+    background: transparent;
+    color: var(--dashboard-black);
 }
 
 .social-icon.instagram {
-    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-    color: var(--dashboard-white);
+    background: transparent;
+    color: var(--dashboard-black);
 }
 
 .social-icon.twitter {
-    background-color: #1DA1F2;
-    color: var(--dashboard-white);
+    background: transparent;
+    color: var(--dashboard-black);
+}
+
+.social-icon i {
+    font-size: 26px;
+    line-height: 1;
 }
 
 /* ===================================
@@ -553,18 +627,19 @@ html {
    =================================== */
 .action-buttons {
     display: flex;
-    gap: 12px;
+    gap: 16px;
     margin-top: 32px;
-    padding-top: 24px;
-    border-top: 1px solid var(--dashboard-gray-border);
+    padding-top: 0;
+    border-top: none;
+    justify-content: flex-end;
 }
 
 .btn-save {
     background-color: var(--dashboard-orange);
     color: var(--dashboard-white);
-    padding: 12px 32px;
+    padding: 14px 44px;
     border: none;
-    border-radius: 8px;
+    border-radius: 999px;
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
@@ -578,9 +653,9 @@ html {
 .btn-cancel {
     background-color: var(--dashboard-black);
     color: var(--dashboard-white);
-    padding: 12px 32px;
+    padding: 14px 44px;
     border: none;
-    border-radius: 8px;
+    border-radius: 999px;
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
@@ -603,6 +678,8 @@ html {
         width: 100%;
         position: relative;
         top: 0;
+        left: 0;
+        bottom: auto;
         height: auto;
     }
 
@@ -617,25 +694,14 @@ html {
     .account-section {
         padding: 20px;
     }
+
+    .account-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* ===================================
    Scrollbar Styles
    =================================== */
-.dashboard-sidebar::-webkit-scrollbar {
-    width: 6px;
-}
-
-.dashboard-sidebar::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.1);
-}
-
-.dashboard-sidebar::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: 3px;
-}
-
-.dashboard-sidebar::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.5);
-}
+/* Sidebar no longer scrolls internally, so no custom scrollbar */
 

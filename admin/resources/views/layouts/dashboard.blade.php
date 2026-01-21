@@ -21,8 +21,8 @@
     <!-- intl-tel-input CSS (for phone input with flags like register page) -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@19.5.3/build/css/intlTelInput.css">
 
-    <!-- Custom CSS -->
-    <link href="{{ asset('css/dashboard.css') }}" rel="stylesheet">
+    <!-- Custom CSS (cache-busted) -->
+    <link href="{{ asset('css/dashboard.css') }}?v={{ filemtime(public_path('css/dashboard.css')) }}" rel="stylesheet">
 </head>
 <body class="dashboard-body">
     <div class="dashboard-wrapper">
@@ -223,6 +223,21 @@
     
     <!-- intl-tel-input JS -->
     <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@19.5.3/build/js/intlTelInput.min.js"></script>
+
+    <script>
+        (function () {
+            function setDashboardHeaderHeightVar() {
+                const header = document.querySelector('.dashboard-header');
+                if (!header) return;
+                const h = Math.ceil(header.getBoundingClientRect().height);
+                document.documentElement.style.setProperty('--dashboard-header-height', `${h}px`);
+            }
+
+            document.addEventListener('DOMContentLoaded', setDashboardHeaderHeightVar);
+            window.addEventListener('load', setDashboardHeaderHeightVar);
+            window.addEventListener('resize', setDashboardHeaderHeightVar);
+        })();
+    </script>
     
     @stack('scripts')
     @yield('scripts')
