@@ -136,6 +136,16 @@ class DashboardController extends Controller
     }
 
     /**
+     * Show Team/Workspace page.
+     */
+    public function team()
+    {
+        return view('dashboard.team', [
+            'user' => auth()->user(),
+        ]);
+    }
+
+    /**
      * Update Security settings (password change, 2FA placeholder).
      */
     public function updateSecurity(Request $request)

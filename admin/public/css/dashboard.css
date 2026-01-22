@@ -1064,3 +1064,419 @@ body.dashboard-body {
    =================================== */
 /* Sidebar no longer scrolls internally, so no custom scrollbar */
 
+/* ===================================
+   Team/Workspace Page Styles
+   =================================== */
+.team-page {
+    max-width: 1200px;
+}
+
+.workspace-content {
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: 32px;
+    margin-bottom: 32px;
+    align-items: start;
+}
+
+.workspace-left {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.workspace-description {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.description-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.check-icon {
+    color: #2563eb;
+    font-size: 20px;
+    margin-top: 2px;
+    flex-shrink: 0;
+}
+
+.description-item p {
+    margin: 0;
+    font-size: 14px;
+    color: var(--dashboard-gray-dark);
+    line-height: 1.6;
+}
+
+.workspace-illustration {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px;
+    position: relative;
+}
+
+.illustration-container {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.workspace-illustration-img {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    object-fit: contain;
+    border-radius: 12px;
+}
+
+.illustration-placeholder {
+    width: 100%;
+    min-height: 300px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(91, 44, 255, 0.1) 0%, rgba(245, 97, 41, 0.1) 100%);
+    border: 2px dashed rgba(91, 44, 255, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.illustration-icon {
+    font-size: 64px;
+    color: var(--dashboard-purple);
+    opacity: 0.6;
+}
+
+.workspace-right {
+    position: sticky;
+    top: 100px;
+}
+
+.invite-section {
+    background-color: var(--dashboard-white);
+    border: 1px solid rgba(17, 24, 39, 0.06);
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 6px 18px rgba(17, 24, 39, 0.06);
+}
+
+.invite-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--dashboard-gray-dark);
+    margin-bottom: 20px;
+}
+
+.invite-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.email-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.email-input-wrapper {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.email-input {
+    flex: 1;
+    padding: 12px 16px;
+    border: 1px solid rgba(17, 24, 39, 0.12);
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.btn-add-email,
+.btn-remove-email {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background-color: var(--dashboard-purple);
+    color: var(--dashboard-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    flex-shrink: 0;
+}
+
+.btn-add-email:hover {
+    background-color: var(--dashboard-purple-dark);
+}
+
+.btn-remove-email {
+    background-color: rgba(239, 68, 68, 0.14);
+    color: #ef4444;
+}
+
+.btn-remove-email:hover {
+    background-color: rgba(239, 68, 68, 0.25);
+}
+
+.btn-invite {
+    background-color: var(--dashboard-orange);
+    color: var(--dashboard-white);
+    padding: 14px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    width: 100%;
+}
+
+.btn-invite:hover {
+    background-color: #e04a1f;
+}
+
+/* ===================================
+   Invite Members Modal Styles
+   =================================== */
+.invite-modal-content {
+    border-radius: 16px;
+    border: none;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.invite-modal-header {
+    background: linear-gradient(135deg, #374151 0%, #1f2937 100%);
+    border-radius: 16px 16px 0 0;
+    padding: 24px 32px;
+    border-bottom: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.invite-modal-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 200px;
+    height: 200px;
+    background: linear-gradient(135deg, rgba(245, 97, 41, 0.2) 0%, transparent 100%);
+    border-radius: 50%;
+    transform: translate(30%, -30%);
+}
+
+.invite-modal-header::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 150px;
+    height: 150px;
+    background: linear-gradient(135deg, rgba(91, 44, 255, 0.2) 0%, transparent 100%);
+    border-radius: 50%;
+    transform: translate(-30%, -30%);
+}
+
+.invite-modal-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #fbbf24;
+    margin: 0;
+    position: relative;
+    z-index: 1;
+}
+
+.btn-close-modal {
+    position: absolute;
+    top: 24px;
+    right: 32px;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: var(--dashboard-white);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    z-index: 2;
+}
+
+.btn-close-modal:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.invite-modal-body {
+    padding: 32px;
+    background-color: var(--dashboard-white);
+}
+
+.invite-modal-description {
+    font-size: 14px;
+    color: var(--dashboard-gray-text);
+    margin-bottom: 24px;
+    line-height: 1.6;
+}
+
+.form-label-modal {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--dashboard-gray-dark);
+    margin-bottom: 12px;
+}
+
+.invite-form-modal {
+    margin-bottom: 0;
+}
+
+.email-input-group-modal {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.email-input-wrapper-modal {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.email-input-modal {
+    flex: 1;
+    padding: 12px 16px;
+    border: 1px solid rgba(17, 24, 39, 0.12);
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.email-input-modal:focus {
+    outline: none;
+    border-color: var(--dashboard-orange);
+    box-shadow: 0 0 0 3px rgba(245, 97, 41, 0.18);
+}
+
+.btn-add-email-modal,
+.btn-remove-email-modal {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background-color: var(--dashboard-purple);
+    color: var(--dashboard-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    flex-shrink: 0;
+}
+
+.btn-add-email-modal:hover {
+    background-color: var(--dashboard-purple-dark);
+}
+
+.btn-remove-email-modal {
+    background-color: rgba(239, 68, 68, 0.14);
+    color: #ef4444;
+}
+
+.btn-remove-email-modal:hover {
+    background-color: rgba(239, 68, 68, 0.25);
+}
+
+.invite-modal-footer {
+    padding: 24px 32px;
+    background-color: var(--dashboard-white);
+    border-top: 1px solid rgba(17, 24, 39, 0.06);
+    border-radius: 0 0 16px 16px;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+}
+
+.btn-invite-modal {
+    background-color: #dc2626;
+    color: var(--dashboard-white);
+    padding: 14px 48px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-invite-modal:hover {
+    background-color: #b91c1c;
+}
+
+/* Modal Guarantees/Footer Info */
+.invite-modal-footer::after {
+    content: '';
+    display: block;
+    width: 100%;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(17, 24, 39, 0.06);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    font-size: 12px;
+    color: var(--dashboard-gray-text);
+}
+
+/* Responsive Styles for Team Page */
+@media (max-width: 1024px) {
+    .workspace-content {
+        grid-template-columns: 1fr;
+    }
+
+    .workspace-right {
+        position: relative;
+        top: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .workspace-content {
+        gap: 24px;
+    }
+
+    .invite-section {
+        padding: 20px;
+    }
+
+    .invite-modal-header {
+        padding: 20px 24px;
+    }
+
+    .invite-modal-body {
+        padding: 24px;
+    }
+
+    .invite-modal-footer {
+        padding: 20px 24px;
+    }
+
+    .invite-modal-title {
+        font-size: 24px;
+    }
+}
+

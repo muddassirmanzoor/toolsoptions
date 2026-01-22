@@ -35,6 +35,9 @@ Route::middleware(['auth'])->group(function () {
 
     // Last tasks (Processed files)
     Route::get('/last-tasks', [DashboardController::class, 'tasks'])->name('dashboard.tasks');
+
+    // Team (Workspace)
+    Route::get('/team', [DashboardController::class, 'team'])->name('dashboard.team');
 });
 
 // Admin routes

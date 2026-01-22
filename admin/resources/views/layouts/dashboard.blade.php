@@ -94,8 +94,8 @@
                                         <span>Security</span>
                                     </a>
                                 </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                <li class="nav-item {{ request()->routeIs('dashboard.team') ? 'active' : '' }}">
+                                    <a href="{{ route('dashboard.team') }}" class="nav-link">
                                         <i class="fas fa-users"></i>
                                         <span>Team</span>
                                     </a>
