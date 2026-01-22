@@ -45,6 +45,13 @@ modules_bkp_*/
 *.log
 logs/
 
+# Admin (Laravel) storage/cache (do not version runtime artifacts)
+admin/storage/framework/views/
+admin/storage/framework/cache/
+admin/storage/framework/sessions/
+admin/storage/logs/
+admin/storage
+
 # Temporary files
 tmp/
 .cache/

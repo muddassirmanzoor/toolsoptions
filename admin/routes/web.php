@@ -28,6 +28,13 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::put('/dashboard', [DashboardController::class, 'update'])->name('dashboard.update');
+
+    // Security (Profile)
+    Route::get('/security', [DashboardController::class, 'security'])->name('dashboard.security');
+    Route::put('/security', [DashboardController::class, 'updateSecurity'])->name('dashboard.security.update');
+
+    // Last tasks (Processed files)
+    Route::get('/last-tasks', [DashboardController::class, 'tasks'])->name('dashboard.tasks');
 });
 
 // Admin routes

@@ -82,14 +82,14 @@
                         <div class="nav-section">
                             <h4 class="nav-section-title">Profile</h4>
                             <ul class="nav-list">
-                                <li class="nav-item active">
+                                <li class="nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
                                     <a href="{{ route('dashboard') }}" class="nav-link">
                                         <i class="fas fa-user"></i>
                                         <span>My Account</span>
                                     </a>
                                 </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                <li class="nav-item {{ request()->routeIs('dashboard.security') ? 'active' : '' }}">
+                                    <a href="{{ route('dashboard.security') }}" class="nav-link">
                                         <i class="fas fa-shield-alt"></i>
                                         <span>Security</span>
                                     </a>
@@ -107,6 +107,12 @@
                         <div class="nav-section">
                             <h4 class="nav-section-title">Signature</h4>
                             <ul class="nav-list">
+                                <li class="nav-item {{ request()->routeIs('dashboard.tasks') ? 'active' : '' }}">
+                                    <a href="{{ route('dashboard.tasks') }}" class="nav-link">
+                                        <i class="fas fa-clock"></i>
+                                        <span>Last tasks</span>
+                                    </a>
+                                </li>
                                 <li class="nav-item">
                                     <a href="#" class="nav-link">
                                         <i class="fas fa-eye"></i>
@@ -208,6 +214,17 @@
                     @if(session('error'))
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
                             {{ session('error') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
+
+                    @if($errors->any())
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <ul class="mb-0">
+                                @foreach($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     @endif

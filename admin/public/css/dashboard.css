@@ -348,6 +348,172 @@ body.dashboard-body {
 }
 
 /* ===================================
+   Last tasks page (Processed Files)
+   =================================== */
+.dashboard-tasks-page .tasks-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    margin: 26px 0 18px;
+}
+
+.dashboard-tasks-page .tasks-total {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--dashboard-gray-dark);
+    white-space: nowrap;
+}
+
+.dashboard-tasks-page .tasks-notice {
+    background: rgba(91, 44, 255, 0.12);
+    border: 1px solid rgba(91, 44, 255, 0.10);
+    color: var(--dashboard-gray-dark);
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin-bottom: 22px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.tasks-card {
+    background-color: var(--dashboard-white);
+    border: 1px solid rgba(17, 24, 39, 0.06);
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(17, 24, 39, 0.06);
+    overflow: hidden;
+}
+
+.tasks-card-header {
+    padding: 18px 22px 10px;
+}
+
+.tasks-card-title {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--dashboard-gray-dark);
+}
+
+.tasks-table thead th {
+    font-size: 13px;
+    font-weight: 700;
+    color: rgba(17, 24, 39, 0.70);
+    border-bottom: 1px solid rgba(17, 24, 39, 0.08);
+    padding: 14px 22px;
+}
+
+.tasks-table tbody td {
+    padding: 16px 22px;
+    border-bottom: 1px solid rgba(17, 24, 39, 0.06);
+    font-size: 14px;
+    color: var(--dashboard-gray-dark);
+}
+
+.tasks-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.tasks-tool {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.tool-icon {
+    width: 26px;
+    height: 26px;
+    border-radius: 6px;
+    background: rgba(91, 44, 255, 0.12);
+    color: var(--dashboard-purple);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+}
+
+.tool-icon i {
+    font-size: 13px;
+}
+
+.tool-name {
+    font-weight: 600;
+}
+
+.status-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 7px 14px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    border: 1px solid transparent;
+}
+
+.status-pill.status--completed {
+    background: rgba(34, 197, 94, 0.16);
+    color: #16a34a;
+    border-color: rgba(34, 197, 94, 0.18);
+}
+
+.status-pill.status--default {
+    background: rgba(107, 114, 128, 0.12);
+    color: rgba(17, 24, 39, 0.70);
+    border-color: rgba(107, 114, 128, 0.18);
+}
+
+.task-actions {
+    display: inline-flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.icon-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 999px;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.12s ease, filter 0.12s ease, opacity 0.12s ease;
+}
+
+.icon-btn:hover {
+    transform: translateY(-1px);
+    filter: brightness(0.98);
+}
+
+.icon-btn:active {
+    transform: translateY(0px);
+}
+
+.icon-btn--danger {
+    background: rgba(239, 68, 68, 0.14);
+    color: #ef4444;
+}
+
+.icon-btn--primary {
+    background: rgba(91, 44, 255, 0.14);
+    color: var(--dashboard-purple);
+}
+
+@media (max-width: 768px) {
+    .dashboard-tasks-page .tasks-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .tasks-table thead th,
+    .tasks-table tbody td {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+}
+
+/* ===================================
   Page Layout (My Account)
   =================================== */
 .account-grid {
@@ -356,6 +522,15 @@ body.dashboard-body {
     grid-template-columns: minmax(0, 1fr) minmax(280px, 420px);
     gap: 24px;
     align-items: start;
+}
+
+.account-grid--equal {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.security-grid--single {
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 520px;
 }
 
 .account-col-left {
@@ -445,6 +620,142 @@ body.dashboard-body {
     font-size: 14px;
     color: var(--dashboard-gray-text);
     margin-bottom: 20px;
+}
+
+/* ===================================
+  Security Page
+  =================================== */
+.security-card-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 18px;
+}
+
+.security-card-header--between {
+    justify-content: space-between;
+}
+
+.security-card-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0;
+    color: var(--dashboard-gray-dark);
+}
+
+.security-status {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.security-status.disabled {
+    color: var(--dashboard-orange);
+}
+
+.security-status.enabled {
+    color: #16a34a;
+}
+
+.twofa-row {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    margin-top: 8px;
+}
+
+.twofa-qr {
+    width: 140px;
+    height: 140px;
+    background: #fff;
+    border: 1px solid rgba(17, 24, 39, 0.10);
+    border-radius: 10px;
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+}
+
+.twofa-qr-placeholder {
+    width: 112px;
+    height: 112px;
+    background:
+        linear-gradient(90deg, rgba(0,0,0,0.08) 1px, transparent 1px) 0 0/14px 14px,
+        linear-gradient(0deg, rgba(0,0,0,0.08) 1px, transparent 1px) 0 0/14px 14px;
+    border-radius: 6px;
+}
+
+.twofa-text {
+    margin: 0;
+    font-size: 13px;
+    color: var(--dashboard-gray-dark);
+    line-height: 1.35;
+}
+
+/* Password strength (Security page) */
+.password-strength {
+    margin: -8px 0 16px;
+}
+
+.password-strength-bar {
+    width: 100%;
+    height: 8px;
+    border-radius: 999px;
+    background: rgba(17, 24, 39, 0.08);
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.password-strength-bar-fill {
+    height: 100%;
+    width: 0%;
+    border-radius: 999px;
+    transition: width 160ms ease, background-color 160ms ease;
+}
+
+.password-strength-meta {
+    display: flex;
+    gap: 6px;
+    align-items: baseline;
+    margin-bottom: 10px;
+    color: var(--dashboard-gray-text);
+    font-size: 12px;
+}
+
+.password-strength-label {
+    font-weight: 600;
+}
+
+.password-strength-value {
+    font-weight: 700;
+    color: var(--dashboard-gray-dark);
+}
+
+.password-criteria {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 6px;
+}
+
+.password-criteria li {
+    font-size: 12px;
+    color: var(--dashboard-gray-text);
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.password-criteria li::before {
+    content: "•";
+    color: rgba(17, 24, 39, 0.35);
+}
+
+.password-criteria li.ok {
+    color: var(--dashboard-gray-dark);
+}
+
+.password-criteria li.ok::before {
+    content: "✓";
+    color: #16a34a;
 }
 
 /* ===================================
@@ -698,6 +1009,18 @@ body.dashboard-body {
 
     .account-grid {
         grid-template-columns: 1fr;
+    }
+
+    .account-grid--equal {
+        grid-template-columns: 1fr;
+    }
+
+    .security-grid--single {
+        max-width: 100%;
+    }
+
+    .twofa-row {
+        align-items: flex-start;
     }
 }
 
