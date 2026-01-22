@@ -48,7 +48,12 @@
                     </div>
                     <div class="form-group mb-3">
                         <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" placeholder="Password" required>
+                        <div class="password-input-wrapper">
+                            <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" placeholder="Password" required>
+                            <button type="button" class="password-toggle-btn" id="passwordToggle" aria-label="Toggle password visibility">
+                                <i class="fas fa-eye" id="passwordToggleIcon"></i>
+                            </button>
+                        </div>
                         @error('password')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -92,6 +97,27 @@
         const countryCode = iti.getSelectedCountryData().dialCode;
         document.getElementById('country_code').value = '+' + countryCode;
     });
+
+    // Password visibility toggle
+    const passwordInput = document.getElementById('password');
+    const passwordToggle = document.getElementById('passwordToggle');
+    const passwordToggleIcon = document.getElementById('passwordToggleIcon');
+
+    if (passwordToggle && passwordInput) {
+        passwordToggle.addEventListener('click', function() {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            
+            // Toggle icon
+            if (type === 'text') {
+                passwordToggleIcon.classList.remove('fa-eye');
+                passwordToggleIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordToggleIcon.classList.remove('fa-eye-slash');
+                passwordToggleIcon.classList.add('fa-eye');
+            }
+        });
+    }
 </script>
 @endsection
 

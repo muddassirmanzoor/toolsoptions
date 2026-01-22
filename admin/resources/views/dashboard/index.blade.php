@@ -90,11 +90,8 @@
                             <a href="#" class="social-icon facebook" aria-label="Link Facebook">
                                 <i class="fab fa-facebook-f"></i>
                             </a>
-                            <a href="#" class="social-icon instagram" aria-label="Link Instagram">
-                                <i class="fab fa-instagram"></i>
-                            </a>
-                            <a href="#" class="social-icon twitter" aria-label="Link Twitter">
-                                <i class="fab fa-twitter"></i>
+                            <a href="#" class="social-icon gmail" aria-label="Link Gmail">
+                                <i class="fab fa-google"></i>
                             </a>
                         </div>
                     </div>

@@ -45,7 +45,12 @@
 
                 <div class="form-group">
                     <label class="form-label" for="currentPassword">Current Password</label>
-                    <input id="currentPassword" type="password" class="form-control" name="current_password" placeholder="Current Password" autocomplete="current-password">
+                    <div class="password-input-wrapper">
+                        <input id="currentPassword" type="password" class="form-control" name="current_password" placeholder="Current Password" autocomplete="current-password">
+                        <button type="button" class="password-toggle-btn" id="currentPasswordToggle" aria-label="Toggle password visibility">
+                            <i class="fas fa-eye" id="currentPasswordToggleIcon"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -151,6 +156,29 @@
 
     input.addEventListener('input', update);
     update();
+})();
+
+// Password visibility toggle for current password
+(() => {
+    const currentPasswordInput = document.getElementById('currentPassword');
+    const currentPasswordToggle = document.getElementById('currentPasswordToggle');
+    const currentPasswordToggleIcon = document.getElementById('currentPasswordToggleIcon');
+
+    if (currentPasswordToggle && currentPasswordInput) {
+        currentPasswordToggle.addEventListener('click', function() {
+            const type = currentPasswordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            currentPasswordInput.setAttribute('type', type);
+            
+            // Toggle icon
+            if (type === 'text') {
+                currentPasswordToggleIcon.classList.remove('fa-eye');
+                currentPasswordToggleIcon.classList.add('fa-eye-slash');
+            } else {
+                currentPasswordToggleIcon.classList.remove('fa-eye-slash');
+                currentPasswordToggleIcon.classList.add('fa-eye');
+            }
+        });
+    }
 })();
 </script>
 @endpush

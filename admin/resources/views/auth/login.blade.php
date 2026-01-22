@@ -26,26 +26,25 @@
                     </div>
                     <div class="form-group mb-3">
                         <label for="loginPassword" class="form-label">Password</label>
-                        <input type="password" class="form-control @error('password') is-invalid @enderror" id="loginPassword" name="password" placeholder="Password" required>
+                        <div class="password-input-wrapper">
+                            <input type="password" class="form-control @error('password') is-invalid @enderror" id="loginPassword" name="password" placeholder="Password" required>
+                            <button type="button" class="password-toggle-btn" id="loginPasswordToggle" aria-label="Toggle password visibility">
+                                <i class="fas fa-eye" id="loginPasswordToggleIcon"></i>
+                            </button>
+                        </div>
                         @error('password')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
                     <button type="submit" class="btn-auth btn-login-submit">Login</button>
-                    <div class="forgot-password mt-3">
-                        <a href="#" class="forgot-link">Forget Your Password, Click Here...</a>
-                    </div>
                     <div class="social-login mt-4">
                         <p class="social-text">Or login with:</p>
                         <div class="social-icons">
                             <a href="#" class="social-icon facebook">
                                 <i class="fab fa-facebook-f"></i>
                             </a>
-                            <a href="#" class="social-icon instagram">
-                                <i class="fab fa-instagram"></i>
-                            </a>
-                            <a href="#" class="social-icon twitter">
-                                <i class="fab fa-twitter"></i>
+                            <a href="#" class="social-icon gmail">
+                                <i class="fab fa-google"></i>
                             </a>
                         </div>
                     </div>
@@ -66,5 +65,30 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('scripts')
+<script>
+    // Password visibility toggle for login page
+    const loginPasswordInput = document.getElementById('loginPassword');
+    const loginPasswordToggle = document.getElementById('loginPasswordToggle');
+    const loginPasswordToggleIcon = document.getElementById('loginPasswordToggleIcon');
+
+    if (loginPasswordToggle && loginPasswordInput) {
+        loginPasswordToggle.addEventListener('click', function() {
+            const type = loginPasswordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            loginPasswordInput.setAttribute('type', type);
+            
+            // Toggle icon
+            if (type === 'text') {
+                loginPasswordToggleIcon.classList.remove('fa-eye');
+                loginPasswordToggleIcon.classList.add('fa-eye-slash');
+            } else {
+                loginPasswordToggleIcon.classList.remove('fa-eye-slash');
+                loginPasswordToggleIcon.classList.add('fa-eye');
+            }
+        });
+    }
+</script>
 @endsection
 
