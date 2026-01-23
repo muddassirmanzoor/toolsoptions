@@ -214,7 +214,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Get user ID from Laravel (if logged in)
         let userId = null;
         try {
-            const laravelUrl = 'http://82.180.132.134:8000/admin';
+            const laravelUrl = 'http://82.180.132.134:8000';
             const userResponse = await fetch(`${laravelUrl}/api/current-user`, {
                 method: 'GET',
                 credentials: 'include', // Include cookies for session
@@ -242,15 +242,19 @@ document.addEventListener("DOMContentLoaded", () => {
         formData.append("compression", compression.value);
         if (userId) {
             formData.append("user_id", userId);
+            console.log(`📤 Sending compress request with user_id: ${userId}`);
+        } else {
+            console.warn(`⚠️ No user_id available, file will be recorded as guest (user_id: 1)`);
         }
 
         try {
             const SERVER_NAME = window.env.PUBLIC_SERVER_URL; // Access the server name from config.js
+            console.log(`📤 Sending compress request to: ${SERVER_NAME}/api/compress-pdf`);
             const response = await fetch(`${SERVER_NAME}/api/compress-pdf`, {
                 method: "POST",
                 body: formData
             });
-            console.log(response);
+            console.log(`📥 Compress response status: ${response.status} ${response.statusText}`);
             if (!response.ok) {
                 throw new Error(response);
             }
@@ -281,6 +285,12 @@ document.addEventListener("DOMContentLoaded", () => {
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
+        
+        // Clean up blob URL to free memory (reduces warning visibility)
+        setTimeout(() => {
+            URL.revokeObjectURL(url);
+        }, 100);
+        
         showAlert("PDF compressed successfully!", 'success');
     }
 
@@ -299,7 +309,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Automatically remove the alert after a timeout (optional)
         setTimeout(() => {
-            $(alertDiv).alert('close');
-        }, 7000); // Remove alert after 5 seconds
+            // Use Bootstrap 5 native method (no jQuery needed)
+            const bsAlert = new bootstrap.Alert(alertDiv);
+            bsAlert.close();
+        }, 7000); // Remove alert after 7 seconds
     }
 });

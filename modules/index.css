@@ -25,7 +25,8 @@ body {
     margin-left: 15px; /* Adjust spacing between nav items */
 }
 
-.nav-link {
+/* Only apply to old navbar nav-links, not header-nav */
+.navbar-nav .nav-link {
     font-family: 'Inter', sans-serif;
 }
 

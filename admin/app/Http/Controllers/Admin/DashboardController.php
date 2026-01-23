@@ -96,9 +96,21 @@ class DashboardController extends Controller
      */
     public function tasks()
     {
-        $tasks = ProcessedFile::where('user_id', auth()->id())
+        $userId = auth()->id();
+        \Log::info('DashboardController::tasks called', [
+            'user_id' => $userId,
+            'authenticated' => auth()->check(),
+        ]);
+        
+        $tasks = ProcessedFile::where('user_id', $userId)
             ->orderBy('created_at', 'desc')
             ->get();
+
+        \Log::info('ProcessedFile query result', [
+            'user_id' => $userId,
+            'tasks_count' => $tasks->count(),
+            'task_ids' => $tasks->pluck('id')->toArray(),
+        ]);
 
         return view('dashboard.tasks', [
             'tasks' => $tasks,

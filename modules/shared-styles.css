@@ -106,22 +106,26 @@ body {
 }
 
 /* Header nav - exact match to admin */
-.header-nav {
-    display: flex;
-    gap: 24px;
+.dashboard-header .header-nav {
+    display: flex !important;
+    gap: 24px !important;
     align-items: center;
+    flex-wrap: nowrap;
 }
 
-.header-nav .nav-link {
-    color: var(--dashboard-gray-dark);
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 500;
+.dashboard-header .header-nav .nav-link {
+    color: var(--dashboard-gray-dark) !important;
+    text-decoration: none !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
     transition: color 0.2s;
+    white-space: nowrap;
+    margin: 0 !important;
+    padding: var(--spacing-xs) var(--spacing-md) !important;
 }
 
-.header-nav .nav-link:hover {
-    color: var(--dashboard-purple);
+.dashboard-header .header-nav .nav-link:hover {
+    color: var(--dashboard-purple) !important;
 }
 
 .navbar-nav .dropdown-toggle::after {

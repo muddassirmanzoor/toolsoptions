@@ -60,5 +60,14 @@ Route::options('/processed-files', function () {
         ->header('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization');
 });
 
+Route::options('/processed-files/{id}', function () {
+    return response('', 200)
+        ->header('Access-Control-Allow-Origin', 'http://82.180.132.134:3000')
+        ->header('Access-Control-Allow-Credentials', 'true')
+        ->header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
+        ->header('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization');
+});
+
 // Processed Files API (called by Node.js server)
 Route::post('/processed-files', [ProcessedFileController::class, 'store'])->name('api.processed-files.store');
+Route::get('/processed-files/{id}', [ProcessedFileController::class, 'show'])->name('api.processed-files.show');

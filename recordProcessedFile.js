@@ -27,7 +27,7 @@ async function recordProcessedFile(options) {
         filePath = null,
         originalFilename = null,
         metadata = {},
-        laravelUrl = process.env.LARAVEL_API_URL || 'http://82.180.132.134:8000/admin'
+        laravelUrl = process.env.LARAVEL_API_URL || 'http://82.180.132.134:8000'
     } = options;
 
     if (!toolName) {
@@ -62,6 +62,9 @@ async function recordProcessedFile(options) {
     };
 
     return new Promise((resolve, reject) => {
+        console.log(`📤 Sending request to Laravel API: ${url.href}`);
+        console.log(`📦 Request data:`, JSON.stringify(JSON.parse(data), null, 2));
+        
         const req = httpModule.request(options_http, (res) => {
             let responseData = '';
 
@@ -70,19 +73,30 @@ async function recordProcessedFile(options) {
             });
 
             res.on('end', () => {
+                console.log(`📥 Laravel API Response Status: ${res.statusCode}`);
+                console.log(`📥 Laravel API Response Headers:`, res.headers);
+                
                 if (res.statusCode >= 200 && res.statusCode < 300) {
-                    console.log(`✓ Processed file recorded: ${toolName} (${fileCount} file(s))`);
+                    console.log(`✅ Processed file recorded successfully: ${toolName} (${fileCount} file(s))`);
+                    console.log(`📥 Response body:`, responseData);
                     resolve(true);
                 } else {
-                    console.error(`✗ Failed to record processed file. Status: ${res.statusCode}`);
-                    console.error('Response:', responseData);
+                    console.error(`❌ Failed to record processed file. Status: ${res.statusCode}`);
+                    console.error('📥 Response body:', responseData);
+                    try {
+                        const errorData = JSON.parse(responseData);
+                        console.error('📥 Parsed error:', errorData);
+                    } catch (e) {
+                        console.error('📥 Could not parse error response as JSON');
+                    }
                     resolve(false); // Don't reject, just log error
                 }
             });
         });
 
         req.on('error', (error) => {
-            console.error('Error calling Laravel API:', error.message);
+            console.error('❌ Error calling Laravel API:', error.message);
+            console.error('❌ Error details:', error);
             resolve(false); // Don't reject, just log error
         });
 
