@@ -1,16 +1,29 @@
 /* ===================================
-   CSS Variables / Design Tokens
+   CSS Variables / Design Tokens - Match Admin Dashboard
    =================================== */
 :root {
-    /* Colors */
-    --color-primary-purple: #5A26EF;
+    /* Colors - Match Admin Dashboard */
+    --color-primary-purple: #5B2CFF;
+    --color-primary-purple-dark: #4b22e6;
     --color-primary-orange: #F56129;
     --color-white: #FFFFFF;
     --color-black: #000000;
-    --color-gray-light: #FAFAFA;
-    --color-gray-border: #E4E4E4;
-    --color-gray-text: #666666;
-    --color-gray-dark: #333333;
+    --color-gray-light: #F9FAFB;
+    --color-gray-border: #E5E7EB;
+    --color-gray-text: #6B7280;
+    --color-gray-dark: #111827;
+    
+    /* Dashboard specific (for compatibility) */
+    --dashboard-purple: #5B2CFF;
+    --dashboard-purple-dark: #4b22e6;
+    --dashboard-orange: #F56129;
+    --dashboard-white: #FFFFFF;
+    --dashboard-canvas: #EEF3FB;
+    --dashboard-gray-light: #F9FAFB;
+    --dashboard-gray-border: #E5E7EB;
+    --dashboard-gray-text: #6B7280;
+    --dashboard-gray-dark: #111827;
+    --dashboard-black: #000000;
     
     /* Typography */
     --font-poppins: 'Poppins', sans-serif;
@@ -56,13 +69,24 @@ body {
 }
 
 /* ===================================
-   Navbar Styles
+   Header Styles - Exact Match to Admin Dashboard
    =================================== */
-.navbar {
-    padding: var(--spacing-md) 0;
-    border-bottom: 1px solid var(--color-gray-border);
+.dashboard-header {
+    background-color: var(--dashboard-white);
+    border-bottom: 1px solid var(--dashboard-gray-border);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    width: 100%;
 }
 
+.dashboard-header .container-fluid {
+    padding: 16px 32px;
+    max-width: 100%;
+}
+
+.dashboard-header .logo-img,
 .logo-img {
     height: 40px;
     width: auto;
@@ -79,6 +103,25 @@ body {
 
 .navbar-nav .nav-link:hover {
     color: var(--color-primary-purple);
+}
+
+/* Header nav - exact match to admin */
+.header-nav {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+}
+
+.header-nav .nav-link {
+    color: var(--dashboard-gray-dark);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.header-nav .nav-link:hover {
+    color: var(--dashboard-purple);
 }
 
 .navbar-nav .dropdown-toggle::after {
@@ -124,6 +167,82 @@ body {
     background-color: #e04f1f;
     transform: translateY(-2px);
     box-shadow: var(--shadow-md);
+}
+
+/* ===================================
+   Authenticated User Navbar Styles
+   =================================== */
+/* Guest nav - hidden by default */
+#guest-nav {
+    display: none !important;
+}
+
+/* Show guest nav when explicitly set to flex */
+#guest-nav[style*="flex"] {
+    display: flex !important;
+}
+
+/* User nav - hidden by default */
+#user-nav {
+    display: none !important;
+}
+
+/* Show user nav when explicitly set to flex */
+#user-nav[style*="flex"] {
+    display: flex !important;
+}
+
+/* Upgrade button - exact match to admin */
+.btn-upgrade {
+    background-color: var(--dashboard-orange);
+    color: var(--dashboard-white);
+    padding: 10px 20px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    transition: background-color 0.2s;
+}
+
+.btn-upgrade:hover {
+    background-color: #e04a1f;
+    color: var(--dashboard-white);
+}
+
+/* Profile image - exact match to admin */
+.profile-img-header {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+/* Dropdown menu - exact match to admin */
+.dropdown-menu {
+    border: 1px solid var(--dashboard-gray-border);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 8px 0;
+    margin-top: 8px;
+    min-width: 180px;
+}
+
+.dropdown-item {
+    padding: 10px 20px;
+    font-size: 14px;
+    color: var(--dashboard-gray-dark);
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.dropdown-item:hover {
+    background-color: var(--dashboard-gray-light);
+    color: var(--dashboard-purple);
+}
+
+.dropdown-divider {
+    margin: 8px 0;
+    border-top: 1px solid var(--dashboard-gray-border);
 }
 
 /* ===================================

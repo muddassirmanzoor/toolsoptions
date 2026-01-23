@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\ProcessedFile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
 class DashboardController extends Controller
@@ -94,45 +96,102 @@ class DashboardController extends Controller
      */
     public function tasks()
     {
-        // NOTE: This is currently UI-only (no backing table/model yet).
-        // Swap this array for a DB query once processed jobs are persisted.
-        $tasks = collect([
-            [
-                'date' => 'Aug 29, 2024',
-                'tool' => 'Compress PDF',
-                'files' => 2,
-                'status' => 'Completed',
-            ],
-            [
-                'date' => 'Aug 29, 2024',
-                'tool' => 'Compress PDF',
-                'files' => 2,
-                'status' => 'Completed',
-            ],
-            [
-                'date' => 'Aug 29, 2024',
-                'tool' => 'Compress PDF',
-                'files' => 2,
-                'status' => 'Completed',
-            ],
-            [
-                'date' => 'Aug 29, 2024',
-                'tool' => 'Compress PDF',
-                'files' => 2,
-                'status' => 'Completed',
-            ],
-            [
-                'date' => 'Aug 29, 2024',
-                'tool' => 'Compress PDF',
-                'files' => 2,
-                'status' => 'Completed',
-            ],
-        ]);
+        $tasks = ProcessedFile::where('user_id', auth()->id())
+            ->orderBy('created_at', 'desc')
+            ->get();
 
         return view('dashboard.tasks', [
             'tasks' => $tasks,
             'totalFiles' => $tasks->count(),
         ]);
+    }
+
+    /**
+     * Download a processed file.
+     */
+    public function downloadFile($id)
+    {
+        $file = ProcessedFile::where('user_id', auth()->id())
+            ->where('id', $id)
+            ->firstOrFail();
+
+        if (!$file->file_path) {
+            return redirect()->route('dashboard.tasks')
+                ->with('error', 'File not found or has been deleted.');
+        }
+
+        // Try multiple storage locations
+        $filePath = $file->file_path;
+        $fullPath = null;
+
+        // Check in Laravel storage
+        if (Storage::disk('local')->exists($filePath)) {
+            $fullPath = Storage::disk('local')->path($filePath);
+        }
+        // Check in processed_files directory
+        elseif (Storage::disk('local')->exists('processed_files/' . basename($filePath))) {
+            $fullPath = Storage::disk('local')->path('processed_files/' . basename($filePath));
+        }
+        // Check absolute path (for files stored by Node.js)
+        elseif (file_exists($filePath)) {
+            $fullPath = $filePath;
+        }
+        // Check in admin storage directory
+        else {
+            $adminStoragePath = storage_path('app/processed_files/' . basename($filePath));
+            if (file_exists($adminStoragePath)) {
+                $fullPath = $adminStoragePath;
+            }
+        }
+
+        if (!$fullPath || !file_exists($fullPath)) {
+            return redirect()->route('dashboard.tasks')
+                ->with('error', 'File not found or has been deleted.');
+        }
+
+        return response()->download($fullPath, $file->original_filename ?? basename($filePath));
+    }
+
+    /**
+     * Delete a processed file.
+     */
+    public function deleteFile($id)
+    {
+        $file = ProcessedFile::where('user_id', auth()->id())
+            ->where('id', $id)
+            ->firstOrFail();
+
+        // Delete the physical file if it exists (check multiple locations)
+        if ($file->file_path) {
+            $filePath = $file->file_path;
+            
+            // Try Laravel storage
+            if (Storage::disk('local')->exists($filePath)) {
+                Storage::disk('local')->delete($filePath);
+            }
+            
+            // Try processed_files directory
+            $basename = basename($filePath);
+            if (Storage::disk('local')->exists('processed_files/' . $basename)) {
+                Storage::disk('local')->delete('processed_files/' . $basename);
+            }
+            
+            // Try absolute path
+            if (file_exists($filePath)) {
+                @unlink($filePath);
+            }
+            
+            // Try admin storage directory
+            $adminStoragePath = storage_path('app/processed_files/' . $basename);
+            if (file_exists($adminStoragePath)) {
+                @unlink($adminStoragePath);
+            }
+        }
+
+        $file->delete();
+
+        return redirect()->route('dashboard.tasks')
+            ->with('success', 'File deleted successfully.');
     }
 
     /**

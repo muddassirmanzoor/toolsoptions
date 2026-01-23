@@ -211,9 +211,38 @@ document.addEventListener("DOMContentLoaded", () => {
         compressBtn.disabled = true;
         compressBtn.innerHTML = 'Please Wait... <span id="spinner" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>';
 
+        // Get user ID from Laravel (if logged in)
+        let userId = null;
+        try {
+            const laravelUrl = 'http://82.180.132.134:8000/admin';
+            const userResponse = await fetch(`${laravelUrl}/api/current-user`, {
+                method: 'GET',
+                credentials: 'include', // Include cookies for session
+                headers: {
+                    'Accept': 'application/json',
+                }
+            });
+            
+            if (userResponse.ok) {
+                const userData = await userResponse.json();
+                if (userData.authenticated && userData.user_id) {
+                    userId = userData.user_id;
+                    console.log('User authenticated:', userId);
+                } else {
+                    console.log('User not authenticated, using guest mode');
+                }
+            }
+        } catch (error) {
+            console.warn('Could not fetch user ID:', error);
+            // Continue without user ID (guest mode)
+        }
+
         const formData = new FormData();
         formData.append("pdfFile", pdfFiles[0]);
         formData.append("compression", compression.value);
+        if (userId) {
+            formData.append("user_id", userId);
+        }
 
         try {
             const SERVER_NAME = window.env.PUBLIC_SERVER_URL; // Access the server name from config.js

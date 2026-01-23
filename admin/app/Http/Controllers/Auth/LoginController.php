@@ -51,6 +51,12 @@ class LoginController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
+        // If request is from cross-origin (Node.js app), redirect back to tools
+        if ($request->header('Referer') && str_contains($request->header('Referer'), ':3000')) {
+            return redirect('http://82.180.132.134:3000/')
+                ->with('success', 'You have been logged out successfully.');
+        }
+
         return redirect()->route('login')
             ->with('success', 'You have been logged out successfully.');
     }

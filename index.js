@@ -12,6 +12,7 @@ const glob = require('glob'); // Requires glob package to match files
 const JSZip = require('jszip');
 const puppeteer = require('puppeteer'); // Added Puppeteer for HTML to PDF conversion
 const { spawn } = require('child_process');
+const { recordProcessedFile } = require('./recordProcessedFile');
 
 const app = express();
 const port = process.env.PUBLIC_PORT || 3000;
@@ -34,7 +35,7 @@ const cleanUpFiles = async (inputPath, outputPath) => {
 };
 
 // Helper function to handle file conversion
-const handleFileConversion = async (req, res, conversionCommand, outputExtension) => {
+const handleFileConversion = async (req, res, conversionCommand, outputExtension, toolName = null, userId = null) => {
     const inputPath = path.normalize(req.file.path);
     const outputPath = path.normalize(path.join(__dirname, 'uploads', `${req.file.filename}${outputExtension}`));
 
@@ -63,17 +64,66 @@ const handleFileConversion = async (req, res, conversionCommand, outputExtension
             return;
         }
 
+        // Store file in Laravel storage directory for later access
+        const laravelStoragePath = path.join(__dirname, 'admin', 'storage', 'app', 'processed_files');
+        const storageFileName = `${Date.now()}_${req.file.filename}${outputExtension}`;
+        const storagePath = path.join(laravelStoragePath, storageFileName);
+        
+        // Ensure directory exists
+        try {
+            await fs.mkdir(laravelStoragePath, { recursive: true });
+        } catch (mkdirErr) {
+            console.error('Error creating storage directory:', mkdirErr);
+        }
+
+        // Copy file to Laravel storage (don't delete immediately)
+        let fileStored = false;
+        try {
+            await fs.copyFile(outputPath, storagePath);
+            fileStored = true;
+        } catch (copyErr) {
+            console.error('Error copying file to storage:', copyErr);
+        }
+
+        // Record in database if tool name is provided
+        if (toolName && fileStored) {
+            const relativePath = `processed_files/${storageFileName}`;
+            const finalUserId = userId || (req.body.user_id ? parseInt(req.body.user_id) : null) || 1;
+            console.log(`Recording processed file: ${toolName}, User ID: ${finalUserId}, Path: ${relativePath}`);
+            await recordProcessedFile({
+                userId: finalUserId,
+                toolName: toolName,
+                fileCount: 1,
+                status: 'completed',
+                filePath: relativePath,
+                originalFilename: path.basename(outputPath)
+            });
+        } else if (toolName && !fileStored) {
+            console.warn(`File not stored, skipping database record for: ${toolName}`);
+        }
+
         res.setHeader('Content-Disposition', `attachment; filename="${path.basename(outputPath)}"`);
         res.sendFile(outputPath, async (err) => {
             if (err) {
                 console.error('Error sending file:', err);
                 res.status(500).send('Failed to send the converted document.');
             }
+            // Clean up input file immediately, but keep output file for 2 hours
             try {
                 await fs.unlink(inputPath);
-                await fs.unlink(outputPath);
+                // Schedule output file deletion after 2 hours (7200000 ms)
+                setTimeout(async () => {
+                    try {
+                        await fs.unlink(outputPath);
+                        if (fileStored) {
+                            await fs.unlink(storagePath).catch(() => {});
+                        }
+                    } catch (unlinkErr) {
+                        console.error('Error removing scheduled file:', unlinkErr);
+                    }
+                }, 7200000); // 2 hours
             } catch (unlinkErr) {
-                console.error('Error removing file:', unlinkErr);
+                console.error('Error removing input file:', unlinkErr);
             }
         });
     });
@@ -88,13 +138,13 @@ app.post('/api/protect-pdf', upload.single('pdf'), (req, res) => {
     }
     const scriptPath = path.join(__dirname, 'protect_pdf.py');
     const conversionCommand = `"${pythonPath}" "${scriptPath}" "${req.file.path.replace(/\\/g, '/')}" "${path.join(__dirname, 'uploads', `${req.file.filename}_protected.pdf`).replace(/\\/g, '/')}" ${password}`;
-    handleFileConversion(req, res, conversionCommand, '_protected.pdf');
+    handleFileConversion(req, res, conversionCommand, '_protected.pdf', 'Protect PDF', req.body.user_id);
 });
 // Compress PDF
 app.post('/api/compress-pdf', upload.single('pdfFile'), (req, res) => {
     const compression = req.body.compression;
     const conversionCommand = `python compress_pdf.py "${req.file.path.replace(/\\/g, '/')}" "${path.join(__dirname, 'uploads', `${req.file.filename}_compressed.pdf`).replace(/\\/g, '/')}" ${compression}`;
-    handleFileConversion(req, res, conversionCommand, '_compressed.pdf');
+    handleFileConversion(req, res, conversionCommand, '_compressed.pdf', 'Compress PDF', req.body.user_id);
 });
 app.post('/api/crop-pdf', upload.single('file'), (req, res) => {
     const left = req.body.left;
@@ -104,7 +154,7 @@ app.post('/api/crop-pdf', upload.single('file'), (req, res) => {
     const mode = req.body.mode;
     const pageIndex = req.body.pageIndex;
     const conversionCommand = `python crop_pdf.py "${req.file.path.replace(/\\/g, '/')}" "${path.join(__dirname, 'uploads', `${req.file.filename}_croped.pdf`).replace(/\\/g, '/')}" ${left} ${top} ${right} ${bottom} ${mode} ${pageIndex}`;
-    handleFileConversion(req, res, conversionCommand, '_croped.pdf');
+    handleFileConversion(req, res, conversionCommand, '_croped.pdf', 'Crop PDF', req.body.user_id);
 });
 // Define the /env route
 app.get('/env', (req, res) => {
@@ -213,14 +263,14 @@ app.post('/api/convert-word-to-pdf', upload.single('word'), (req, res) => {
 // HTML to PDF
 app.post('/api/convert-html-to-pdf', upload.single('html'), (req, res) => {
     const conversionCommand = `python convert_html_to_pdf.py "${req.file.path.replace(/\\/g, '/')}" "${path.join(__dirname, 'uploads', `${req.file.filename}.pdf`).replace(/\\/g, '/')}"`;
-    handleFileConversion(req, res, conversionCommand, '.pdf');
+    handleFileConversion(req, res, conversionCommand, '.pdf', 'Convert HTML to PDF', req.body.user_id);
 });
 
 // Unprotect PDF
 app.post('/api/unprotect-pdf', upload.single('pdf'), (req, res) => {
     const password = req.body.password || ''; // Use empty string if no password provided
     const conversionCommand = `python unprotect_pdf.py "${req.file.path.replace(/\\/g, '/')}" "${path.join(__dirname, 'uploads', `${req.file.filename}_unprotected.pdf`).replace(/\\/g, '/')}" "${password}"`;
-    handleFileConversion(req, res, conversionCommand, '_unprotected.pdf');
+    handleFileConversion(req, res, conversionCommand, '_unprotected.pdf', 'Unlock PDF', req.body.user_id);
 });
 
 // Watermark PDF

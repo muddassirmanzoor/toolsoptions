@@ -53,4 +53,12 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * Get the processed files for the user.
+     */
+    public function processedFiles()
+    {
+        return $this->hasMany(ProcessedFile::class);
+    }
 }

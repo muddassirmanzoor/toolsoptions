@@ -1,47 +1,40 @@
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-white">
-    <div class="container-fluid px-4">
-        <a class="navbar-brand" href="/">
-            <img src="../compressPDF/assets/logo-ilovepdf.svg" alt="I Love PDF" class="logo-img">
-        </a>
-        
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav mx-auto">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Browse Tools
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="/">All Tools</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">How It Works</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        All Tools PDF
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="../compressPDF/">Compress PDF</a></li>
-                        <li><a class="dropdown-item" href="../mergePDF/">Merge PDF</a></li>
-                        <li><a class="dropdown-item" href="../splitPDF/">Split PDF</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Pricing Plan</a>
-                </li>
-            </ul>
+<!-- Header - Exact Match to Admin Dashboard -->
+<header class="dashboard-header">
+    <div class="container-fluid">
+        <div class="d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center">
+                <a class="navbar-brand" href="/">
+                    <img src="/compressPDF/assets/logo-ilovepdf.svg" alt="I Love PDF" class="logo-img">
+                </a>
+                <nav class="header-nav ms-4">
+                    <a href="#" class="nav-link">Browse Tools</a>
+                    <a href="#" class="nav-link">How It Works</a>
+                    <a href="#" class="nav-link">All Tools PDF</a>
+                    <a href="#" class="nav-link">Pricing Plan</a>
+                </nav>
+            </div>
             <div class="d-flex align-items-center gap-3">
-                <a href="#" class="btn-login">Login</a>
-                <a href="#" class="btn-signup">Sign Up Free</a>
+                <!-- Guest User (Login/Signup) - Hidden by default -->
+                <div id="guest-nav" class="d-flex align-items-center gap-3" style="display: none !important;">
+                    <a href="http://82.180.132.134:8000/login" class="btn-login">Login</a>
+                    <a href="http://82.180.132.134:8000/register" class="btn-signup">Sign Up Free</a>
+                </div>
+                
+                <!-- Authenticated User (Dropdown) - Hidden by default -->
+                <div id="user-nav" class="d-flex align-items-center gap-3" style="display: none !important;">
+                    <a href="http://82.180.132.134:8000/dashboard" class="btn-upgrade">Upgrade Plan</a>
+                    <div class="dropdown">
+                        <img id="user-avatar" src="https://ui-avatars.com/api/?name=User&background=6366f1&color=fff&size=40" alt="Profile" class="profile-img-header" data-bs-toggle="dropdown" aria-expanded="false" style="cursor: pointer;">
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="http://82.180.132.134:8000/dashboard">Dashboard</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="http://82.180.132.134:8000/logout">Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</nav>
+</header>
 
 
