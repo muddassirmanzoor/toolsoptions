@@ -623,8 +623,46 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    function downloadPDF(pdfBytes, filename) {
+    async function downloadPDF(pdfBytes, filename) {
         const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+        
+        // Get user ID
+        let userId = null;
+        try {
+            const laravelUrl = 'http://82.180.132.134:8000';
+            const userResponse = await fetch(`${laravelUrl}/api/current-user`, {
+                method: 'GET',
+                credentials: 'include',
+                headers: { 'Accept': 'application/json' }
+            });
+            if (userResponse.ok) {
+                const userData = await userResponse.json();
+                if (userData.authenticated && userData.user_id) {
+                    userId = userData.user_id;
+                }
+            }
+        } catch (error) {
+            console.warn('Could not fetch user ID:', error);
+        }
+        
+        // Record file in database
+        try {
+            const SERVER_NAME = window.env.PUBLIC_SERVER_URL || 'http://82.180.132.134:3000';
+            const formData = new FormData();
+            formData.append('file', blob, filename);
+            formData.append('tool_name', 'Split PDF');
+            if (userId) formData.append('user_id', userId);
+            formData.append('original_filename', filename);
+            
+            await fetch(`${SERVER_NAME}/api/record-processed-file`, {
+                method: 'POST',
+                body: formData
+            });
+        } catch (error) {
+            console.warn('Failed to record file in database:', error);
+        }
+        
+        // Download file
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;

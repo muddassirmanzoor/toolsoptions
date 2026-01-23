@@ -328,7 +328,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             const mergedPdfBytes = await mergedPdf.save();
-            downloadMergedPDF(mergedPdfBytes);
+            await downloadMergedPDF(mergedPdfBytes);
         } catch (error) {
             showAlert("An error occurred while merging the PDFs: " + error.message, 'danger');
             console.error("Error merging PDFs:", error);
@@ -340,15 +340,55 @@ document.addEventListener("DOMContentLoaded", () => {
         return `merged_${timestamp}.pdf`;
     }
 
-    function downloadMergedPDF(pdfBytes) {
+    async function downloadMergedPDF(pdfBytes) {
+        const fileName = generateUniqueName();
         const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+        
+        // Get user ID
+        let userId = null;
+        try {
+            const laravelUrl = 'http://82.180.132.134:8000';
+            const userResponse = await fetch(`${laravelUrl}/api/current-user`, {
+                method: 'GET',
+                credentials: 'include',
+                headers: { 'Accept': 'application/json' }
+            });
+            if (userResponse.ok) {
+                const userData = await userResponse.json();
+                if (userData.authenticated && userData.user_id) {
+                    userId = userData.user_id;
+                }
+            }
+        } catch (error) {
+            console.warn('Could not fetch user ID:', error);
+        }
+        
+        // Record file in database
+        try {
+            const SERVER_NAME = window.env.PUBLIC_SERVER_URL || 'http://82.180.132.134:3000';
+            const formData = new FormData();
+            formData.append('file', blob, fileName);
+            formData.append('tool_name', 'Merge PDF');
+            if (userId) formData.append('user_id', userId);
+            formData.append('original_filename', fileName);
+            
+            await fetch(`${SERVER_NAME}/api/record-processed-file`, {
+                method: 'POST',
+                body: formData
+            });
+        } catch (error) {
+            console.warn('Failed to record file in database:', error);
+        }
+        
+        // Download file
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = generateUniqueName(); // Use the unique name
+        a.download = fileName;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
+        setTimeout(() => URL.revokeObjectURL(url), 100);
         showAlert("PDFs merged successfully!", 'success');
     }
 

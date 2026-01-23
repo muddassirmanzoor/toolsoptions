@@ -736,10 +736,26 @@ app.post('/api/convert-pdf-to-jpg', upload.single('pdf'), (req, res) => {
         console.log('Python stdout:', stdout);
 
         // Use glob to find all generated JPG files
-        glob(`${outputBase}_page_*.jpg`, (err, files) => {
+        glob(`${outputBase}_page_*.jpg`, async (err, files) => {
             if (err || files.length === 0) {
                 console.error('File Matching Error:', err);
                 return res.status(500).json({ error: 'No output files found' });
+            }
+
+            // Record first file in database (representing the conversion)
+            if (files.length > 0) {
+                const userId = req.body.user_id ? parseInt(req.body.user_id) : null;
+                const firstFile = files[0];
+                try {
+                    await recordFileForCustomTool(
+                        firstFile, 
+                        'Convert PDF to JPG', 
+                        userId, 
+                        `${path.basename(req.file.originalname, '.pdf')}_${files.length}_pages.jpg`
+                    );
+                } catch (recordErr) {
+                    console.warn('Failed to record PDF to JPG conversion:', recordErr);
+                }
             }
 
             try {
@@ -783,6 +799,11 @@ app.post('/api/convert-jpgs-to-pdf', upload.array('images', 50), (req, res) => {
         // Check if the output file exists
         try {
             await fs.access(outputPath);
+            
+            // Record file in database
+            const userId = req.body.user_id ? parseInt(req.body.user_id) : null;
+            await recordFileForCustomTool(outputPath, 'Convert JPGs to PDF', userId, `merged_${req.files.length}_images.pdf`);
+            
             res.setHeader('Content-Disposition', `attachment; filename="${outputFileName}"`);
             res.sendFile(outputPath, async (err) => {
                 if (err) {
@@ -821,10 +842,26 @@ app.post('/api/convert-pdf-to-png', upload.single('pdf'), (req, res) => {
         console.log('Python stdout:', stdout);
 
         // Use glob to find all generated PNG files
-        glob(`${outputBase}_page_*.png`, (err, files) => {
+        glob(`${outputBase}_page_*.png`, async (err, files) => {
             if (err || files.length === 0) {
                 console.error('File Matching Error:', err);
                 return res.status(500).json({ error: 'No output files found' });
+            }
+
+            // Record first file in database (representing the conversion)
+            if (files.length > 0) {
+                const userId = req.body.user_id ? parseInt(req.body.user_id) : null;
+                const firstFile = files[0];
+                try {
+                    await recordFileForCustomTool(
+                        firstFile, 
+                        'Convert PDF to PNG', 
+                        userId, 
+                        `${path.basename(req.file.originalname, '.pdf')}_${files.length}_pages.png`
+                    );
+                } catch (recordErr) {
+                    console.warn('Failed to record PDF to PNG conversion:', recordErr);
+                }
             }
 
             try {
@@ -868,6 +905,11 @@ app.post('/api/convert-pngs-to-pdf', upload.array('images', 50), (req, res) => {
         // Check if the output file exists
         try {
             await fs.access(outputPath);
+            
+            // Record file in database
+            const userId = req.body.user_id ? parseInt(req.body.user_id) : null;
+            await recordFileForCustomTool(outputPath, 'Convert PNGs to PDF', userId, `merged_${req.files.length}_images.pdf`);
+            
             res.setHeader('Content-Disposition', `attachment; filename="${outputFileName}"`);
             res.sendFile(outputPath, async (err) => {
                 if (err) {
@@ -891,6 +933,36 @@ app.post('/api/convert-pngs-to-pdf', upload.array('images', 50), (req, res) => {
     });
 });
 
+// API endpoint to record client-side processed files (Merge, Split, Extract, Remove PDF)
+app.post('/api/record-processed-file', upload.single('file'), async (req, res) => {
+    if (!req.file) {
+        return res.status(400).json({ error: 'No file uploaded' });
+    }
+    
+    const { tool_name, user_id, original_filename } = req.body;
+    
+    if (!tool_name) {
+        return res.status(400).json({ error: 'tool_name is required' });
+    }
+    
+    const userId = user_id ? parseInt(user_id) : 1;
+    const outputPath = req.file.path;
+    
+    try {
+        await recordFileForCustomTool(outputPath, tool_name, userId, original_filename || req.file.originalname);
+        
+        res.json({
+            success: true,
+            message: 'File recorded successfully'
+        });
+    } catch (error) {
+        console.error('Error recording file:', error);
+        res.status(500).json({
+            success: false,
+            error: error.message
+        });
+    }
+});
 
 // Serve the ICC profile
 app.use('/icc_profiles', express.static(path.join(__dirname, 'icc_profiles')));
