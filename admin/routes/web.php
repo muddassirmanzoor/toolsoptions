@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\PaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,7 +48,14 @@ Route::middleware(['auth'])->group(function () {
     
     // Premium Upgrade
     Route::get('/premium', [DashboardController::class, 'premium'])->name('dashboard.premium');
+
+    // Payment routes
+    Route::post('/api/payment/create-intent', [PaymentController::class, 'createPaymentIntent'])->name('payment.create-intent');
+    Route::post('/api/payment/confirm', [PaymentController::class, 'confirmPayment'])->name('payment.confirm');
 });
+
+// Webhook routes (no auth required)
+Route::post('/api/payment/webhook', [PaymentController::class, 'handleWebhook'])->name('payment.webhook');
 
 // Admin routes
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
