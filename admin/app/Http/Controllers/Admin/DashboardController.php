@@ -194,6 +194,26 @@ class DashboardController extends Controller
     }
 
     /**
+     * Show Plans and Packages page.
+     */
+    public function plans()
+    {
+        return view('dashboard.plans', [
+            'user' => auth()->user(),
+        ]);
+    }
+
+    /**
+     * Show Premium upgrade page.
+     */
+    public function premium()
+    {
+        return view('dashboard.premium', [
+            'user' => auth()->user(),
+        ]);
+    }
+
+    /**
      * Update Security settings (password change, 2FA placeholder).
      */
     public function updateSecurity(Request $request)

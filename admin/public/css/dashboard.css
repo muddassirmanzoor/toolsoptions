@@ -1582,3 +1582,984 @@ body.dashboard-body {
     }
 }
 
+/* ===================================
+   Plans and Packages Page
+   =================================== */
+.plans-page {
+    padding-bottom: 40px;
+}
+
+.plans-header {
+    margin-bottom: 32px;
+}
+
+.plans-subheader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 8px;
+}
+
+.subheading {
+    font-size: 16px;
+    color: var(--dashboard-gray-text);
+    font-weight: 500;
+}
+
+.total-files {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--dashboard-gray-dark);
+}
+
+.plans-content {
+    margin-bottom: 40px;
+}
+
+.plans-card {
+    background-color: var(--dashboard-white);
+    border: 1px solid rgba(17, 24, 39, 0.06);
+    border-radius: 12px;
+    padding: 32px;
+    box-shadow: 0 6px 18px rgba(17, 24, 39, 0.06);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.plans-card .card-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--dashboard-gray-dark);
+    margin-bottom: 16px;
+}
+
+.plans-card .card-description {
+    font-size: 14px;
+    color: var(--dashboard-gray-text);
+    line-height: 1.6;
+    margin-bottom: 24px;
+}
+
+/* Subscription Card */
+.subscription-card .current-plan {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-bottom: 32px;
+}
+
+.plan-price {
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--dashboard-purple);
+}
+
+.plan-period {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--dashboard-gray-dark);
+}
+
+.btn-go-premium {
+    background-color: var(--dashboard-orange);
+    color: var(--dashboard-white);
+    padding: 14px 32px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 16px;
+    text-align: center;
+    display: inline-block;
+    transition: background-color 0.2s;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+
+.btn-go-premium:hover {
+    background-color: #e04a1f;
+    color: var(--dashboard-white);
+}
+
+/* Packages Card */
+.packages-card {
+    padding: 32px;
+}
+
+.signatures-status {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--dashboard-gray-dark);
+}
+
+.signature-add-icon {
+    color: var(--dashboard-purple);
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.package-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 24px;
+    flex: 1;
+}
+
+.package-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border: 2px solid var(--dashboard-gray-border);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    background-color: var(--dashboard-white);
+}
+
+.package-option:hover {
+    border-color: var(--dashboard-purple);
+    background-color: rgba(91, 44, 255, 0.02);
+}
+
+.package-option.active {
+    border-color: var(--dashboard-purple);
+    background-color: rgba(91, 44, 255, 0.08);
+}
+
+.package-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.package-count {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--dashboard-gray-dark);
+}
+
+.package-price {
+    font-size: 14px;
+    color: var(--dashboard-gray-text);
+}
+
+.package-check {
+    color: var(--dashboard-purple);
+    font-size: 24px;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.package-option.active .package-check {
+    opacity: 1;
+}
+
+.btn-checkout {
+    background-color: var(--dashboard-black);
+    color: var(--dashboard-white);
+    padding: 14px 32px;
+    border-radius: 8px;
+    border: none;
+    font-weight: 600;
+    font-size: 16px;
+    width: 100%;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-checkout:hover {
+    background-color: #333;
+}
+
+/* Order Summary Modal */
+.order-summary-modal {
+    border-radius: 16px;
+    border: none;
+    max-width: 600px;
+}
+
+.order-summary-modal .modal-header {
+    border-bottom: 1px solid rgba(17, 24, 39, 0.06);
+    padding: 24px 32px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.back-link {
+    position: absolute;
+    left: 32px;
+    color: #dc2626;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.back-link:hover {
+    color: #b91c1c;
+}
+
+.order-summary-modal .modal-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--dashboard-gray-dark);
+    margin: 0;
+}
+
+.order-summary-modal .modal-body {
+    padding: 32px;
+}
+
+.purchase-details {
+    margin-bottom: 24px;
+}
+
+.section-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--dashboard-gray-dark);
+    margin-bottom: 12px;
+    display: block;
+}
+
+.purchase-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background-color: var(--dashboard-gray-light);
+    border-radius: 8px;
+}
+
+.item-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--dashboard-gray-dark);
+}
+
+.item-price {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--dashboard-gray-dark);
+}
+
+.payment-methods-modal {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 24px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid rgba(17, 24, 39, 0.06);
+    align-items: center;
+}
+
+.payment-method-item-modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer !important;
+    transition: all 0.2s;
+    position: relative;
+    padding: 8px;
+}
+
+.payment-method-item-modal * {
+    cursor: pointer !important;
+}
+
+.payment-card-icon-modal {
+    width: 48px;
+    height: 32px;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+    cursor: pointer !important;
+}
+
+.payment-method-item-modal:hover .payment-card-icon-modal {
+    opacity: 1;
+}
+
+.payment-method-item-modal.paypal-tab-modal {
+    padding: 8px 16px;
+    border-radius: 8px;
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer !important;
+}
+
+.paypal-content-wrapper-modal {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer !important;
+}
+
+.paypal-logo-icon-modal {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    cursor: pointer !important;
+}
+
+.paypal-text-label-modal {
+    font-size: 16px;
+    font-weight: 600;
+    color: #0070ba;
+    cursor: pointer !important;
+}
+
+.paypal-underline-modal {
+    position: absolute;
+    bottom: -24px;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background-color: var(--dashboard-orange);
+    border-radius: 2px;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.payment-method-item-modal.paypal-tab-modal.active .paypal-underline-modal {
+    opacity: 1;
+}
+
+.payment-method-item-modal.paypal-tab-modal:hover {
+    background-color: rgba(91, 44, 255, 0.05);
+}
+
+.card-details-section {
+    margin-bottom: 24px;
+}
+
+.card-inputs {
+    display: flex;
+    gap: 12px;
+}
+
+.card-input-wrapper {
+    position: relative;
+    flex: 1;
+}
+
+.card-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--dashboard-gray-text);
+    font-size: 18px;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.card-input {
+    padding: 12px 16px 12px 50px;
+    border: 1px solid var(--dashboard-gray-border);
+    border-radius: 8px;
+    font-size: 14px;
+    width: 100%;
+}
+
+.card-input:focus {
+    outline: none;
+    border-color: var(--dashboard-purple);
+    box-shadow: 0 0 0 3px rgba(91, 44, 255, 0.18);
+}
+
+.card-input-small {
+    padding: 12px 16px;
+    border: 1px solid var(--dashboard-gray-border);
+    border-radius: 8px;
+    font-size: 14px;
+    width: 140px;
+}
+
+.card-input-small:focus {
+    outline: none;
+    border-color: var(--dashboard-purple);
+    box-shadow: 0 0 0 3px rgba(91, 44, 255, 0.18);
+}
+
+.btn-confirm-payment {
+    background-color: var(--dashboard-orange);
+    color: var(--dashboard-white);
+    padding: 16px 32px;
+    border-radius: 8px;
+    border: none;
+    font-weight: 600;
+    font-size: 16px;
+    width: 100%;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-bottom: 16px;
+}
+
+.btn-confirm-payment:hover {
+    background-color: #e04a1f;
+}
+
+.paypal-button-container-modal {
+    display: block;
+    margin-bottom: 16px;
+}
+
+.btn-paypal-modal {
+    background: linear-gradient(135deg, #0070ba 0%, #003087 100%);
+    color: var(--dashboard-white);
+    padding: 16px 32px;
+    border-radius: 8px;
+    border: none;
+    font-weight: 600;
+    font-size: 18px;
+    width: 100%;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0, 112, 186, 0.3);
+}
+
+.btn-paypal-modal {
+    gap: 8px;
+}
+
+.btn-paypal-modal .paypal-button-logo {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.btn-paypal-modal .paypal-button-logo svg {
+    width: 60px;
+    height: 18px;
+}
+
+.btn-paypal-modal .paypal-button-text {
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.btn-paypal-modal:hover {
+    background: linear-gradient(135deg, #005ea6 0%, #002d6b 100%);
+    box-shadow: 0 4px 12px rgba(0, 112, 186, 0.4);
+    transform: translateY(-1px);
+}
+
+.btn-paypal-modal:active {
+    transform: translateY(0);
+}
+
+.security-text {
+    text-align: center;
+    font-size: 12px;
+    color: var(--dashboard-gray-text);
+    margin-bottom: 24px;
+}
+
+.security-text i {
+    color: var(--dashboard-purple);
+    margin-left: 4px;
+}
+
+.security-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+    align-items: center;
+}
+
+.security-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    color: var(--dashboard-gray-text);
+    font-weight: 500;
+}
+
+.security-badge i {
+    font-size: 16px;
+    color: var(--dashboard-gray-text);
+}
+
+/* ===================================
+   Premium Upgrade Page
+   =================================== */
+.premium-page {
+    padding: 0;
+    background-color: var(--dashboard-white);
+}
+
+.premium-container {
+    min-height: calc(100vh - var(--dashboard-header-height) - 60px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.premium-content {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 60px 40px;
+}
+
+.premium-logo {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.logo-text {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--dashboard-black);
+    margin: 0;
+}
+
+.premium-heading {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--dashboard-gray-dark);
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.pricing-plans {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-bottom: 24px;
+}
+
+.pricing-plan {
+    position: relative;
+    padding: 24px 32px;
+    border: 2px solid var(--dashboard-gray-border);
+    border-radius: 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    background-color: var(--dashboard-white);
+    min-width: 150px;
+}
+
+.pricing-plan:hover {
+    border-color: var(--dashboard-orange);
+}
+
+.pricing-plan.active {
+    border-color: var(--dashboard-orange);
+    background: linear-gradient(135deg, rgba(245, 97, 41, 0.1) 0%, rgba(245, 97, 41, 0.05) 100%);
+}
+
+.plan-label {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--dashboard-gray-dark);
+    margin-bottom: 8px;
+}
+
+.plan-price {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--dashboard-black);
+    margin-bottom: 4px;
+}
+
+.plan-savings {
+    font-size: 12px;
+    color: var(--dashboard-gray-text);
+}
+
+.discount-badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: #16a34a;
+    color: var(--dashboard-white);
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.payment-methods-premium {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    margin-bottom: 32px;
+}
+
+.payment-method-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer !important;
+    transition: all 0.2s;
+    position: relative;
+    padding: 8px;
+}
+
+.payment-method-item * {
+    cursor: pointer !important;
+}
+
+.payment-card-icon {
+    width: 48px;
+    height: 32px;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+    cursor: pointer !important;
+}
+
+.payment-method-item:hover .payment-card-icon {
+    opacity: 1;
+}
+
+.payment-method-item.paypal-tab {
+    padding: 8px 16px;
+    border-radius: 8px;
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer !important;
+}
+
+.paypal-content-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer !important;
+}
+
+.paypal-logo-icon {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    cursor: pointer !important;
+}
+
+.paypal-text-label {
+    font-size: 16px;
+    font-weight: 600;
+    color: #0070ba;
+    cursor: pointer !important;
+}
+
+.paypal-underline {
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background-color: var(--dashboard-orange);
+    border-radius: 2px;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.payment-method-item.paypal-tab.active .paypal-underline {
+    opacity: 1;
+}
+
+.payment-method-item.paypal-tab:hover {
+    background-color: rgba(91, 44, 255, 0.05);
+}
+
+.premium-form {
+    margin-bottom: 24px;
+}
+
+.premium-form .form-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--dashboard-gray-dark);
+    margin-bottom: 12px;
+}
+
+.card-inputs-row {
+    display: flex;
+    gap: 12px;
+}
+
+.premium-form .card-input-wrapper {
+    flex: 1;
+    position: relative;
+}
+
+.premium-form .card-input {
+    width: 100%;
+    padding: 12px 16px 12px 50px;
+}
+
+.premium-form .card-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--dashboard-gray-text);
+    font-size: 18px;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.premium-form .card-input-small {
+    width: 140px;
+}
+
+.btn-go-premium-large {
+    background-color: var(--dashboard-orange);
+    color: var(--dashboard-white);
+    padding: 16px 48px;
+    border-radius: 8px;
+    border: none;
+    font-weight: 600;
+    font-size: 18px;
+    width: 100%;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-top: 24px;
+}
+
+.btn-go-premium-large:hover {
+    background-color: #e04a1f;
+}
+
+.paypal-button-container {
+    display: none;
+    margin-bottom: 24px;
+}
+
+.btn-paypal {
+    background: linear-gradient(135deg, #0070ba 0%, #003087 100%);
+    color: var(--dashboard-white);
+    padding: 16px 48px;
+    border-radius: 8px;
+    border: none;
+    font-weight: 600;
+    font-size: 18px;
+    width: 100%;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0, 112, 186, 0.3);
+}
+
+.btn-paypal {
+    gap: 8px;
+}
+
+.paypal-button-logo {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.paypal-button-logo svg {
+    width: 60px;
+    height: 18px;
+}
+
+.paypal-button-text {
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.btn-paypal:hover {
+    background: linear-gradient(135deg, #005ea6 0%, #002d6b 100%);
+    box-shadow: 0 4px 12px rgba(0, 112, 186, 0.4);
+    transform: translateY(-1px);
+}
+
+.btn-paypal:active {
+    transform: translateY(0);
+}
+
+.guarantees {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 16px;
+    align-items: center;
+}
+
+.guarantee-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: var(--dashboard-gray-dark);
+}
+
+.guarantee-icon {
+    color: #16a34a;
+    font-size: 18px;
+}
+
+.security-message {
+    text-align: center;
+    font-size: 12px;
+    color: var(--dashboard-gray-text);
+    margin: 0;
+}
+
+.security-message i {
+    color: var(--dashboard-purple);
+    margin-left: 4px;
+}
+
+/* Premium Right Section - Benefits */
+.premium-right {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    min-height: calc(100vh - var(--dashboard-header-height) - 60px);
+    display: flex;
+    align-items: center;
+    padding: 60px 40px;
+    position: relative;
+    overflow: hidden;
+}
+
+.premium-right::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(245, 97, 41, 0.2) 0%, transparent 70%);
+    border-radius: 50%;
+}
+
+.premium-right::after {
+    content: '';
+    position: absolute;
+    bottom: -50px;
+    right: -50px;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(245, 97, 41, 0.2) 0%, transparent 70%);
+    border-radius: 50%;
+}
+
+.premium-benefits {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+}
+
+.benefits-heading {
+    font-size: 48px;
+    font-weight: 700;
+    color: #FFD700;
+    margin-bottom: 32px;
+    line-height: 1.2;
+}
+
+.benefits-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.benefit-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    color: var(--dashboard-white);
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.benefit-icon {
+    color: #16a34a;
+    font-size: 20px;
+    margin-top: 2px;
+    flex-shrink: 0;
+}
+
+.benefit-item span {
+    flex: 1;
+}
+
+.benefit-item strong {
+    font-weight: 700;
+}
+
+.benefit-toggle {
+    color: var(--dashboard-white);
+    font-size: 14px;
+    margin-left: auto;
+    cursor: pointer;
+}
+
+/* Responsive Styles for Plans and Premium Pages */
+@media (max-width: 992px) {
+    .premium-right {
+        min-height: auto;
+        padding: 40px 24px;
+    }
+
+    .benefits-heading {
+        font-size: 36px;
+    }
+
+    .premium-content {
+        padding: 40px 24px;
+    }
+}
+
+@media (max-width: 768px) {
+    .plans-subheader {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .pricing-plans {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .pricing-plan {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .card-inputs-row {
+        flex-direction: column;
+    }
+
+    .premium-form .card-input-small {
+        width: 100%;
+    }
+
+    .benefits-heading {
+        font-size: 28px;
+    }
+
+    .benefit-item {
+        font-size: 14px;
+    }
+}
+

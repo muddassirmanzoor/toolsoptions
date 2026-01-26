@@ -42,7 +42,7 @@
                         </nav>
                     </div>
                     <div class="d-flex align-items-center gap-3">
-                        <a href="#" class="btn-upgrade">Upgrade Plan</a>
+                        <a href="{{ route('dashboard.premium') }}" class="btn-upgrade">Upgrade Plan</a>
                         <div class="dropdown">
                             <img src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name ?? 'User') }}&background=6366f1&color=fff&size=40" alt="Profile" class="profile-img-header" data-bs-toggle="dropdown" aria-expanded="false" style="cursor: pointer;">
                             <ul class="dropdown-menu dropdown-menu-end">
@@ -168,8 +168,8 @@
                         <div class="nav-section">
                             <h4 class="nav-section-title">Billing</h4>
                             <ul class="nav-list">
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                <li class="nav-item {{ request()->routeIs('dashboard.plans') ? 'active' : '' }}">
+                                    <a href="{{ route('dashboard.plans') }}" class="nav-link">
                                         <i class="fas fa-box"></i>
                                         <span>Plan & Packages</span>
                                     </a>
@@ -192,7 +192,7 @@
 
                     <!-- Upgrade Button -->
                     <div class="sidebar-upgrade">
-                        <a href="#" class="btn-upgrade-sidebar">Upgrade to Premium</a>
+                        <a href="{{ route('dashboard.premium') }}" class="btn-upgrade-sidebar">Upgrade to Premium</a>
                     </div>
                 </div>
             </aside>

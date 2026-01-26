@@ -41,6 +41,12 @@ Route::middleware(['auth'])->group(function () {
 
     // Team (Workspace)
     Route::get('/team', [DashboardController::class, 'team'])->name('dashboard.team');
+
+    // Plans and Packages
+    Route::get('/plans', [DashboardController::class, 'plans'])->name('dashboard.plans');
+    
+    // Premium Upgrade
+    Route::get('/premium', [DashboardController::class, 'premium'])->name('dashboard.premium');
 });
 
 // Admin routes
