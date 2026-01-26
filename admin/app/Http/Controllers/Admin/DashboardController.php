@@ -102,6 +102,7 @@ class DashboardController extends Controller
             'authenticated' => auth()->check(),
         ]);
         
+        // Only show non-deleted files (soft delete)
         $tasks = ProcessedFile::where('user_id', $userId)
             ->orderBy('created_at', 'desc')
             ->get();
@@ -123,6 +124,7 @@ class DashboardController extends Controller
      */
     public function downloadFile($id)
     {
+        // Only allow download of non-deleted files (soft delete)
         $file = ProcessedFile::where('user_id', auth()->id())
             ->where('id', $id)
             ->firstOrFail();
@@ -165,7 +167,8 @@ class DashboardController extends Controller
     }
 
     /**
-     * Delete a processed file.
+     * Delete a processed file (soft delete).
+     * Files are not physically deleted, only marked as deleted.
      */
     public function deleteFile($id)
     {
@@ -173,33 +176,7 @@ class DashboardController extends Controller
             ->where('id', $id)
             ->firstOrFail();
 
-        // Delete the physical file if it exists (check multiple locations)
-        if ($file->file_path) {
-            $filePath = $file->file_path;
-            
-            // Try Laravel storage
-            if (Storage::disk('local')->exists($filePath)) {
-                Storage::disk('local')->delete($filePath);
-            }
-            
-            // Try processed_files directory
-            $basename = basename($filePath);
-            if (Storage::disk('local')->exists('processed_files/' . $basename)) {
-                Storage::disk('local')->delete('processed_files/' . $basename);
-            }
-            
-            // Try absolute path
-            if (file_exists($filePath)) {
-                @unlink($filePath);
-            }
-            
-            // Try admin storage directory
-            $adminStoragePath = storage_path('app/processed_files/' . $basename);
-            if (file_exists($adminStoragePath)) {
-                @unlink($adminStoragePath);
-            }
-        }
-
+        // Soft delete - only mark as deleted, don't delete physical file
         $file->delete();
 
         return redirect()->route('dashboard.tasks')

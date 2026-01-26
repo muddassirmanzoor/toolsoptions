@@ -13,7 +13,7 @@
 
     @if($tasks->count() > 0)
         <div class="tasks-notice" role="note">
-            All your files will be automatically deleted 2 hours after being processed, but you can also delete them manually.
+            Files are kept in your history. Deleted files are hidden but can be restored if needed.
         </div>
 
         <div class="tasks-card">
@@ -85,7 +85,7 @@
             </div>
             <h2 class="empty-state-title">No processed files yet</h2>
             <p class="empty-state-description">
-                All your files will be automatically deleted 2 hours after being processed, but you can also delete them manually.
+                Files are kept in your history. Deleted files are hidden but can be restored if needed.
             </p>
             <div class="empty-state-info">
                 <p class="empty-state-info-text">

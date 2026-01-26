@@ -99,6 +99,7 @@ class ProcessedFileController extends Controller
     public function show($id)
     {
         try {
+            // Only return non-deleted files (soft delete)
             $file = ProcessedFile::find($id);
             
             if (!$file) {
