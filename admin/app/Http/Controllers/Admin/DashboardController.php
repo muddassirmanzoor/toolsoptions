@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Payment;
 use App\Models\ProcessedFile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -212,6 +213,59 @@ class DashboardController extends Controller
             'user' => auth()->user(),
         ]);
     }
+
+    /**
+     * Show Invoice history page (payments from Premium + Plans checkout).
+     */
+    public function invoices()
+    {
+        $user = auth()->user();
+        $invoices = Payment::where('user_id', $user->id)
+            ->visible()
+            ->with('subscription')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('dashboard.invoices', [
+            'user' => $user,
+            'invoices' => $invoices,
+            'totalInvoices' => $invoices->count(),
+        ]);
+    }
+
+    /**
+     * Download invoice as printable HTML.
+     */
+    public function downloadInvoice($id)
+    {
+        $payment = Payment::where('user_id', auth()->id())
+            ->visible()
+            ->with('subscription', 'user')
+            ->findOrFail($id);
+
+        return response()->view('dashboard.invoice-download', [
+            'payment' => $payment,
+        ], 200, [
+            'Content-Type' => 'text/html; charset=UTF-8',
+            'Content-Disposition' => 'inline; filename="invoice-' . $payment->id . '.html"',
+        ]);
+    }
+
+    /**
+     * Hide (soft-remove) an invoice from the user's list.
+     */
+    public function hideInvoice($id)
+    {
+        $payment = Payment::where('user_id', auth()->id())
+            ->visible()
+            ->findOrFail($id);
+
+        $payment->update(['hidden_at' => now()]);
+
+        return redirect()->route('dashboard.invoices')
+            ->with('success', 'Invoice removed from your history.');
+    }
+
 
     /**
      * Update Security settings (password change, 2FA placeholder).

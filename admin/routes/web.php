@@ -49,6 +49,11 @@ Route::middleware(['auth'])->group(function () {
     // Premium Upgrade
     Route::get('/premium', [DashboardController::class, 'premium'])->name('dashboard.premium');
 
+    // Invoices (payment history)
+    Route::get('/invoices', [DashboardController::class, 'invoices'])->name('dashboard.invoices');
+    Route::get('/invoices/{id}/download', [DashboardController::class, 'downloadInvoice'])->name('dashboard.invoices.download');
+    Route::delete('/invoices/{id}', [DashboardController::class, 'hideInvoice'])->name('dashboard.invoices.hide');
+
     // Payment routes
     Route::post('/api/payment/create-intent', [PaymentController::class, 'createPaymentIntent'])->name('payment.create-intent');
     Route::post('/api/payment/confirm', [PaymentController::class, 'confirmPayment'])->name('payment.confirm');

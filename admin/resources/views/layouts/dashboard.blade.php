@@ -23,6 +23,7 @@
 
     <!-- Custom CSS (cache-busted) -->
     <link href="{{ asset('css/dashboard.css') }}?v={{ filemtime(public_path('css/dashboard.css')) }}" rel="stylesheet">
+    @stack('styles')
 </head>
 <body class="dashboard-body">
     <div class="dashboard-wrapper">
@@ -180,8 +181,8 @@
                                         <span>Business Details</span>
                                     </a>
                                 </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                <li class="nav-item {{ request()->routeIs('dashboard.invoices*') ? 'active' : '' }}">
+                                    <a href="{{ route('dashboard.invoices') }}" class="nav-link">
                                         <i class="fas fa-file-invoice"></i>
                                         <span>Invoices</span>
                                     </a>
