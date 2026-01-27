@@ -393,17 +393,24 @@
             const rect = canvas.getBoundingClientRect();
             const { x, y, w, h } = selection;
 
+            // Calculate the actual canvas scale (canvas might be scaled down for display)
+            const scaleX = rect.width / canvas.width;
+            const scaleY = rect.height / canvas.height;
+
             selectionBox.style.display = 'block';
-            selectionBox.style.left = (rect.left + x) + 'px';
-            selectionBox.style.top = (rect.top + y) + 'px';
-            selectionBox.style.width = w + 'px';
-            selectionBox.style.height = h + 'px';
+            selectionBox.style.left = (rect.left + x * scaleX) + 'px';
+            selectionBox.style.top = (rect.top + y * scaleY) + 'px';
+            selectionBox.style.width = (w * scaleX) + 'px';
+            selectionBox.style.height = (h * scaleY) + 'px';
         }
 
         function canvasCoordsFromEvent(evt, canvas) {
             const rect = canvas.getBoundingClientRect();
-            const x = evt.clientX - rect.left;
-            const y = evt.clientY - rect.top;
+            // Account for canvas scaling (canvas might be displayed at different size)
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+            const x = (evt.clientX - rect.left) * scaleX;
+            const y = (evt.clientY - rect.top) * scaleY;
             return { x, y };
         }
 
@@ -458,6 +465,22 @@
                 setStatus(`Crop area selected on page ${selection.pageIndex + 1}. Choose scope and click "Crop & Download PDF".`, 'success');
             }
         });
+
+        // Update selection box position on scroll and resize
+        function handleViewportChange() {
+            if (selection && activePageIndex != null) {
+                updateSelectionBox();
+            }
+        }
+
+        // Listen to scroll events on the PDF container
+        if (pdfContainer) {
+            pdfContainer.addEventListener('scroll', handleViewportChange, { passive: true });
+        }
+
+        // Listen to window scroll and resize events
+        window.addEventListener('scroll', handleViewportChange, { passive: true });
+        window.addEventListener('resize', handleViewportChange);
 
         async function renderAllPages(file) {
             if (!file) return;
