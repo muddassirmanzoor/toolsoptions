@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Organizer</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link href="../main.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <div id="navbar"></div>
+
+    <div class="landing-page text-center mt-5">
+        <h1>Welcome to the PDF Organizer App</h1>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#pdfOrganizerModal">Organize PDFs</button>
+    </div>
+
+    <!-- Organize PDFs Modal -->
+    <div class="modal fade" id="pdfOrganizerModal" tabindex="-1" role="dialog" aria-labelledby="pdfOrganizerModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-white bg-danger">
+                    <h5 class="modal-title" id="pdfOrganizerModalLabel">Organize PDFs</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="custom-file mb-3">
+                        <input type="file" id="pdfInputOrganizer" class="custom-file-input" accept="application/pdf">
+                        <label class="custom-file-label" for="pdfInputOrganizer">Choose PDF file</label>
+                    </div>
+                    <div id="pdfPreviewContainer" class="d-flex flex-wrap"></div>
+                    <div class="mt-3">
+                        <button id="sortAscBtn" class="btn btn-info">Sort Ascending</button>
+                        <button id="sortDescBtn" class="btn btn-info">Sort Descending</button>
+                        <button id="downloadBtn" class="btn btn-success">Download Organized PDF</button>
+                    </div>
+                    <div id="alertPlaceholder"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit PDF Modal -->
+    <div class="modal fade" id="editPdfModal" tabindex="-1" role="dialog" aria-labelledby="editPdfModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-white bg-danger">
+                    <h5 class="modal-title" id="editPdfModalLabel">Edit PDF Page</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <canvas id="editCanvas" class="w-100"></canvas>
+                    <div id="textOptions" class="mt-3">
+                        <h5>Text Options</h5>
+                        <button id="addTextBtn" class="btn btn-secondary">Add Text</button>
+                        <label for="textColor">Text Color:</label>
+                        <input type="color" id="textColor" value="#000000">
+                        <label for="textSize">Font Size:</label>
+                        <input type="number" id="textSize" value="12" min="8" max="72">
+                        <label for="fontStyle">Font Style:</label>
+                        <select id="fontStyle">
+                            <option value="normal">Normal</option>
+                            <option value="bold">Bold</option>
+                            <option value="italic">Italic</option>
+                            <option value="underline">Underline</option>
+                        </select>
+                    </div>
+                    <div id="imageOptions" class="mt-3">
+                        <h5>Image Options</h5>
+                        <input type="file" id="imageInput" accept="image/*">
+                    </div>
+                    <div id="shapeOptions" class="mt-3">
+                        <h5>Shape Options</h5>
+                        <button id="addShapeBtn" class="btn btn-secondary">Add Shape</button>
+                        <label for="shapeColor">Shape Color:</label>
+                        <input type="color" id="shapeColor" value="#000000">
+                        <label for="shapeBorderColor">Border Color:</label>
+                        <input type="color" id="shapeBorderColor" value="#000000">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="saveChangesBtn">Save Changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JS Files -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="app.js"></script>
+    <script src="../main.js"></script>
+</body>
+</html>

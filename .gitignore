@@ -1,0 +1,44 @@
+# Dependencies
+node_modules/
+vendor/
+.npm/
+
+# Environment & secrets
+.env
+.env.*
+!.env.example
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Cache / logs / temp
+.cache/
+*.log
+tmp/
+logs/
+pm2/
+
+# Backups
+backups/
+*.bkp
+*.bak
+*.zip
+
+# NVM (optional – remove if you want to track .nvmrc)
+.nvm/
+
+# PM2
+.pm2/
+
+# Project-specific (from htdocs)
+uploads/
+*.pdf
+*.pptx
+*.docx
+*.xlsx

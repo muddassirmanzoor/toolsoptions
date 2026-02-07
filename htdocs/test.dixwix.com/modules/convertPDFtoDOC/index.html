@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF To Word - I Love PDF</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Montserrat:wght@700&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link href="styles.css" rel="stylesheet">
+    <link href="../shared-styles.css" rel="stylesheet">
+</head>
+<body data-page-title="PDF To Word">
+    <!-- Shared Navbar -->
+    <div id="shared-navbar"></div>
+
+    <!-- Shared Hero Section -->
+    <div id="shared-hero"></div>
+
+    <!-- Shared Breadcrumb -->
+    <div id="shared-breadcrumb"></div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container-fluid container-custom">
+            <div class="row">
+                <!-- Left Side - PDF Placeholder -->
+                <div class="col-lg-6 col-md-12 d-flex position-relative">
+                    <!-- Initial Upload State -->
+                    <div id="initialUploadState" class="initial-upload-state">
+                        <div class="upload-content">
+                            <h2 class="upload-title">PDF To Word</h2>
+                            <p class="upload-subtitle">Convert your PDF files to Word format easily.</p>
+                            <div class="upload-buttons-wrapper">
+                                <button id="selectFilesBtn" class="btn-select-files" type="button">
+                                    Select PDF file
+                                </button>
+                                <div class="cloud-buttons">
+                                    <button id="initialGoogleDriveBtn" class="cloud-btn" type="button" title="Select from Google Drive">
+                                        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                                            <path d="M7.71 2.5L2.5 12.71l5.21 10.21L12.71 16l5.21-3.29L12.71 2.5H7.71z"/>
+                                        </svg>
+                                    </button>
+                                    <button id="initialDropboxBtn" class="cloud-btn" type="button" title="Select from Dropbox">
+                                        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                                            <path d="M6 2L0 6l6 4 6-4-6-4zm12 4l6-4-6-4-6 4 6 4zM0 14l6 4 6-4-6-4-6 4zm18-4l-6 4 6 4 6-4-6-4zM0 20l6 4 6-4-6-4-6 4zm12 0l6 4 6-4-6-4-6 4z"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <p class="drop-hint">or drop PDF here</p>
+                        </div>
+                    </div>
+
+                    <!-- File Selection Buttons Group (shown after file is selected) -->
+                    <div id="fileSelectionButtons" class="file-selection-buttons" style="display: none;">
+                        <button id="addBtn" class="file-select-btn add-btn" type="button" title="Change PDF file">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                        <button id="computerBtn" class="file-select-btn computer-btn" type="button" title="Select from computer">
+                            <i class="fas fa-desktop"></i>
+                        </button>
+                        <button id="googleDriveBtn" class="file-select-btn google-drive-btn" type="button" title="Select from Google Drive">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                                <path d="M7.71 2.5L2.5 12.71l5.21 10.21L12.71 16l5.21-3.29L12.71 2.5H7.71z"/>
+                            </svg>
+                        </button>
+                        <button id="dropboxBtn" class="file-select-btn dropbox-btn" type="button" title="Select from Dropbox">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                                <path d="M6 2L0 6l6 4 6-4-6-4zm12 4l6-4-6-4-6 4 6 4zM0 14l6 4 6-4-6-4-6 4zm18-4l-6 4 6 4 6-4-6-4zM0 20l6 4 6-4-6-4-6 4zm12 0l6 4 6-4-6-4-6 4z"/>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <div class="upload-area w-100">
+                        <div id="fileList" class="file-list">
+                            <!-- PDF files will be inserted here -->
+                        </div>
+                        
+                        <!-- File Info (shown after file is selected) -->
+                        <div id="fileInfo" class="file-info" style="display: none;">
+                            <div class="file-info-content">
+                                <i class="fas fa-file-pdf"></i>
+                                <span id="fileName"></span>
+                                <button id="removeFileBtn" class="remove-file-btn" type="button" title="Remove file">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <input type="file" id="pdfInput" accept="application/pdf" style="display:none;">
+                    </div>
+                    
+                    <div id="alertPlaceholder" class="alert-container mb-4"></div>
+                </div>
+        
+                <!-- Right Side - Options -->
+                <div class="col-lg-6 col-md-12">
+                    <h5 class="section-title"><strong>PDF To Word</strong></h5>
+                
+                    <!-- Option 1: No OCR -->
+                    <div class="option-box">
+                        <div class="option-content">
+                            <div>
+                                <strong>No OCR</strong>
+                            </div>
+                            <p>Convert PDFs with selectable text into editable Word files.</p>
+                        </div>
+                        <input type="checkbox" checked>
+                    </div>
+                
+                    <!-- Option 2: No OCR with Premium Badge -->
+                    <div class="option-box">
+                        <div class="option-content">
+                            <div>
+                                <strong>No OCR</strong>
+                                <span class="premium-badge">Premium</span>
+                            </div>
+                            <p><img style="height: 50px;" src="/assests/image- 2.png" alt="">All embedded images inside the PDF will be extracted as JPG images.</p>
+                        </div>
+                        <input type="checkbox" checked>
+                    </div>
+                
+                    <!-- Convert Button -->
+                    <button id="convertBtn" class="btn btn-convert">Convert To Word</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- jQuery (required for alert dismiss) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    
+    <!-- Bootstrap Bundle with Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../shared-components.js"></script>
+    <script src="../config.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

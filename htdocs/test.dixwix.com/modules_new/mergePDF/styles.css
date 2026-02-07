@@ -1,0 +1,613 @@
+/*body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+}
+
+.landing-page {
+    padding: 20px;
+}
+
+.custom-file-input ~ .custom-file-label::after {
+    content: "Browse";
+}
+
+.custom-file-label {
+    border-radius: 0;
+    background-color: #ffffff;
+    border: 1px solid #ced4da;
+}
+
+#alertPlaceholder {
+    margin-top: 20px;
+}
+
+.list-group-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn-danger {
+    margin-left: 10px;
+}
+*/
+body {
+    font-family: 'Red Hat Display', sans-serif;
+}
+
+
+.pdf-section {
+    background-color: #f9f9f9;
+}
+
+.navbar-brand, .navbar-nav .nav-link {
+    font-family: 'Inter', sans-serif;
+}
+
+.pdf-section h1, .pdf-section p {
+    font-family: 'Red Hat Display', sans-serif;
+}
+
+
+.navbar-nav {
+    flex-direction: row;
+    margin-right: auto; /* Pushes the buttons to the right */
+}
+
+.nav-item {
+    margin-left: 15px; /* Adjust spacing between nav items */
+}
+
+.nav-link {
+    font-family: 'Inter', sans-serif;
+}
+
+.navbar-btns {
+    display: flex;
+    align-items: center;
+}
+
+.btn-create-account {
+
+    border: none;
+    color: black;
+    margin-left: 10px;
+    padding: 8px 15px;
+}
+
+.btn-start-trial {
+    background-color: #F56129;
+    ;
+    ;
+    border: none;
+    color: white;
+    margin-left: 10px;
+    padding: 8px 15px;
+}
+
+.navbar-toggler {
+    border: none;
+}
+
+/* ===================================
+   Hero Section (match compressPDF)
+   =================================== */
+.hero-section {
+    background-color: #5A26EF;
+    padding: 80px 0 120px;
+    position: relative;
+    overflow: hidden;
+    clip-path: polygon(0 0, 100% 0, 100% 85%, 50% 100%, 0 85%);
+}
+
+.hero-decorations {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+
+.decoration {
+    position: absolute;
+    width: auto;
+    height: auto;
+}
+
+.decoration-triangle-left {
+    left: 68px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 107px;
+    height: 107px;
+}
+
+.decoration-star-right {
+    right: 80px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 69px;
+    height: 70px;
+}
+
+.hero-title {
+    font-family: 'Mont', 'Montserrat', sans-serif;
+    font-size: 75px;
+    font-weight: 900;
+    color: #FFFFFF;
+    text-align: center;
+    text-transform: capitalize;
+    margin: 0;
+    padding: 20px 0;
+}
+
+/* ===================================
+   Breadcrumb Section (match compressPDF)
+   =================================== */
+.breadcrumb-section {
+    padding: 24px 0;
+    background-color: #FFFFFF;
+    position: relative;
+}
+
+.breadcrumb-decorations {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+
+.decoration-star-left {
+    left: 73px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 69px;
+    height: 70px;
+}
+
+.decoration-triangle-right {
+    right: 80px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 107px;
+    height: 107px;
+}
+
+.breadcrumb-content {
+    text-align: center;
+    font-family: 'Sora', sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.breadcrumb-link {
+    color: #000000;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.breadcrumb-link:hover {
+    color: #5A26EF;
+}
+
+.breadcrumb-separator {
+    margin: 0 12px;
+    color: #000000;
+}
+
+/* ===================================
+   Responsive tweaks for hero/breadcrumb
+   =================================== */
+@media (max-width: 992px) {
+    .hero-title {
+        font-size: 60px;
+    }
+
+    .decoration-triangle-left,
+    .decoration-star-right,
+    .decoration-star-left,
+    .decoration-triangle-right {
+        width: 50px;
+        height: 50px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 48px;
+    }
+
+    .hero-section {
+        padding: 60px 0 100px;
+    }
+
+    .decoration {
+        display: none;
+    }
+}
+
+
+
+.logo {
+    height: 40px; /* Adjust the height as needed */
+    max-width: 100%; /* Ensure the logo does not exceed its container width */
+}
+
+
+.main-image {
+    width: 100%;
+    height: auto;
+    max-width: 1200px;
+    border-radius: 15px;
+}
+
+.responsive-image {
+    width: 100%;
+    height: auto;
+    max-width: 1000px; /* Set a maximum width */
+    transform: scale(0.8); /* Scale the image to 80% of its original size */
+    transform-origin: center; /* Ensures the image scales from its center */
+}
+
+
+.store-logo {
+    height: 30px;
+    margin-right: 10px;
+}
+
+@media (max-width: 768px) {
+    .mobile-image {
+        right: -30px;
+        bottom: -20px;
+        width: 150px;
+    }
+
+    .pdf-section h1 {
+        font-size: 1.75rem;
+    }
+}
+
+* Full background image setup */
+#pdf-tool-section {
+    background: url('background-full.png') no-repeat center center fixed;
+    background-size: cover;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 100px 0;
+    color: #fff;
+    position: relative;
+    background:linear-gradient(to bottom,#007bff 50%,  #fff 50%) ;
+   
+  }
+ .section-in{
+  
+    height: 900px;
+    background-color: #5A26EF;
+    position: relative;
+    text-align: center;
+    padding-top: 100px;
+    color: white;
+    /* display: inline-block; */
+    clip-path: circle(83% at 51% 3%);
+
+ }
+
+  
+  
+/* Default Styles */
+.tablet-image img {
+  position: absolute;
+  top: 370px;
+  left: 100px; /* Corrected from padding-left to left */
+  max-width: 100%;
+  height: auto;
+}
+
+h1 {
+  font-weight: bold;
+}
+
+.btn-lg {
+  font-size: 1.2rem;
+}
+
+.col-md-8.offset-md-2 {
+  padding-top: 259px;
+}
+
+/* Responsive Styles */
+@media (max-width: 1199px) {
+  /* Styles for tablets and small screens */
+  .tablet-image img {
+      left: 50px; /* Adjust positioning for smaller screens */
+      top: 250px;
+  }
+}
+
+@media (max-width: 991px) {
+  /* Styles for large tablets and small desktops */
+  .tablet-image img {
+      left: 20px; /* Further adjust positioning */
+      top: 150px;
+  }
+  
+  .btn-lg {
+      font-size: 1rem; /* Adjust button font size for smaller devices */
+  }
+  
+  .col-md-8.offset-md-2 {
+      padding-top: 100px; /* Reduce padding for smaller screens */
+  }
+}
+
+@media (max-width: 767px) {
+  /* Styles for mobile screens */
+  .tablet-image img {
+      position: static; /* Let the image flow naturally */
+      top: auto; /* Remove absolute positioning */
+      left: auto; /* Remove left positioning */
+      margin: 0 auto; /* Center the image horizontally */
+      display: block; /* Ensure block display */
+      max-width: 90%; /* Adjust image width to fit mobile screens */
+  }
+  
+  h1 {
+      font-size: 1.5rem; /* Adjust font size for mobile screens */
+      text-align: center; /* Center the heading text */
+  }
+  
+  .btn-lg {
+      font-size: 1rem; /* Adjust button font size */
+      padding: 0.5rem 1rem; /* Adjust button padding */
+  }
+  
+  .col-md-8.offset-md-2 {
+      padding-top: 1rem; /* Reduce padding for mobile screens */
+  }
+}
+/* Custom header background and text styling */
+.custom-header {
+    background-color: #5f20da; /* Matching the purple background */
+    position: relative;
+    color: white;
+    font-family: Arial, sans-serif;
+    height: 300px; /* Adjust the height as per your design */
+    clip-path: polygon(0 0, 100% 0, 100% 75%, 50% 100%, 0 75%); /* V shape with straight sides */
+}
+
+/* Heading styling */
+.custom-header h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+/* Footer links */
+nav a {
+    color: #000;
+    text-decoration: none;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .custom-header h1 {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .custom-header h1 {
+        font-size: 1.5rem;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+.pdf-card {
+    border: 2px solid transparent;
+    border-radius: 10px;
+    padding: 10px;
+    position: relative;
+    transition: transform 0.2s ease, border 0.2s ease;
+    cursor: pointer;
+  }
+
+  .pdf-card img {
+    width: 100%;
+    border-radius: 10px;
+  }
+
+  .pdf-card.selected {
+    border: 3px solid #6c5ce7;
+  }
+
+  .checkmark {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: none;
+    color: #F56129; /* make SVG circle fill orange via currentColor */
+    background-image: url('../compressPDF/assets/checkmark-filled.svg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    font-size: 0;      /* hide text "✔" */
+    line-height: 0;
+  }
+
+  .pdf-card.selected .checkmark {
+    display: block;
+  }
+
+  .pdf-name {
+    text-align: center;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+
+  .merge-button {
+    background-color: #ff6348;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    border: none;
+  }
+
+  .merge-button:hover {
+    background-color: #ff4500;
+  }
+
+  @media (max-width: 768px) {
+    .pdf-card img {
+      width: 100%;
+      height: auto;
+    }
+  }
+
+/* ===================================
+   Floating Add Button (same as Compress PDF)
+   =================================== */
+.floating-add-btn {
+    position: fixed;
+    bottom: 40px;
+    left: 40px;
+    width: 49px;
+    height: 49px;
+    background-color: #5A26EF;
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(90, 38, 239, 0.3);
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.floating-add-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(90, 38, 239, 0.4);
+}
+
+.floating-add-btn:active {
+    transform: scale(0.95);
+}
+
+.plus-icon {
+    width: 28px;
+    height: 28px;
+}
+
+/* ===================================
+   Override header/nav to match compressPDF
+   =================================== */
+body {
+    font-family: 'Sora', sans-serif;
+    background-color: #FFFFFF;
+    color: #000000;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+.navbar {
+    padding: 16px 0;
+    border-bottom: 1px solid #E4E4E4;
+}
+
+.logo-img,
+.logo {
+    height: 40px;
+    width: auto;
+}
+
+.navbar-nav .nav-link {
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: #000000;
+    padding: 8px 16px;
+    transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #5A26EF;
+}
+
+.navbar-nav .dropdown-toggle::after {
+    content: '';
+    display: inline-block;
+    width: 13px;
+    height: 6px;
+    background-image: url('../compressPDF/assets/dropdown-arrow.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    border: none;
+    margin-left: 8px;
+    vertical-align: middle;
+}
+
+.btn-create-account,
+.btn-login {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18.92px;
+    font-weight: 700;
+    color: #000000;
+    text-decoration: none;
+    padding: 8px 16px;
+    transition: color 0.3s ease;
+}
+
+.btn-create-account:hover,
+.btn-login:hover {
+    color: #5A26EF;
+}
+
+.btn-start-trial,
+.btn-signup {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 17.81px;
+    font-weight: 700;
+    color: #FFFFFF;
+    background-color: #F56129;
+    padding: 10px 24px;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.btn-start-trial:hover,
+.btn-signup:hover {
+    background-color: #e04f1f;
+    transform: translateY(-2px);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.navbar-toggler {
+    border: none;
+}

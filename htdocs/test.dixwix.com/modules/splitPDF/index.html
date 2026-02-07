@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Split PDF - I Love PDF</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Red+Hat+Display:wght@400;500;700&family=Poppins:wght@700&family=Montserrat:wght@700&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link href="styles.css" rel="stylesheet">
+    <link href="../shared-styles.css" rel="stylesheet">
+</head>
+<body data-page-title="Split PDF">
+    <!-- Shared Navbar -->
+    <div id="shared-navbar"></div>
+
+    <!-- Shared Hero Section -->
+    <div id="shared-hero"></div>
+
+    <!-- Shared Breadcrumb -->
+    <div id="shared-breadcrumb"></div>
+
+    <!-- Hidden functional elements for JavaScript -->
+    <input type="file" id="pdfInputSplit" class="custom-file-input" multiple style="display:none;" accept="application/pdf">
+    <ul id="fileListSplit" class="list-group mb-3" style="display:none;"></ul>
+    <div id="alertPlaceholder"></div>
+
+    <!-- Container for Split PDF Section: Split by Range -->
+    <div class="container my-5 split-pdf-section">
+        <h2 class="text-center mb-5" style="margin-left: 100px;">Split PDF</h2>
+        <div class="row">
+            <!-- PDF Preview Section -->
+            <div class="col-lg-6 col-md-6 col-sm-12 position-relative">
+                <!-- Initial Upload State -->
+                <div id="initialUploadStateRange" class="initial-upload-state">
+                    <div class="upload-content">
+                        <h2 class="upload-title">Split PDF</h2>
+                        <p class="upload-subtitle">Split your PDF files by range or extract specific pages.</p>
+                        <div class="upload-buttons-wrapper">
+                            <button id="selectFilesBtnRange" class="btn-select-files" type="button">
+                                Select PDF file
+                            </button>
+                            <div class="cloud-buttons">
+                                <button id="initialGoogleDriveBtnRange" class="cloud-btn" type="button" title="Select from Google Drive">
+                                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                                        <path d="M7.71 2.5L2.5 12.71l5.21 10.21L12.71 16l5.21-3.29L12.71 2.5H7.71z"/>
+                                    </svg>
+                                </button>
+                                <button id="initialDropboxBtnRange" class="cloud-btn" type="button" title="Select from Dropbox">
+                                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                                        <path d="M6 2L0 6l6 4 6-4-6-4zm12 4l6-4-6-4-6 4 6 4zM0 14l6 4 6-4-6-4-6 4zm18-4l-6 4 6 4 6-4-6-4zM0 20l6 4 6-4-6-4-6 4zm12 0l6 4 6-4-6-4-6 4z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <p class="drop-hint">or drop PDF file here</p>
+                    </div>
+                </div>
+
+                <!-- File Selection Buttons Group (shown after file is selected) -->
+                <div id="fileSelectionButtonsRange" class="file-selection-buttons" style="display: none;">
+                    <button id="addBtnRange" class="file-select-btn add-btn" type="button" title="Change PDF file">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                    <button id="computerBtnRange" class="file-select-btn computer-btn" type="button" title="Select from computer">
+                        <i class="fas fa-desktop"></i>
+                    </button>
+                    <button id="googleDriveBtnRange" class="file-select-btn google-drive-btn" type="button" title="Select from Google Drive">
+                        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                            <path d="M7.71 2.5L2.5 12.71l5.21 10.21L12.71 16l5.21-3.29L12.71 2.5H7.71z"/>
+                        </svg>
+                    </button>
+                    <button id="dropboxBtnRange" class="file-select-btn dropbox-btn" type="button" title="Select from Dropbox">
+                        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                            <path d="M6 2L0 6l6 4 6-4-6-4zm12 4l6-4-6-4-6 4 6 4zM0 14l6 4 6-4-6-4-6 4zm18-4l-6 4 6 4 6-4-6-4zM0 20l6 4 6-4-6-4-6 4zm12 0l6 4 6-4-6-4-6 4z"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="upload-area w-100">
+                    <div class="text-center pdf-preview" id="pdfPreviewRange">
+                        <div class="row g-3">
+                            <!-- PDF Page Cards will be dynamically generated -->
+                        </div>
+                    </div>
+                    
+                    <!-- File Info (shown after file is selected) -->
+                    <div id="fileInfoRange" class="file-info" style="display: none;">
+                        <div class="file-info-content">
+                            <i class="fas fa-file-pdf"></i>
+                            <span id="fileNameRange"></span>
+                            <button id="removeFileBtnRange" class="remove-file-btn" type="button" title="Remove file">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Split PDF Controls Section -->
+            <div class="col-lg-6 col-md-6 col-sm-12 range-section">
+                <div class="d-flex justify-content-between mb-3">
+                    <button class="btn btn-primary" id="splitByRangeTab">Split by Range</button>
+                    <button class="btn btn-outline-secondary" id="extractPageTab">Extract Page</button>
+                </div>
+
+                <!-- Range Mode Options -->
+                <h5>Range Mode:</h5>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="rangeMode" id="customRange" checked>
+                    <label class="form-check-label" for="customRange">Custom Range</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="rangeMode" id="fixedRangeRadio">
+                    <label class="form-check-label" for="fixedRangeRadio">Fixed Range</label>
+                </div>
+
+                <!-- Custom Range Inputs (hidden by default, shown when customRange is selected) -->
+                <div class="mt-3" id="customRangeInputs" style="display:none;">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="startRange">Start Page</label>
+                            <input type="number" id="startRange" class="form-control" min="1" placeholder="Enter start page">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="endRange">End Page</label>
+                            <input type="number" id="endRange" class="form-control" min="1" placeholder="Enter end page">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fixed Range Input -->
+                <div class="mt-3">
+                    <label for="splitRange" class="form-label">Split Into Range Of:</label>
+                    <div class="input-group">
+                        <button class="btn btn-outline-secondary" id="decreaseRange" type="button">-</button>
+                        <input type="text" class="form-control text-center" value="2" id="splitRange">
+                        <button class="btn btn-outline-secondary" id="increaseRange" type="button">+</button>
+                    </div>
+                </div>
+
+                <!-- Info Text -->
+                <div class="range-text bg-light p-2 mt-2 text-center" id="rangeInfoText">This PDF will be split into files of 2 pages.</div>
+
+                <!-- Split Button -->
+                <button id="splitBtn" class="btn btn-warning w-100 mt-3" style="background-color: #F56129; color: white;">Split PDF</button>
+                <button id="extractAllPagesBtn" class="btn btn-info w-100 mt-2" style="display:none;">Extract All Pages</button>
+            </div>
+        </div>
+
+    </div>
+    
+    <!-- Container for Split PDF Section: Extract Mode -->
+    <div class="container my-5 split-pdf-section">
+        <h2 class="text-center mb-5" style="margin-left: 100px;">Split PDF</h2>
+        <div class="row">
+            <!-- PDF Preview Section -->
+            <div class="col-lg-6 col-md-6 col-sm-12 position-relative">
+                <!-- Initial Upload State -->
+                <div id="initialUploadStateExtract" class="initial-upload-state">
+                    <div class="upload-content">
+                        <h2 class="upload-title">Split PDF</h2>
+                        <p class="upload-subtitle">Split your PDF files by range or extract specific pages.</p>
+                        <div class="upload-buttons-wrapper">
+                            <button id="selectFilesBtnExtract" class="btn-select-files" type="button">
+                                Select PDF file
+                            </button>
+                            <div class="cloud-buttons">
+                                <button id="initialGoogleDriveBtnExtract" class="cloud-btn" type="button" title="Select from Google Drive">
+                                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                                        <path d="M7.71 2.5L2.5 12.71l5.21 10.21L12.71 16l5.21-3.29L12.71 2.5H7.71z"/>
+                                    </svg>
+                                </button>
+                                <button id="initialDropboxBtnExtract" class="cloud-btn" type="button" title="Select from Dropbox">
+                                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                                        <path d="M6 2L0 6l6 4 6-4-6-4zm12 4l6-4-6-4-6 4 6 4zM0 14l6 4 6-4-6-4-6 4zm18-4l-6 4 6 4 6-4-6-4zM0 20l6 4 6-4-6-4-6 4zm12 0l6 4 6-4-6-4-6 4z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <p class="drop-hint">or drop PDF file here</p>
+                    </div>
+                </div>
+
+                <!-- File Selection Buttons Group (shown after file is selected) -->
+                <div id="fileSelectionButtonsExtract" class="file-selection-buttons" style="display: none;">
+                    <button id="addBtnExtract" class="file-select-btn add-btn" type="button" title="Change PDF file">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                    <button id="computerBtnExtract" class="file-select-btn computer-btn" type="button" title="Select from computer">
+                        <i class="fas fa-desktop"></i>
+                    </button>
+                    <button id="googleDriveBtnExtract" class="file-select-btn google-drive-btn" type="button" title="Select from Google Drive">
+                        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                            <path d="M7.71 2.5L2.5 12.71l5.21 10.21L12.71 16l5.21-3.29L12.71 2.5H7.71z"/>
+                        </svg>
+                    </button>
+                    <button id="dropboxBtnExtract" class="file-select-btn dropbox-btn" type="button" title="Select from Dropbox">
+                        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                            <path d="M6 2L0 6l6 4 6-4-6-4zm12 4l6-4-6-4-6 4 6 4zM0 14l6 4 6-4-6-4-6 4zm18-4l-6 4 6 4 6-4-6-4zM0 20l6 4 6-4-6-4-6 4zm12 0l6 4 6-4-6-4-6 4z"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="upload-area w-100">
+                    <div class="text-center pdf-preview" id="pdfPreviewExtract">
+                        <div class="row g-3">
+                            <!-- PDF Page Cards will be dynamically generated -->
+                        </div>
+                    </div>
+                    
+                    <!-- File Info (shown after file is selected) -->
+                    <div id="fileInfoExtract" class="file-info" style="display: none;">
+                        <div class="file-info-content">
+                            <i class="fas fa-file-pdf"></i>
+                            <span id="fileNameExtract"></span>
+                            <button id="removeFileBtnExtract" class="remove-file-btn" type="button" title="Remove file">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Split PDF Controls Section: Extract Mode -->
+            <div class="col-lg-6 col-md-6 col-sm-12 range-section">
+                <div class="d-flex justify-content-between mb-3">
+                    <button class="btn btn-outline-primary" id="splitByRangeTab2">Split by Range</button>
+                    <button class="btn btn-primary" id="extractPageTab2">Extract Page</button>
+                </div>
+                <h5>Extract Mode:</h5>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="extractMode" id="extractAll" checked>
+                    <label class="form-check-label" for="extractAll">Extract All Pages</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="extractMode" id="selectPagesRadio">
+                    <label class="form-check-label" for="selectPagesRadio">Select Pages</label>
+                </div>
+                <div class="pages-input mt-3" id="pagesInputContainer" style="display:none;">
+                    <label for="fromPage" class="form-label">Pages to Extract:</label>
+                    <div class="d-flex align-items-center gap-2">
+                        <input type="text" class="form-control" id="fromPage" value="1">
+                        <span>To</span>
+                        <input type="text" class="form-control" id="toPage" value="5">
+                    </div>
+                </div>
+                <!-- Hidden input for selectPages (custom page selection) -->
+                <input type="text" class="form-control mt-2" id="selectPages" placeholder="Enter pages or ranges (e.g., 1,3-5)" style="display:none;">
+                <div class="checkbox-section mt-3">
+                    <input type="checkbox" id="mergeOption">
+                    <label for="mergeOption">Merge extracted pages into one PDF file.</label>
+                </div>
+                <button id="extractSplitBtn" class="btn btn-warning w-100 mt-3" style="background-color: #F56129; color: white;">Split PDF</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Google API Scripts -->
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script src="https://accounts.google.com/gsi/client"></script>
+    <script src="https://apis.google.com/js/picker.js"></script>
+    
+    <!-- Dropbox Chooser -->
+    <script type="text/javascript">
+        // Set Dropbox app key from environment if available
+        const dropboxAppKey = window.env?.DROPBOX_APP_KEY || 'YOUR_DROPBOX_APP_KEY';
+        const dropboxScript = document.createElement('script');
+        dropboxScript.type = 'text/javascript';
+        dropboxScript.src = 'https://www.dropbox.com/static/api/2/dropins.js';
+        dropboxScript.id = 'dropboxjs';
+        dropboxScript.setAttribute('data-app-key', dropboxAppKey);
+        document.head.appendChild(dropboxScript);
+    </script>
+
+    <!-- Bootstrap Bundle with Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+    <script src="../shared-components.js"></script>
+    <script src="../config.js"></script>
+    <script src="app.js"></script>
+    <script src="../main.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML to PDF - I Love PDF</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Montserrat:wght@700&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand" href="/">
+                <img src="../compressPDF/assets/logo-ilovepdf.svg" alt="I Love PDF" class="logo-img">
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Browse Tools
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">All Tools</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">How It Works</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            All Tools PDF
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Compress PDF</a></li>
+                            <li><a class="dropdown-item" href="#">Merge PDF</a></li>
+                            <li><a class="dropdown-item" href="#">Split PDF</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Pricing Plan</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center gap-3">
+                    <a href="#" class="btn-login">Login</a>
+                    <a href="#" class="btn-signup">Sign Up Free</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-decorations">
+            <img src="../compressPDF/assets/triangle-orange-1.svg" alt="" class="decoration decoration-triangle-left">
+            <img src="../compressPDF/assets/star-orange.svg" alt="" class="decoration decoration-star-right">
+        </div>
+        <div class="container">
+            <h1 class="hero-title">HTML to PDF</h1>
+        </div>
+    </section>
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb-section">
+        <div class="container">
+            <div class="breadcrumb-decorations">
+                <img src="../compressPDF/assets/star-orange.svg" alt="" class="decoration decoration-star-left">
+                <img src="../compressPDF/assets/triangle-orange-1.svg" alt="" class="decoration decoration-triangle-right">
+            </div>
+            <div class="breadcrumb-content">
+                <a href="/" class="breadcrumb-link">Home</a>
+                <span class="breadcrumb-separator">|</span>
+                <a href="#" class="breadcrumb-link">Tools</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container-fluid container-custom">
+            <div id="alertPlaceholder" class="alert-container mb-4"></div>
+            
+            <div class="row g-4">
+                <!-- Left Side - File Upload Area -->
+                <div class="col-lg-6">
+                    <div class="upload-area">
+                        <div id="fileList" class="file-list-container">
+                            <!-- Default state -->
+                            <div class="upload-default" id="uploadDefault">
+                                <img src="../compressPDF/assets/pdf-icon.svg" alt="PDF" class="pdf-icon-large">
+                            </div>
+                            <!-- HTML files will be inserted here -->
+                        </div>
+                        <input type="file" id="htmlInput" class="file-upload" accept=".html, .htm" style="display:none;">
+                    </div>
+                </div>
+
+                <!-- Right Side - HTML to PDF Options -->
+                <div class="col-lg-6">
+                    <div class="options-panel">
+                        <h5 class="section-title"><strong>HTML To PDF</strong></h5>
+                        
+                        <form id="htmlToPdfForm">
+                            <!-- Website URL -->
+                            <div class="form-group mb-3">
+                                <label for="websiteUrl" class="form-label">Website Url</label>
+                                <input type="url" class="form-control" id="websiteUrl" placeholder="www.url.com">
+                            </div>
+                            
+                            <!-- Screen Size -->
+                            <div class="form-group mb-3">
+                                <label for="screenSize" class="form-label">Screen Size</label>
+                                <select class="form-select" id="screenSize">
+                                    <option value="A3">A3 (297x420 mm)</option>
+                                    <option value="A4" selected>A4 (210x297 mm)</option>
+                                </select>
+                            </div>
+                            
+                            <!-- Page Size -->
+                            <div class="form-group mb-3">
+                                <label for="pageSize" class="form-label">Page Size</label>
+                                <select class="form-select" id="pageSize">
+                                    <option value="A3">A3 (297x420 mm)</option>
+                                    <option value="A4" selected>A4 (210x297 mm)</option>
+                                </select>
+                            </div>
+                            
+                            <!-- One Page Long -->
+                            <div class="form-check mb-3">
+                                <input type="checkbox" class="form-check-input" id="onePageLong">
+                                <label class="form-check-label" for="onePageLong">One Page Long</label>
+                            </div>
+                            
+                            <!-- Orientation -->
+                            <div class="form-group mb-3">
+                                <label class="form-label">Orientation</label>
+                                <div class="orientation-options">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="orientation" id="portrait" value="portrait" checked>
+                                        <label class="form-check-label" for="portrait">
+                                            <img src="/assests/Frame (12).png" alt="Portrait Icon" class="orientation-icon">
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="orientation" id="landscape" value="landscape">
+                                        <label class="form-check-label" for="landscape">
+                                            <img src="/assests/Frame (2).png" alt="Landscape Icon" class="orientation-icon">
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Page Margin -->
+                            <div class="form-group mb-3">
+                                <label class="form-label">Page Margin</label>
+                                <div class="margin-options">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="margin" id="noMargin" value="none" checked>
+                                        <label class="form-check-label" for="noMargin">
+                                            <img src="/assests/Frame (3).png" alt="No Margin Icon" class="margin-icon">
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="margin" id="smallMargin" value="small">
+                                        <label class="form-check-label" for="smallMargin">
+                                            <img src="/assests/Frame (4).png" alt="Small Margin Icon" class="margin-icon">
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="margin" id="largeMargin" value="large">
+                                        <label class="form-check-label" for="largeMargin">
+                                            <img src="/assests/Frame (5).png" alt="Large Margin Icon" class="margin-icon">
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Block Ads -->
+                            <div class="form-check mb-3">
+                                <input type="checkbox" class="form-check-input" id="blockAds">
+                                <label class="form-check-label" for="blockAds">Try to block ads</label>
+                            </div>
+                            
+                            <!-- Remove Popups -->
+                            <div class="form-check mb-3 position-relative">
+                                <input type="checkbox" class="form-check-input" id="removePopups">
+                                <label class="form-check-label" for="removePopups">Remove overlay popups</label>
+                                <span class="eye-icon">
+                                    <img src="/assests/Group 143.png" alt="eye icon" class="eye-img">
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Convert Button -->
+            <div class="row mt-4">
+                <div class="col-lg-6 offset-lg-6">
+                    <button id="convertBtn" type="button" class="btn-convert">Convert to PDF</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Floating Add Button -->
+    <button id="addBtn" class="floating-add-btn" type="button">
+        <img src="/assests/Group 89.png" alt="+" class="plus-icon">
+    </button>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../config.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

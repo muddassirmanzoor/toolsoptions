@@ -1,0 +1,590 @@
+.custom-file-input:lang(en)~.custom-file-label::after {
+    content: "Browse";
+}
+
+#fileListSplit .list-group-item {
+    position: relative;
+    padding-right: 120px;
+}
+
+#fileListSplit .btn-danger {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+#alertPlaceholder {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    max-width: 400px;
+}
+
+#alertPlaceholder .alert {
+    margin-top: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Split PDF Section Styles */
+.split-pdf-section {
+    padding: 20px;
+}
+
+.pdf-preview {
+    padding: 20px;
+    min-height: 300px;
+}
+
+.pdf-page {
+    background-color: #f9f9f9;
+    border: 1px solid #eaeaea;
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+    margin-bottom: 15px;
+    transition: all 0.3s ease;
+}
+
+.pdf-page:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.pdf-page img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.pdf-page p {
+    margin: 0;
+    font-size: 14px;
+    color: #333;
+    font-weight: 500;
+}
+
+.range-section {
+    padding: 20px;
+}
+
+.range-text {
+    border-radius: 4px;
+    font-size: 14px;
+    color: #666;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pages-input {
+    margin-top: 15px;
+}
+
+.pages-input label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.pages-input .d-flex {
+    align-items: center;
+}
+
+.pages-input input {
+    flex: 1;
+}
+
+.pages-input span {
+    margin: 0 10px;
+    font-weight: 500;
+}
+
+.checkbox-section {
+    margin-top: 15px;
+}
+
+.checkbox-section input[type="checkbox"] {
+    margin-right: 8px;
+    cursor: pointer;
+}
+
+.checkbox-section label {
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+}
+
+/* Add Button Styles */
+.add-button {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.btn-purple {
+    background-color: #5a26ef;
+    color: white;
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(90, 38, 239, 0.3);
+}
+
+.btn-purple:hover {
+    background-color: #4a1fcf;
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(90, 38, 239, 0.4);
+}
+
+.btn-purple:active {
+    transform: scale(0.95);
+}
+
+/* Button Styles */
+.btn-warning {
+    background-color: #F56129 !important;
+    color: white !important;
+    border: none;
+    font-weight: 600;
+    padding: 12px 24px;
+    transition: all 0.3s ease;
+}
+
+.btn-warning:hover {
+    background-color: #e04f1f !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(245, 97, 41, 0.3);
+}
+
+.btn-warning:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+.btn-outline-primary {
+    color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-outline-primary:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-outline-secondary {
+    color: #6c757d;
+    border-color: #6c757d;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #6c757d;
+    color: white;
+}
+
+/* Input Group Styles */
+.input-group {
+    display: flex;
+    align-items: center;
+}
+
+.input-group .btn {
+    border-radius: 0;
+    padding: 8px 16px;
+}
+
+.input-group .btn:first-child {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+
+.input-group .btn:last-child {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+.input-group .form-control {
+    border-left: none;
+    border-right: none;
+    text-align: center;
+    font-weight: 600;
+}
+
+/* Form Check Styles */
+.form-check {
+    margin-bottom: 10px;
+}
+
+.form-check-input {
+    margin-top: 0.3em;
+    cursor: pointer;
+}
+
+.form-check-label {
+    margin-left: 8px;
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+}
+
+/* Form Control Styles */
+.form-control {
+    border-radius: 4px;
+    border: 1px solid #ced4da;
+    padding: 8px 12px;
+    transition: border-color 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #F56129;
+    box-shadow: 0 0 0 0.2rem rgba(245, 97, 41, 0.25);
+    outline: none;
+}
+
+/* ===================================
+   Initial Upload State
+   =================================== */
+.initial-upload-state {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    border: 2px dashed #ddd;
+    border-radius: 12px;
+    padding: 40px 20px;
+    transition: all 0.3s ease;
+    z-index: 1;
+    min-height: 350px;
+}
+
+.initial-upload-state.drag-over {
+    border-color: #F56129;
+    background-color: rgba(245, 97, 41, 0.05);
+}
+
+.upload-content {
+    text-align: center;
+    width: 100%;
+    max-width: 600px;
+}
+
+.upload-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 12px;
+    font-family: var(--font-sora, 'Sora', sans-serif);
+}
+
+.upload-subtitle {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 32px;
+    font-family: var(--font-sora, 'Sora', sans-serif);
+}
+
+.upload-buttons-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+.btn-select-files {
+    background-color: #F56129;
+    color: white;
+    border: none;
+    padding: 16px 40px;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: var(--font-sora, 'Sora', sans-serif);
+    box-shadow: 0 4px 12px rgba(245, 97, 41, 0.3);
+}
+
+.btn-select-files:hover {
+    background-color: #e04f1f;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(245, 97, 41, 0.4);
+}
+
+.btn-select-files:active {
+    transform: translateY(0);
+}
+
+.cloud-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.cloud-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: none;
+    background-color: #F56129;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(245, 97, 41, 0.3);
+    transition: all 0.3s ease;
+    padding: 0;
+}
+
+.cloud-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(245, 97, 41, 0.4);
+}
+
+.cloud-btn:active {
+    transform: scale(0.95);
+}
+
+.cloud-btn svg {
+    width: 24px;
+    height: 24px;
+}
+
+.drop-hint {
+    font-size: 14px;
+    color: #666;
+    margin-top: 16px;
+    font-family: var(--font-sora, 'Sora', sans-serif);
+}
+
+/* ===================================
+   File Selection Buttons
+   =================================== */
+.col-lg-6.position-relative {
+    padding-left: 0;
+}
+
+.col-lg-6.position-relative.has-files {
+    padding-left: 80px;
+}
+
+.file-selection-buttons {
+    position: absolute;
+    left: 0;
+    top: 0px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    z-index: 10;
+    padding: 0;
+    visibility: visible;
+    opacity: 1;
+}
+
+.file-select-btn {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: none;
+    background-color: #F56129;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(245, 97, 41, 0.3);
+    transition: all 0.3s ease;
+    position: relative;
+    padding: 0;
+    flex-shrink: 0;
+}
+
+.file-select-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(245, 97, 41, 0.4);
+}
+
+.file-select-btn:active {
+    transform: scale(0.95);
+}
+
+.file-select-btn i {
+    font-size: 24px;
+    width: auto;
+    height: auto;
+    display: inline-block;
+    line-height: 1;
+}
+
+.file-select-btn svg {
+    width: 24px;
+    height: 24px;
+    display: block;
+}
+
+.google-drive-btn svg {
+    width: 24px;
+    height: 24px;
+}
+
+.dropbox-btn svg {
+    width: 24px;
+    height: 24px;
+}
+
+.upload-area {
+    position: relative;
+    min-height: 350px;
+}
+
+/* File Info Section */
+.file-info {
+    margin-top: 8px;
+    margin-left: 0;
+    padding: 12px 16px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+    position: relative;
+    z-index: 10;
+    max-width: 100%;
+    width: 100%;
+}
+
+.file-info-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.file-info-content i.fa-file-pdf {
+    color: #e34c26;
+    font-size: 20px;
+}
+
+.file-info-content span {
+    flex: 1;
+    font-weight: 500;
+    color: #333;
+    word-break: break-word;
+}
+
+.remove-file-btn {
+    background: transparent;
+    border: none;
+    color: #dc3545;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: background 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+}
+
+.remove-file-btn i {
+    font-size: 16px;
+}
+
+.remove-file-btn:hover {
+    background: rgba(220, 53, 69, 0.1);
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .split-pdf-section {
+        padding: 10px;
+    }
+
+    .pdf-preview,
+    .range-section {
+        padding: 10px;
+    }
+
+    .pdf-page {
+        padding: 10px;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+        margin-left: 0 !important;
+        text-align: center !important;
+    }
+
+    #alertPlaceholder {
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        left: 10px;
+        max-width: 100%;
+    }
+
+    .col-lg-6.position-relative.has-files {
+        padding-left: 15px;
+    }
+    
+    .file-info {
+        margin-left: 0;
+    }
+    
+    .file-selection-buttons {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        flex-direction: column-reverse;
+    }
+    
+    .file-select-btn {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .file-select-btn i,
+    .file-select-btn svg {
+        font-size: 20px;
+        width: 20px;
+        height: 20px;
+    }
+    
+    .upload-title {
+        font-size: 24px;
+    }
+    
+    .upload-subtitle {
+        font-size: 14px;
+    }
+    
+    .btn-select-files {
+        padding: 12px 30px;
+        font-size: 16px;
+    }
+}
+

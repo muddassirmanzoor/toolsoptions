@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signature - I Love PDF</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Montserrat:wght@700&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- PDF.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <!-- PDF-lib Library for embedding signatures -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+    <script>
+        // Configure PDF.js worker immediately when library loads
+        window.addEventListener('load', function() {
+            if (typeof pdfjsLib !== 'undefined') {
+                pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+            } else {
+                console.error('PDF.js library failed to load');
+            }
+        });
+    </script>
+
+    <!-- Custom CSS -->
+    <link href="styles.css" rel="stylesheet">
+    <link href="../shared-styles.css" rel="stylesheet">
+</head>
+<body data-page-title="Signature">
+    <!-- Shared Navbar -->
+    <div id="shared-navbar"></div>
+
+    <!-- Shared Hero Section -->
+    <div id="shared-hero"></div>
+
+    <!-- Shared Breadcrumb -->
+    <div id="shared-breadcrumb"></div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container-fluid container-custom">
+            <div class="row g-4">
+                <!-- Left Side - Document Preview -->
+                <div class="col-lg-8">
+                    <div class="document-preview-container">
+                        <!-- Top Navigation Bar -->
+                        <div class="document-nav-bar">
+                            <div class="nav-left">
+                                <button class="nav-btn" id="prevPageBtn" title="Previous Page">
+                                    <i class="fa-solid fa-chevron-left"></i>
+                                </button>
+                                <span class="page-info">Page: <span id="currentPage">1</span> - <span id="totalPages">1</span></span>
+                                <div class="go-to-page" id="goToPageDropdown">
+                                    <span>Go to Page</span>
+                                    <i class="fa-solid fa-chevron-down"></i>
+                                </div>
+                                <input type="number" id="pageNumberInput" class="page-number-input" value="1" min="1" style="display: none;">
+                                <button class="nav-btn" id="nextPageBtn" title="Next Page">
+                                    <i class="fa-solid fa-chevron-right"></i>
+                                </button>
+                            </div>
+                            <div class="nav-right">
+                                <div class="document-name" id="documentNameContainer">
+                                    <span id="documentName">No file selected</span>
+                                    <i class="fa-solid fa-chevron-down"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="document-preview-wrapper position-relative">
+                            <!-- Initial Upload State -->
+                            <div id="initialUploadState" class="initial-upload-state">
+                                <div class="upload-content">
+                                    <h2 class="upload-title">Sign PDF</h2>
+                                    <p class="upload-subtitle">Your tool to eSign documents. Upload a PDF file to get started.</p>
+                                    <div class="upload-buttons-wrapper">
+                                        <button id="selectFilesBtn" class="btn-select-files" type="button">
+                                            Select PDF file
+                                        </button>
+                                        <div class="cloud-buttons">
+                                            <button id="initialGoogleDriveBtn" class="cloud-btn" type="button" title="Select from Google Drive">
+                                                <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                                                    <path d="M7.71 2.5L2.5 12.71l5.21 10.21L12.71 16l5.21-3.29L12.71 2.5H7.71z"/>
+                                                </svg>
+                                            </button>
+                                            <button id="initialDropboxBtn" class="cloud-btn" type="button" title="Select from Dropbox">
+                                                <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                                                    <path d="M6 2L0 6l6 4 6-4-6-4zm12 4l6-4-6-4-6 4 6 4zM0 14l6 4 6-4-6-4-6 4zm18-4l-6 4 6 4 6-4-6-4zM0 20l6 4 6-4-6-4-6 4zm12 0l6 4 6-4-6-4-6 4z"/>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <p class="drop-hint">or drop PDF here</p>
+                                </div>
+                            </div>
+
+                            <!-- File Selection Buttons Group (shown after file is selected) -->
+                            <div id="fileSelectionButtons" class="file-selection-buttons" style="display: none;">
+                                <button id="addBtn" class="file-select-btn add-btn" type="button" title="Select PDF file">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                                <button id="computerBtn" class="file-select-btn computer-btn" type="button" title="Select from computer">
+                                    <i class="fas fa-desktop"></i>
+                                </button>
+                                <button id="googleDriveBtn" class="file-select-btn google-drive-btn" type="button" title="Select from Google Drive">
+                                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                                        <path d="M7.71 2.5L2.5 12.71l5.21 10.21L12.71 16l5.21-3.29L12.71 2.5H7.71z"/>
+                                    </svg>
+                                </button>
+                                <button id="dropboxBtn" class="file-select-btn dropbox-btn" type="button" title="Select from Dropbox">
+                                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                                        <path d="M6 2L0 6l6 4 6-4-6-4zm12 4l6-4-6-4-6 4 6 4zM0 14l6 4 6-4-6-4-6 4zm18-4l-6 4 6 4 6-4-6-4zM0 20l6 4 6-4-6-4-6 4zm12 0l6 4 6-4-6-4-6 4z"/>
+                                    </svg>
+                                </button>
+                            </div>
+
+                            <input type="file" id="pdfInput" class="custom-file-input" style="display:none;" accept="application/pdf">
+
+                            <!-- Page Thumbnails Column (Left) - shown after file is uploaded -->
+                            <div class="page-thumbnails-column" id="pageThumbnailsColumn" style="display: none;">
+                                <!-- Thumbnails will be dynamically generated -->
+                            </div>
+
+                            <!-- Main Document Preview Area (Center) - shown after file is uploaded -->
+                            <div class="document-preview-area" id="documentPreviewArea" style="display: none;">
+                                <canvas id="pdfCanvas" style="max-width: 100%; height: auto;"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Side - Signing Options -->
+                <div class="col-lg-4">
+                    <div class="options-panel">
+                        <h5 class="section-title"><strong>Signing Options</strong></h5>
+
+                        <!-- Type Section -->
+                        <div class="type-section mb-4">
+                            <label class="option-label">Type:</label>
+                            <div class="type-buttons">
+                                <button class="type-btn" id="simpleSignatureBtn" data-type="simple">
+                                    <i class="fa-solid fa-pen"></i>
+                                    <span>Simple Signature</span>
+                                </button>
+                                <button class="type-btn" id="digitalSignatureBtn" data-type="digital">
+                                    <i class="fa-solid fa-shield-halved"></i>
+                                    <span>Digital Signature</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Required Fields Section -->
+                        <div class="required-fields-section mb-4">
+                            <label class="option-label">Required Fields:</label>
+                            <div class="field-item required-field" id="signatureField">
+                                <div class="drag-handle">
+                                    <i class="fa-solid fa-grip-vertical"></i>
+                                </div>
+                                <div class="field-icon">
+                                    <i class="fa-solid fa-pen"></i>
+                                </div>
+                                <div class="field-content">
+                                    <span class="field-text">Signature</span>
+                                </div>
+                                <button class="field-edit-btn" id="editSignatureBtn" title="Edit Signature">
+                                    <i class="fa-solid fa-pen"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Optimal Fields Section -->
+                        <div class="optimal-fields-section mb-4">
+                            <label class="option-label">Optimal Fields:</label>
+                            <div class="fields-list">
+                                <!-- Initials Field -->
+                                <div class="field-item optimal-field" id="initialsField">
+                                    <div class="drag-handle">
+                                        <i class="fa-solid fa-grip-vertical"></i>
+                                    </div>
+                                    <div class="field-icon">
+                                        <i class="fa-solid fa-pen"></i>
+                                    </div>
+                                    <div class="field-content">
+                                        <span class="field-text">Initials</span>
+                                    </div>
+                                    <button class="field-edit-btn" id="editInitialsBtn" title="Edit Initials">
+                                        <i class="fa-solid fa-pen"></i>
+                                    </button>
+                                </div>
+
+                                <!-- Name Field -->
+                                <div class="field-item optimal-field" id="nameField">
+                                    <div class="drag-handle">
+                                        <i class="fa-solid fa-grip-vertical"></i>
+                                    </div>
+                                    <div class="field-icon">
+                                        <i class="fa-solid fa-user"></i>
+                                    </div>
+                                    <div class="field-content">
+                                        <span class="field-text">Name</span>
+                                    </div>
+                                </div>
+
+                                <!-- Date Field -->
+                                <div class="field-item optimal-field" id="dateField">
+                                    <div class="drag-handle">
+                                        <i class="fa-solid fa-grip-vertical"></i>
+                                    </div>
+                                    <div class="field-icon">
+                                        <i class="fa-solid fa-calendar-days"></i>
+                                    </div>
+                                    <div class="field-content">
+                                        <span class="field-text">Date</span>
+                                    </div>
+                                </div>
+
+                                <!-- Text Field -->
+                                <div class="field-item optimal-field" id="textField">
+                                    <div class="drag-handle">
+                                        <i class="fa-solid fa-grip-vertical"></i>
+                                    </div>
+                                    <div class="field-icon">
+                                        <i class="fa-solid fa-font"></i>
+                                    </div>
+                                    <div class="field-content">
+                                        <span class="field-text">Text</span>
+                                    </div>
+                                </div>
+
+                                <!-- Company Stamp Field -->
+                                <div class="field-item optimal-field" id="companyField">
+                                    <div class="drag-handle">
+                                        <i class="fa-solid fa-grip-vertical"></i>
+                                    </div>
+                                    <div class="field-icon">
+                                        <i class="fa-solid fa-stamp"></i>
+                                    </div>
+                                    <div class="field-content">
+                                        <span class="field-text">Company Stamp</span>
+                                    </div>
+                                    <button class="field-edit-btn" id="editCompanyStampBtn" title="Edit Company Stamp">
+                                        <i class="fa-solid fa-pen"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Alert Placeholder -->
+                        <div id="alertPlaceholder" class="alert-container mb-3"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sign PDF / Send to Sign Button -->
+            <div class="row mt-4">
+                <div class="col-lg-4 offset-lg-8">
+                    <button id="signPdfBtn" class="btn-sign-pdf">Sign PDF</button>
+                    <button id="sendToSignBtn" class="btn-sign-pdf" style="display: none;">Send to Sign</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Who will sign? Modal (theme: orange) -->
+    <div id="whoWillSignModal" class="modal who-will-sign-modal" tabindex="-1" aria-labelledby="whoWillSignModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title" id="whoWillSignModalLabel">Who will sign this document?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="d-flex justify-content-center gap-4 flex-wrap">
+                        <div class="text-center">
+                            <div class="mb-2 p-3 rounded bg-light d-inline-block who-will-sign-icon-wrap">
+                                <i class="fas fa-pen-fancy fa-2x who-will-sign-icon"></i>
+                            </div>
+                            <button type="button" class="btn btn-who-sign btn-lg w-100 mb-2" id="whoSignOnlyMeBtn">Only me</button>
+                            <p class="small text-muted mb-0">Sign this document</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="mb-2 p-3 rounded bg-light d-inline-block who-will-sign-icon-wrap">
+                                <i class="fas fa-users fa-2x who-will-sign-icon"></i>
+                            </div>
+                            <button type="button" class="btn btn-who-sign btn-lg w-100 mb-2" id="whoSignSeveralBtn">Several people</button>
+                            <p class="small text-muted mb-0">Invite others to sign</p>
+                        </div>
+                    </div>
+                    <p class="small text-muted mt-3 mb-0">Uploaded documents: <span id="whoSignDocName"></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create signature request Modal (Several people) - theme orange -->
+    <div id="createRequestModal" class="modal create-request-modal" tabindex="-1" aria-labelledby="createRequestModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title" id="createRequestModalLabel">Create your signature request</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="fw-semibold mb-1">Who will receive your document?</p>
+                    <p class="small create-request-info-text mb-2" data-bs-toggle="tooltip" title="Fill in the information of each receiver.">
+                        <i class="fas fa-info-circle me-1"></i>Fill in the information of each receiver.
+                    </p>
+                    <div id="receiversContainer">
+                        <div class="receiver-row d-flex align-items-center gap-2 mb-2 flex-wrap">
+                            <span class="receiver-drag-handle text-muted" title="Reorder"><i class="fas fa-arrows-alt-v"></i></span>
+                            <span class="receiver-avatar rounded-circle bg-light d-inline-flex align-items-center justify-content-center" style="width:36px;height:36px;"><i class="fas fa-user text-muted"></i></span>
+                            <input type="text" class="form-control form-control-sm receiver-name flex-grow-1" style="min-width:120px;" placeholder="Name" required>
+                            <input type="email" class="form-control form-control-sm receiver-email flex-grow-1" style="min-width:140px;" placeholder="Email" required>
+                            <select class="form-select form-select-sm receiver-role" style="width:auto;min-width:100px;">
+                                <option value="signer">Signer</option>
+                                <option value="validator">Validator</option>
+                                <option value="witness">Witness</option>
+                            </select>
+                            <button type="button" class="btn btn-outline-secondary btn-sm receiver-actions" title="Options"><i class="fas fa-key"></i></button>
+                            <button type="button" class="btn btn-outline-secondary btn-sm receiver-actions" title="Document"><i class="fas fa-file"></i></button>
+                            <button type="button" class="btn btn-outline-secondary btn-sm receiver-actions" title="Edit"><i class="fas fa-pencil-alt"></i></button>
+                            <button type="button" class="btn btn-outline-create-request btn-sm remove-receiver" title="Remove"><i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-add-receiver btn-sm mb-4" id="addReceiverBtn"><i class="fas fa-user-plus me-1"></i> Add Receiver</button>
+
+                    <hr>
+                    <p class="fw-semibold mb-3">Settings</p>
+
+                    <div class="settings-group mb-3">
+                        <div class="form-check mb-1">
+                            <input class="form-check-input" type="checkbox" id="settingReceiverOrder">
+                            <label class="form-check-label" for="settingReceiverOrder">
+                                Set the order of receivers <i class="fas fa-arrows-alt-v ms-1 text-muted small"></i>
+                            </label>
+                        </div>
+                        <p class="small text-muted ms-4 mb-0">Select this option to set a signing order. A signer won't receive a request until the previous person has completed their document.</p>
+                    </div>
+
+                    <div class="settings-group mb-3">
+                        <div class="form-check mb-1">
+                            <input class="form-check-input" type="checkbox" id="settingChangeExpiry" checked>
+                            <label class="form-check-label" for="settingChangeExpiry">Change expiration date</label>
+                        </div>
+                        <p class="small text-muted ms-4 mb-1">The document will expire in <span id="expiryDaysLabel">15</span> days.</p>
+                        <p class="small text-muted ms-4 mb-0">Expires on: <strong id="expiresOnLabel">—</strong></p>
+                        <div class="ms-4 mt-1">
+                            <input type="number" class="form-control form-control-sm d-inline-block" id="settingExpiresDays" value="15" min="1" max="365" style="width:80px;"> days
+                        </div>
+                    </div>
+
+                    <div class="settings-group mb-3">
+                        <div class="form-check mb-1">
+                            <input class="form-check-input" type="checkbox" id="settingMultipleRequests" disabled>
+                            <label class="form-check-label" for="settingMultipleRequests">Multiple requests</label>
+                            <span class="badge bg-warning text-dark ms-1">Premium</span>
+                        </div>
+                        <p class="small text-muted ms-4 mb-0">This option will allow each signer to receive a unique and separate request to sign individually.</p>
+                    </div>
+
+                    <div class="settings-group mb-3">
+                        <div class="form-check mb-1">
+                            <input class="form-check-input" type="checkbox" id="settingEmailNotifications" checked>
+                            <label class="form-check-label" for="settingEmailNotifications">Enable email notifications</label>
+                        </div>
+                        <p class="small text-muted ms-4 mb-0">You will receive an email notification when a receiver has completed their request.</p>
+                    </div>
+
+                    <div class="settings-group mb-3">
+                        <div class="form-check mb-1">
+                            <input class="form-check-input" type="checkbox" id="settingEnableReminders" checked>
+                            <label class="form-check-label" for="settingEnableReminders">Enable reminders</label>
+                        </div>
+                        <p class="small text-muted ms-4 mb-0">Send a reminder to the participants every <input type="number" class="form-control form-control-sm d-inline-block" id="settingRemindersDays" value="1" min="0" max="30" style="width:60px;"> days.</p>
+                    </div>
+
+                    <div class="settings-group mb-3">
+                        <div class="form-check mb-1">
+                            <input class="form-check-input" type="checkbox" id="settingDigitalSignature" disabled>
+                            <label class="form-check-label" for="settingDigitalSignature">Digital Signature</label>
+                            <span class="badge bg-warning text-dark ms-1">Premium</span>
+                        </div>
+                        <p class="small text-muted ms-4 mb-0">A signed Certified Hash and a Qualified Timestamp is embedded to the signed documents, ensuring the future integrity of the document and signature. Certified signatures are eIDAS, ESIGN &amp; UETA compliant.</p>
+                    </div>
+
+                    <div class="settings-group mb-3">
+                        <div class="form-check mb-1">
+                            <input class="form-check-input" type="checkbox" id="settingSetLanguage" checked>
+                            <label class="form-check-label" for="settingSetLanguage">Set language</label>
+                        </div>
+                        <p class="small text-muted ms-4 mb-0">Notifications will be sent in <select class="form-select form-select-sm d-inline-block" id="settingLanguage" style="width:auto;"><option value="en">English</option><option value="es">Spanish</option><option value="fr">French</option><option value="de">German</option></select>.</p>
+                    </div>
+
+                    <div class="settings-group mb-3">
+                        <div class="form-check mb-1">
+                            <input class="form-check-input" type="checkbox" id="settingCustomizeEmail">
+                            <label class="form-check-label" for="settingCustomizeEmail">Customize the request email</label>
+                        </div>
+                        <p class="small text-muted ms-4 mb-0">Edit the text you want to appear in the subject and body of the signature request email.</p>
+                    </div>
+
+                    <div class="settings-group mb-3">
+                        <div class="form-check mb-1">
+                            <input class="form-check-input" type="checkbox" id="settingUuid" checked>
+                            <label class="form-check-label" for="settingUuid">UUID (recommended)</label>
+                        </div>
+                        <p class="small text-muted ms-4 mb-0">Show the Unique Signer Identifier code that appears below the signatures to help validate the signature on the Audit Trail. It is recommended that you keep this activated, otherwise it lowers the legal weight of the end document.</p>
+                    </div>
+
+                    <div class="settings-group mb-3">
+                        <div class="form-check mb-1">
+                            <input class="form-check-input" type="checkbox" id="settingVerificationCode">
+                            <label class="form-check-label" for="settingVerificationCode">Signature verification code</label>
+                            <span class="badge bg-success ms-1">Highly recommended</span>
+                        </div>
+                        <p class="small text-muted ms-4 mb-0">Digitally verify the integrity of the printed document using a QR code and a unique password that are provided in the Audit Trail.</p>
+                    </div>
+
+                    <div class="settings-group mb-3">
+                        <div class="form-check mb-1">
+                            <input class="form-check-input" type="checkbox" id="settingEmailBranding" disabled>
+                            <label class="form-check-label" for="settingEmailBranding">Email branding</label>
+                            <span class="badge bg-warning text-dark ms-1">Premium</span>
+                        </div>
+                        <p class="small text-muted ms-4 mb-0">Include the company name and logo in the signature request email. Both are required to apply your settings.</p>
+                    </div>
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn btn-link create-request-cancel-link text-decoration-none p-0" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-create-request-apply" id="createRequestApplyBtn" disabled>Apply</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Signature Creation Modal -->
+    <div id="signatureModal" class="modal" tabindex="-1" aria-labelledby="signatureModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="signatureModalLabel">Create Signature</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="tabs">
+                        <button type="button" class="tab-button" data-tab="type">Type</button>
+                        <button type="button" class="tab-button active" data-tab="draw">Draw</button>
+                        <button type="button" class="tab-button" data-tab="upload">Upload</button>
+                        <button type="button" class="tab-button" data-tab="companyStamp">Company Stamp</button>
+                        <button type="button" class="tab-button" data-tab="history">History</button>
+                    </div>
+                    
+                    <div class="tab-content active" id="typeTab">
+                        <input type="text" id="nameInput" placeholder="Type your name" class="form-control mb-3">
+                        <button type="button" class="btn btn-primary mb-3" id="generateBtn">Generate Signatures</button>
+                        <div id="signaturePreviews" class="mb-3"></div>
+                        <canvas id="signatureCanvas" style="border: 1px solid #ddd; background: white; display: block; margin: 0 auto;"></canvas>
+                    </div>
+                    
+                    <div class="tab-content" id="drawTab">
+                        <div style="text-align: center; margin-bottom: 10px;">
+                            <small class="text-muted">Draw your signature here</small>
+                        </div>
+                        <canvas id="drawCanvas" style="border: 1px solid #ddd; background: white; display: block; margin: 0 auto; cursor: crosshair;"></canvas>
+                        <div class="mt-3 text-center">
+                            <button type="button" class="btn-undo" id="undoBtn">Undo</button>
+                            <button type="button" class="btn-clear" id="clearDrawBtn">Clear</button>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="uploadTab">
+                        <input type="file" id="imageUpload" class="form-control mb-3" accept="image/png,image/jpeg,image/jpg,image/svg+xml">
+                        <small class="text-muted mb-2 d-block">Accepted formats: PNG, JPG and SVG</small>
+                        <canvas id="uploadCanvas" style="border: 1px solid #ddd; background: white; display: block; margin: 0 auto;"></canvas>
+                        <div class="mt-3 text-center">
+                            <button type="button" class="btn-undo" id="undoBtnUpload">Undo</button>
+                            <button type="button" class="btn-clear" id="clearUploadBtn">Clear</button>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="companyStampTab">
+                        <div class="company-stamp-upload-area">
+                            <input type="file" id="companyStampUpload" class="form-control mb-3" accept="image/png,image/jpeg,image/jpg,image/svg+xml" style="display: none;">
+                            <button type="button" class="btn-upload-company-stamp" id="uploadCompanyStampBtn">Upload company stamp</button>
+                            <p class="text-muted mb-2">or drop file here</p>
+                            <small class="text-muted">Accepted formats: <strong>PNG</strong>, <strong>JPG</strong> and <strong>SVG</strong></small>
+                        </div>
+                        <canvas id="companyStampCanvas" style="border: 1px solid #ddd; background: white; display: block; margin: 0 auto; max-width: 100%;"></canvas>
+                    </div>
+                    
+                    <div class="tab-content" id="historyTab">
+                        <div id="historyContainer" style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; max-height: 400px; overflow-y: auto;"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-cancel" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn-apply" id="applySignatureBtn">Apply</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Upgrade to Premium Modal (same as Plans/Team view - when payment required on Send to Sign) -->
+    <div class="modal fade" id="upgradePremiumModalSignature" tabindex="-1" aria-labelledby="upgradePremiumModalSignatureLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content upgrade-premium-modal-content" style="border-radius: 12px; overflow: hidden;">
+                <div class="modal-header" style="background: #2d3748; color: white; border-bottom: none; padding: 20px 30px;">
+                    <h2 class="modal-title" id="upgradePremiumModalSignatureLabel" style="color: #ff702a; font-size: 24px; font-weight: 700;">Upgrade to Premium</h2>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" style="opacity: 1;"></button>
+                </div>
+                <div class="modal-body" style="padding: 30px;">
+                    <p style="color: #666; margin-bottom: 25px; font-size: 14px;">
+                        Premium users can <strong>Digitally sign documents</strong>. Get full access to <a href="#" id="upgradeModalAllFeaturesLink" style="color: #5A26EF; text-decoration: underline;">all features</a>.
+                    </p>
+
+                    <!-- Pricing Plans (same as team/plans) -->
+                    <div class="pricing-plans-modal" style="display: flex; gap: 15px; margin-bottom: 25px;">
+                        <div class="pricing-plan-modal active" data-plan="monthly" style="flex: 1; border: 2px solid #ff702a; border-radius: 8px; padding: 15px; text-align: center; cursor: pointer; background: white;">
+                            <div style="font-size: 14px; color: #666; margin-bottom: 5px;">Monthly</div>
+                            <div style="font-size: 28px; font-weight: 700; color: #333;">$7</div>
+                        </div>
+                        <div class="pricing-plan-modal" data-plan="yearly" style="flex: 1; border: 2px solid #ddd; border-radius: 8px; padding: 15px; text-align: center; cursor: pointer; background: white; position: relative;">
+                            <div style="font-size: 14px; color: #666; margin-bottom: 5px;">Yearly</div>
+                            <div style="font-size: 28px; font-weight: 700; color: #333;">$48</div>
+                            <div style="font-size: 12px; color: #666; margin-top: 5px;">$4 / month</div>
+                            <span style="position: absolute; top: -8px; right: -8px; background: #10b981; color: white; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600;">-42%</span>
+                        </div>
+                    </div>
+
+                    <!-- Payment Methods (PayPal only visible, same as team) -->
+                    <div class="payment-methods-modal">
+                        <div class="payment-method-item-modal" data-method="card" style="display: none !important;">
+                            <svg class="payment-card-icon-modal" width="48" height="32" viewBox="0 0 48 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="48" height="32" rx="4" fill="#E3F2FD"/><rect x="4" y="8" width="8" height="6" rx="1" fill="#FFC107"/>
+                                <rect x="4" y="18" width="20" height="2" rx="1" fill="#90CAF9"/><rect x="4" y="22" width="16" height="2" rx="1" fill="#90CAF9"/>
+                                <circle cx="38" cy="22" r="3" fill="#F44336"/><ellipse cx="42" cy="22" rx="2" ry="3" fill="#FFC107"/>
+                            </svg>
+                        </div>
+                        <div class="payment-method-item-modal paypal-tab-modal active" data-method="paypal">
+                            <div class="paypal-content-wrapper-modal">
+                                <svg class="paypal-logo-icon-modal" width="24" height="24" viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M30.5 15.5c-1.2-7.8-7.1-13.5-14.8-13.5H5.5c-0.8 0-1.5 0.6-1.6 1.4L0 45.5c-0.1 0.7 0.5 1.3 1.2 1.3h8.5l2.1-13.3c0.1-0.8 0.8-1.4 1.6-1.4h3.2c6.5 0 11.8-5.3 12.9-11.8 0.6-3.2 0-5.8-1.6-7.6z" fill="#003087"/>
+                                    <path d="M30.5 15.5c-1.2-7.8-7.1-13.5-14.8-13.5H5.5c-0.8 0-1.5 0.6-1.6 1.4L0 45.5c-0.1 0.7 0.5 1.3 1.2 1.3h8.5l2.1-13.3c0.1-0.8 0.8-1.4 1.6-1.4h3.2c6.5 0 11.8-5.3 12.9-11.8 0.6-3.2 0-5.8-1.6-7.6z" fill="#009CDE"/>
+                                    <path d="M50 15.5c-1.2-7.8-7.1-13.5-14.8-13.5H25c-0.8 0-1.5 0.6-1.6 1.4L19.5 45.5c-0.1 0.7 0.5 1.3 1.2 1.3h8.5l2.1-13.3c0.1-0.8 0.8-1.4 1.6-1.4h3.2c6.5 0 11.8-5.3 12.9-11.8 0.6-3.2 0-5.8-1.6-7.6z" fill="#003087"/>
+                                </svg>
+                                <span class="paypal-text-label-modal">PayPal</span>
+                            </div>
+                            <div class="paypal-underline-modal"></div>
+                        </div>
+                    </div>
+
+                    <!-- Card details (hidden, same as team) -->
+                    <div class="card-details-section" id="cardDetailsSectionSignature" style="display: none !important;">
+                        <h6 class="section-label">Card details</h6>
+                        <div id="card-element-modal-signature" style="width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 6px; background: white;"></div>
+                        <div id="card-errors-modal-signature" role="alert" style="color: #dc3545; font-size: 14px; margin-top: 8px; min-height: 20px;"></div>
+                    </div>
+
+                    <!-- PayPal Button -->
+                    <div id="paypalButtonContainerModalSignature" class="paypal-button-container-modal">
+                        <button type="button" class="btn-paypal-modal" id="paypalPaymentBtnSignature">
+                            <span class="paypal-button-logo">
+                                <svg width="60" height="18" viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M30.5 15.5c-1.2-7.8-7.1-13.5-14.8-13.5H5.5c-0.8 0-1.5 0.6-1.6 1.4L0 45.5c-0.1 0.7 0.5 1.3 1.2 1.3h8.5l2.1-13.3c0.1-0.8 0.8-1.4 1.6-1.4h3.2c6.5 0 11.8-5.3 12.9-11.8 0.6-3.2 0-5.8-1.6-7.6z" fill="white"/>
+                                    <path d="M30.5 15.5c-1.2-7.8-7.1-13.5-14.8-13.5H5.5c-0.8 0-1.5 0.6-1.6 1.4L0 45.5c-0.1 0.7 0.5 1.3 1.2 1.3h8.5l2.1-13.3c0.1-0.8 0.8-1.4 1.6-1.4h3.2c6.5 0 11.8-5.3 12.9-11.8 0.6-3.2 0-5.8-1.6-7.6z" fill="#009CDE"/>
+                                    <path d="M50 15.5c-1.2-7.8-7.1-13.5-14.8-13.5H25c-0.8 0-1.5 0.6-1.6 1.4L19.5 45.5c-0.1 0.7 0.5 1.3 1.2 1.3h8.5l2.1-13.3c0.1-0.8 0.8-1.4 1.6-1.4h3.2c6.5 0 11.8-5.3 12.9-11.8 0.6-3.2 0-5.8-1.6-7.6z" fill="white"/>
+                                </svg>
+                            </span>
+                            <span class="paypal-button-text">PayPal</span>
+                        </button>
+                    </div>
+
+                    <button type="button" class="btn-confirm-payment" id="confirmPaymentBtnSignature" style="display: none;">Go Premium</button>
+
+                    <p class="security-text" style="margin-top: 20px; margin-bottom: 0; font-size: 12px; color: #6B7280;">
+                        Secure. Private. In your control <i class="fas fa-info-circle"></i>
+                    </p>
+                    <p class="small text-muted mb-0 mt-2"><i class="fas fa-check text-success me-1"></i> Cancel anytime &nbsp; <i class="fas fa-check text-success me-1"></i> Money back guarantee</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../config.js"></script>
+    <script src="../shared-components.js"></script>
+    <script src="app.js"></script>
+    <script src="../main.js"></script>
+</body>
+</html>

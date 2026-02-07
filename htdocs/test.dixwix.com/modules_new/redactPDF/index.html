@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redact PDF - I Love PDF</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Montserrat:wght@700&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand" href="/">
+                <img src="../compressPDF/assets/logo-ilovepdf.svg" alt="I Love PDF" class="logo-img">
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Browse Tools
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">All Tools</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">How It Works</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            All Tools PDF
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Compress PDF</a></li>
+                            <li><a class="dropdown-item" href="#">Merge PDF</a></li>
+                            <li><a class="dropdown-item" href="#">Split PDF</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Pricing Plan</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center gap-3">
+                    <a href="#" class="btn-login">Login</a>
+                    <a href="#" class="btn-signup">Sign Up Free</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-decorations">
+            <img src="../compressPDF/assets/triangle-orange-1.svg" alt="" class="decoration decoration-triangle-left">
+            <img src="../compressPDF/assets/star-orange.svg" alt="" class="decoration decoration-star-right">
+        </div>
+        <div class="container">
+            <h1 class="hero-title">Redact PDF</h1>
+        </div>
+    </section>
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb-section">
+        <div class="container">
+            <div class="breadcrumb-decorations">
+                <img src="../compressPDF/assets/star-orange.svg" alt="" class="decoration decoration-star-left">
+                <img src="../compressPDF/assets/triangle-orange-1.svg" alt="" class="decoration decoration-triangle-right">
+            </div>
+            <div class="breadcrumb-content">
+                <a href="/" class="breadcrumb-link">Home</a>
+                <span class="breadcrumb-separator">|</span>
+                <a href="#" class="breadcrumb-link">Tools</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container-fluid container-custom">
+            <div class="row g-4">
+                <!-- Left Side - PDF Viewer Area -->
+                <div class="col-lg-6">
+                    <div class="pdf-viewer-container">
+                        <!-- PDF Page Thumbnails (Vertical Column) -->
+                        <div class="pdf-thumbnails-column">
+                            <div class="pdf-thumbnail-small">
+                                <div class="thumbnail-placeholder"></div>
+                            </div>
+                            <div class="pdf-thumbnail-small">
+                                <div class="thumbnail-placeholder"></div>
+                            </div>
+                            <div class="pdf-thumbnail-small">
+                                <div class="thumbnail-placeholder"></div>
+                            </div>
+                            <div class="pdf-thumbnail-small">
+                                <div class="thumbnail-placeholder"></div>
+                            </div>
+                        </div>
+
+                        <!-- Main PDF Display Area -->
+                        <div class="pdf-display-area">
+                            <div class="pdf-viewer-placeholder">
+                                <img src="../compressPDF/assets/pdf-icon.svg" alt="PDF" class="pdf-icon-large">
+                                <span class="pdf-label">PDF</span>
+                            </div>
+                        </div>
+
+                        <!-- PDF Controls Bar -->
+                        <div class="pdf-controls-bar">
+                            <div class="controls-left">
+                                <button class="control-btn" title="Previous Page">
+                                    <i class="fa-solid fa-chevron-left"></i>
+                                </button>
+                                <span class="page-indicator">2 / 3</span>
+                                <button class="control-btn" title="Next Page">
+                                    <i class="fa-solid fa-chevron-right"></i>
+                                </button>
+                            </div>
+                            <div class="controls-center">
+                                <button class="control-btn" title="View">
+                                    <i class="fa-solid fa-eye"></i>
+                                </button>
+                                <button class="control-btn" title="Lock">
+                                    <i class="fa-solid fa-lock"></i>
+                                </button>
+                                <span class="zoom-indicator">84%</span>
+                            </div>
+                            <div class="controls-right">
+                                <button class="control-btn" title="Zoom Out">
+                                    <i class="fa-solid fa-minus"></i>
+                                </button>
+                                <button class="control-btn" title="Zoom In">
+                                    <i class="fa-solid fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Side - Redaction Options -->
+                <div class="col-lg-6">
+                    <div class="options-panel">
+                        <h5 class="section-title"><strong>Redact PDF</strong></h5>
+
+                        <!-- Search Text Input with Tags -->
+                        <div class="search-section mb-4">
+                            <label for="searchText" class="option-label">Search Text</label>
+                            <div class="search-input-wrapper">
+                                <input type="text" id="searchText" class="search-input" placeholder="Search text to redact">
+                                <div class="search-tags" id="searchTags">
+                                    <!-- Tags will be dynamically added here -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Redaction Type Options -->
+                        <div class="redaction-types-section">
+                            <!-- Text Option -->
+                            <div class="redaction-type-item" data-type="text">
+                                <div class="type-header">
+                                    <div class="type-icon">
+                                        <i class="fa-solid fa-font"></i>
+                                    </div>
+                                    <span class="type-label">Text</span>
+                                </div>
+                                <div class="type-content" id="textContent">
+                                    <!-- Content will be shown when expanded -->
+                                </div>
+                            </div>
+
+                            <!-- Credit Card Option -->
+                            <div class="redaction-type-item" data-type="creditcard">
+                                <div class="type-header">
+                                    <div class="type-icon">
+                                        <i class="fa-solid fa-credit-card"></i>
+                                    </div>
+                                    <span class="type-label">Credit Card</span>
+                                </div>
+                                <div class="type-content" id="creditCardContent">
+                                    <!-- Content will be shown when expanded -->
+                                </div>
+                            </div>
+
+                            <!-- Phone Number Option -->
+                            <div class="redaction-type-item active" data-type="phone">
+                                <div class="type-header">
+                                    <div class="type-icon">
+                                        <i class="fa-solid fa-phone"></i>
+                                    </div>
+                                    <span class="type-label">Phone Number</span>
+                                </div>
+                                <div class="type-content active" id="phoneContent">
+                                    <div class="page-section">
+                                        <div class="page-header">
+                                            <input type="checkbox" id="page1" class="page-checkbox" checked>
+                                            <label for="page1" class="page-label">Page 1</label>
+                                        </div>
+                                        <div class="page-entries">
+                                            <!-- Entries will be dynamically added -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Email Option -->
+                            <div class="redaction-type-item" data-type="email">
+                                <div class="type-header">
+                                    <div class="type-icon">
+                                        <i class="fa-solid fa-envelope"></i>
+                                    </div>
+                                    <span class="type-label">Email</span>
+                                </div>
+                                <div class="type-content" id="emailContent">
+                                    <!-- Content will be shown when expanded -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="action-buttons mt-4">
+                            <button class="btn-cancel">Cancel</button>
+                            <button class="btn-accept">Accept</button>
+                        </div>
+
+                        <!-- Alert Placeholder -->
+                        <div id="alertPlaceholder" class="alert-container mt-3"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Redact PDF Button -->
+            <div class="row mt-4">
+                <div class="col-lg-6 offset-lg-6">
+                    <button id="redactTextBtn" class="btn-redact">Redact PDF</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Floating Add Button -->
+    <button id="addBtn" class="floating-add-btn" type="button">
+        <img src="/assests/Group 89.png" alt="+" class="plus-icon">
+    </button>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../config.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

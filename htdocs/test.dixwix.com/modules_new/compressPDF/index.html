@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compress PDF - I Love PDF</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Montserrat:wght@700&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand" href="/">
+                <img src="assets/logo-ilovepdf.svg" alt="I Love PDF" class="logo-img">
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Browse Tools
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">All Tools</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">How It Works</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            All Tools PDF
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Compress PDF</a></li>
+                            <li><a class="dropdown-item" href="#">Merge PDF</a></li>
+                            <li><a class="dropdown-item" href="#">Split PDF</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Pricing Plan</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center gap-3">
+                    <a href="#" class="btn-login">Login</a>
+                    <a href="#" class="btn-signup">Sign Up Free</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-decorations">
+            <img src="assets/triangle-orange-1.svg" alt="" class="decoration decoration-triangle-left">
+            <img src="assets/star-orange.svg" alt="" class="decoration decoration-star-right">
+        </div>
+        <div class="container">
+            <h1 class="hero-title">Compress PDF</h1>
+        </div>
+    </section>
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb-section">
+        <div class="container">
+            <div class="breadcrumb-decorations">
+                <img src="assets/star-orange.svg" alt="" class="decoration decoration-star-left">
+                <img src="assets/triangle-orange-1.svg" alt="" class="decoration decoration-triangle-right">
+            </div>
+            <div class="breadcrumb-content">
+                <a href="/" class="breadcrumb-link">Home</a>
+                <span class="breadcrumb-separator">|</span>
+                <a href="#" class="breadcrumb-link">Tools</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <h2 class="section-title">Compress PDF</h2>
+            
+            <div id="alertPlaceholder" class="alert-container mb-4"></div>
+            
+            <div class="row g-4 align-items-stretch">
+                <!-- Left: File Upload Area -->
+                <div class="col-lg-6 d-flex">
+                    <div class="upload-area w-100">
+                        <div id="fileList" class="file-list-container">
+                            <!-- Default state -->
+                            <div class="upload-default" id="uploadDefault">
+                                <img src="assets/pdf-icon.svg" alt="PDF" class="pdf-icon-large">
+                            </div>
+                            <!-- PDF thumbnails will be inserted here -->
+                        </div>
+                        <input type="file" id="pdfFile" name="pdfFile" accept="application/pdf" style="display:none;">
+                        <input type="hidden" id="compression" name="compression" value="extreme">
+                    </div>
+                </div>
+
+                <!-- Right: Compression Options -->
+                <div class="col-lg-6 d-flex">
+                    <div class="options-panel w-100">
+                        <!-- Compression Options -->
+                        <div class="compression-options">
+                            <div class="compression-option active" onclick="selectOption(this, 'extreme')">
+                                <span class="option-text">Extreme Compression</span>
+                                <span class="checkmark-icon">
+                                    <svg width="31" height="31" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="15.5" cy="15.5" r="15.5" fill="#F56129"/>
+                                        <path d="M9 15.5L13.5 20L22 11.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </span>
+                            </div>
+                            <div class="compression-option" onclick="selectOption(this, 'recommend')">
+                                <span class="option-text">Recommended Compression</span>
+                                <span class="checkmark-icon">
+                                    <svg width="31" height="31" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="15.5" cy="15.5" r="15" stroke="#E4E4E4" fill="none"/>
+                                        <path d="M9 15.5L13.5 20L22 11.5" stroke="#C0C0C0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </span>
+                            </div>
+                            <div class="compression-option" onclick="selectOption(this, 'less')">
+                                <span class="option-text">Less compression</span>
+                                <span class="checkmark-icon">
+                                    <svg width="31" height="31" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="15.5" cy="15.5" r="15" stroke="#E4E4E4" fill="none"/>
+                                        <path d="M9 15.5L13.5 20L22 11.5" stroke="#C0C0C0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Optimize Slider -->
+                        <div class="optimize-section">
+                            <label class="optimize-label">Optimize:</label>
+                            <div class="slider-wrapper">
+                                <input type="range" class="optimize-slider" id="optimizeRange" min="0" max="100" value="50">
+                                <div class="slider-labels">
+                                    <span class="slider-label-left">Less</span>
+                                    <span class="slider-label-right">More</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Compress Button - Outside of columns -->
+            <div class="row mt-4">
+                <div class="col-lg-6 offset-lg-6">
+                    <button id="compressBtn" class="btn-compress">Compress PDF</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Floating Add Button -->
+    <button id="addBtn" class="floating-add-btn" type="button">
+        <img src="/assests/Group 89.png" alt="+" class="plus-icon">
+    </button>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../config.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

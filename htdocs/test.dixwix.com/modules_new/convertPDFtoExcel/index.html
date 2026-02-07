@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF To Excel - I Love PDF</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Montserrat:wght@700&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand" href="/">
+                <img src="../compressPDF/assets/logo-ilovepdf.svg" alt="I Love PDF" class="logo-img">
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Browse Tools
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">All Tools</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">How It Works</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            All Tools PDF
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Compress PDF</a></li>
+                            <li><a class="dropdown-item" href="#">Merge PDF</a></li>
+                            <li><a class="dropdown-item" href="#">Split PDF</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Pricing Plan</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center gap-3">
+                    <a href="#" class="btn-login">Login</a>
+                    <a href="#" class="btn-signup">Sign Up Free</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-decorations">
+            <img src="../compressPDF/assets/triangle-orange-1.svg" alt="" class="decoration decoration-triangle-left">
+            <img src="../compressPDF/assets/star-orange.svg" alt="" class="decoration decoration-star-right">
+        </div>
+        <div class="container">
+            <h1 class="hero-title">PDF To Excel</h1>
+        </div>
+    </section>
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb-section">
+        <div class="container">
+            <div class="breadcrumb-decorations">
+                <img src="../compressPDF/assets/star-orange.svg" alt="" class="decoration decoration-star-left">
+                <img src="../compressPDF/assets/triangle-orange-1.svg" alt="" class="decoration decoration-triangle-right">
+            </div>
+            <div class="breadcrumb-content">
+                <a href="/" class="breadcrumb-link">Home</a>
+                <span class="breadcrumb-separator">|</span>
+                <a href="#" class="breadcrumb-link">Tools</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container-fluid container-custom">
+            <div class="row">
+                <!-- Left Side - PDF Placeholder -->
+                <div class="col-lg-6 col-md-12 d-flex justify-content-center">
+                    <div class="pdf-placeholder">
+                        <img src="/assests/pdf 2.png" alt="PDF Icon">
+                    </div>
+                </div>
+        
+                <!-- Right Side - Options -->
+                <div class="col-lg-6 col-md-12">
+                    <h5 class="section-title"><strong>PDF To Excel</strong></h5>
+                
+                    <!-- Option 1: No OCR -->
+                    <div class="option-box">
+                        <div class="option-content">
+                            <div>
+                                <strong>No OCR</strong>
+                            </div>
+                            <p>Convert PDFs with selectable text into editable Excel files.</p>
+                        </div>
+                        <input type="checkbox" checked>
+                    </div>
+                
+                    <!-- Option 2: No OCR with Premium Badge -->
+                    <div class="option-box">
+                        <div class="option-content">
+                            <div>
+                                <strong>No OCR</strong>
+                                <span class="premium-badge">Premium</span>
+                            </div>
+                            <p><img style="height: 50px;" src="/assests/image- 2.png" alt="">All embedded images inside the PDF will be extracted as JPG images.</p>
+                        </div>
+                        <input type="checkbox" checked>
+                    </div>
+                
+                    <!-- Convert Button -->
+                    <button id="convertBtn" class="btn btn-convert">Convert To Excel</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Floating Add Button (same as Compress PDF) -->
+    <button id="addBtn" class="floating-add-btn" type="button">
+        <img src="/assests/Group 89.png" alt="+" class="plus-icon">
+    </button>
+
+    <!-- Bootstrap Bundle with Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../config.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

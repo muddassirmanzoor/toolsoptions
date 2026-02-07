@@ -1,0 +1,943 @@
+/* ===================================
+   CSS Variables / Design Tokens
+   =================================== */
+:root {
+    /* Colors */
+    --color-primary-purple: #5A26EF;
+    --color-primary-orange: #F56129;
+    --color-white: #FFFFFF;
+    --color-black: #000000;
+    --color-gray-light: #FAFAFA;
+    --color-gray-border: #E4E4E4;
+    --color-gray-text: #666666;
+    --color-gray-dark: #333333;
+    
+    /* Typography */
+    --font-poppins: 'Poppins', sans-serif;
+    --font-montserrat: 'Montserrat', sans-serif;
+    --font-sora: 'Sora', sans-serif;
+    
+    /* Spacing */
+    --spacing-xs: 8px;
+    --spacing-sm: 12px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+    --spacing-2xl: 48px;
+    
+    /* Border Radius */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 50px;
+    
+    /* Shadows */
+    --shadow-sm: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    --shadow-lg: 0px 4px 12px rgba(90, 38, 239, 0.3);
+}
+
+/* ===================================
+   Global Styles
+   =================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-sora);
+    background-color: var(--color-white);
+    color: var(--color-black);
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+/* ===================================
+   Navbar Styles
+   =================================== */
+.navbar {
+    padding: var(--spacing-md) 0;
+    border-bottom: 1px solid var(--color-gray-border);
+}
+
+.logo-img {
+    height: 40px;
+    width: auto;
+}
+
+.navbar-nav .nav-link {
+    font-family: var(--font-poppins);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--color-black);
+    padding: var(--spacing-xs) var(--spacing-md);
+    transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    color: var(--color-primary-purple);
+}
+
+.navbar-nav .dropdown-toggle::after {
+    content: '';
+    display: inline-block;
+    width: 13px;
+    height: 6px;
+    background-image: url('../compressPDF/assets/dropdown-arrow.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    border: none;
+    margin-left: var(--spacing-xs);
+    vertical-align: middle;
+}
+
+.btn-login {
+    font-family: var(--font-montserrat);
+    font-size: 18.92px;
+    font-weight: 700;
+    color: var(--color-black);
+    text-decoration: none;
+    padding: var(--spacing-xs) var(--spacing-md);
+    transition: color 0.3s ease;
+}
+
+.btn-login:hover {
+    color: var(--color-primary-purple);
+}
+
+.btn-signup {
+    font-family: var(--font-montserrat);
+    font-size: 17.81px;
+    font-weight: 700;
+    color: var(--color-white);
+    background-color: var(--color-primary-orange);
+    padding: 10px 24px;
+    border-radius: var(--radius-xl);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.btn-signup:hover {
+    background-color: #e04f1f;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+/* ===================================
+   Hero Section
+   =================================== */
+.hero-section {
+    background-color: var(--color-primary-purple);
+    padding: 80px 0 120px;
+    position: relative;
+    overflow: hidden;
+    clip-path: polygon(0 0, 100% 0, 100% 85%, 50% 100%, 0 85%);
+}
+
+.hero-decorations {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+
+.decoration {
+    position: absolute;
+    width: auto;
+    height: auto;
+}
+
+.decoration-triangle-left {
+    left: 68px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 107px;
+    height: 107px;
+}
+
+.decoration-star-right {
+    right: 80px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 69px;
+    height: 70px;
+    }
+
+.hero-title {
+    font-family: 'Mont', var(--font-montserrat);
+    font-size: 75px;
+    font-weight: 900;
+    color: var(--color-white);
+    text-align: center;
+    text-transform: capitalize;
+    margin: 0;
+    padding: 20px 0;
+}
+
+/* ===================================
+   Breadcrumb Section
+   =================================== */
+.breadcrumb-section {
+    padding: var(--spacing-lg) 0;
+    background-color: var(--color-white);
+    position: relative;
+}
+
+.breadcrumb-decorations {
+  position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+
+.decoration-star-left {
+    left: 73px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 69px;
+    height: 70px;
+}
+
+.decoration-triangle-right {
+    right: 80px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 107px;
+    height: 107px;
+  }
+  
+.breadcrumb-content {
+    text-align: center;
+    font-family: var(--font-sora);
+    font-size: 18px;
+    font-weight: 400;
+  }
+  
+.breadcrumb-link {
+    color: var(--color-black);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.breadcrumb-link:hover {
+    color: var(--color-primary-purple);
+}
+
+.breadcrumb-separator {
+    margin: 0 var(--spacing-sm);
+    color: var(--color-black);
+}
+
+/* ===================================
+   Main Content
+   =================================== */
+.main-content {
+    padding: var(--spacing-2xl) 0 80px;
+    background-color: var(--color-white);
+}
+
+.section-title {
+    font-family: 'Mont', var(--font-montserrat);
+    font-size: 30px;
+    font-weight: 800;
+    color: var(--color-black);
+    text-align: center;
+    text-transform: capitalize;
+    margin-bottom: var(--spacing-2xl);
+  }
+  
+.alert-container {
+    max-width: 100%;
+}
+
+/* ===================================
+   Upload Area
+   =================================== */
+.upload-area {
+    background-color: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 0;
+    height: auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.file-list {
+    width: 100%;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    justify-content: flex-end;
+    gap: 20px;
+    align-items: flex-start;
+    margin: 0;
+    padding: 0;
+}
+
+/* File Item Styling */
+.file-item {
+    text-align: center;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0;
+    margin: 0;
+    border: none;
+    border-radius: 0;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.file-icon {
+    border: 2px solid #6c63ff;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    position: relative;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    width: 200px;
+    height: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.file-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+    display: block;
+    border: none !important;
+    outline: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+}
+
+.check-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1.5rem;
+    color: orange;
+    display: none; /* Hidden by default */
+    background-color: transparent;
+    border-radius: 0;
+    width: auto;
+    height: auto;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    z-index: 2;
+}
+
+.file-name {
+    margin-top: 10px;
+    font-family: var(--font-sora);
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    background-color: transparent;
+    padding: 0;
+    transition: color 0.3s ease;
+    word-break: break-word;
+    width: 200px;
+    text-align: center;
+    border: none;
+}
+
+/* Selected state styles */
+.file-item.selected .file-icon {
+    background-color: #6c63ff;
+    border-color: #6c63ff;
+}
+
+.file-item.selected .check-icon {
+    display: block;
+    color: white;
+}
+
+.file-item.selected .file-name {
+    color: white;
+}
+
+.delete-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: var(--color-primary-orange);
+    color: var(--color-white);
+    padding: var(--spacing-xs);
+    border-radius: 50%;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    box-shadow: var(--shadow-sm);
+    z-index: 10;
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 1;
+}
+
+.delete-icon:hover {
+    background-color: #e04f1f;
+    transform: scale(1.1);
+}
+
+/* ===================================
+   Options Panel
+   =================================== */
+.options-panel {
+    background-color: rgba(254, 254, 254, 0.25);
+    border: 1px solid var(--color-black);
+    border-radius: 8.06px;
+    box-shadow: var(--shadow-md);
+    padding: var(--spacing-xl);
+    width: 645px;
+    height: 380px;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* Password Protect Section */
+.password-protect-section {
+    flex-shrink: 0;
+}
+
+.password-protect-section h3 {
+    font-family: 'Mont', var(--font-montserrat);
+    font-size: 30px;
+    font-weight: 800;
+    color: var(--color-black);
+    text-transform: capitalize;
+    margin-bottom: var(--spacing-lg);
+}
+
+.form-label {
+    font-family: var(--font-sora);
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--color-black);
+    margin-bottom: var(--spacing-sm);
+    display: block;
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px var(--spacing-md);
+    font-family: var(--font-sora);
+    font-size: 16px;
+    border: 1px solid var(--color-gray-border);
+    border-radius: var(--radius-md);
+    background-color: var(--color-white);
+    color: var(--color-black);
+    transition: all 0.3s ease;
+    margin-bottom: var(--spacing-md);
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--color-primary-purple);
+    box-shadow: 0 0 0 3px rgba(90, 38, 239, 0.1);
+}
+
+.form-text {
+    font-family: var(--font-sora);
+    font-size: 14px;
+    color: var(--color-gray-text);
+    margin-top: var(--spacing-sm);
+}
+
+/* ===================================
+   Compress Button (Protect Button)
+   =================================== */
+.btn-compress {
+    font-family: var(--font-sora);
+    font-size: 21.69px;
+    font-weight: 700;
+    color: var(--color-white);
+    background-color: var(--color-primary-orange);
+    padding: 18px var(--spacing-2xl);
+    border-radius: var(--radius-xl);
+    border: none;
+    width: 100%;
+    max-width: 486px;
+    margin: 0 auto;
+    display: block;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(245, 97, 41, 0.3);
+    text-align: center;
+}
+
+.btn-compress:hover {
+    background-color: #e04f1f;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(245, 97, 41, 0.4);
+}
+
+.btn-compress:active {
+    transform: translateY(0);
+}
+
+.btn-compress:disabled {
+    background-color: var(--color-gray-border);
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+
+/* ===================================
+   Floating Add Button
+   =================================== */
+.floating-add-btn {
+    position: fixed;
+    bottom: 40px;
+    left: 40px;
+    width: 49px;
+    height: 49px;
+    background-color: var(--color-primary-purple);
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: var(--shadow-lg);
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.floating-add-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(90, 38, 239, 0.4);
+}
+
+.floating-add-btn:active {
+    transform: scale(0.95);
+}
+
+.plus-icon {
+    width: 28px;
+    height: 28px;
+}
+
+/* ===================================
+   Responsive Styles
+   =================================== */
+@media (max-width: 992px) {
+    .hero-title {
+        font-size: 60px;
+    }
+    
+    .section-title {
+        font-size: 24px;
+    }
+    
+    .decoration-triangle-left,
+    .decoration-star-right,
+    .decoration-star-left,
+    .decoration-triangle-right {
+        width: 50px;
+        height: 50px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 48px;
+    }
+    
+    .hero-section {
+        padding: 60px 0 100px;
+    }
+    
+    .section-title {
+        font-size: 20px;
+    }
+    
+    .upload-area,
+    .options-panel {
+        padding: var(--spacing-lg);
+    }
+    
+    .options-panel {
+        width: 100%;
+        height: auto;
+        min-height: 315px;
+}
+
+    .btn-compress {
+        font-size: 18px;
+        padding: 14px var(--spacing-lg);
+    }
+    
+    .floating-add-btn {
+        bottom: 20px;
+        left: 20px;
+        width: 44px;
+        height: 44px;
+    }
+    
+    .decoration {
+        display: none;
+    }
+    
+    .file-icon {
+        width: 150px;
+        height: 200px;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero-title {
+        font-size: 36px;
+    }
+    
+    .navbar-nav .nav-link {
+        font-size: 14px;
+    }
+    
+    .btn-login,
+    .btn-signup {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+    
+    .password-protect-section h3 {
+        font-size: 24px;
+    }
+    
+    .form-label {
+        font-size: 16px;
+    }
+    
+    .form-control {
+        font-size: 14px;
+        padding: 10px var(--spacing-sm);
+    }
+}
+
+/* ===================================
+   Additional Styles from Provided CSS
+   =================================== */
+body {
+    font-family: 'Red Hat Display', sans-serif;
+}
+
+.pdf-section {
+    background-color: #f9f9f9;
+}
+
+.navbar-brand, .navbar-nav .nav-link {
+    font-family: 'Inter', sans-serif;
+}
+
+.pdf-section h1, .pdf-section p {
+    font-family: 'Red Hat Display', sans-serif;
+}
+
+.navbar-nav {
+    flex-direction: row;
+    margin-right: auto; /* Pushes the buttons to the right */
+}
+
+.nav-item {
+    margin-left: 15px; /* Adjust spacing between nav items */
+}
+
+.nav-link {
+    font-family: 'Inter', sans-serif;
+}
+
+.navbar-btns {
+    display: flex;
+    align-items: center;
+}
+
+.btn-create-account {
+    border: none;
+    color: black;
+    margin-left: 10px;
+    padding: 8px 15px;
+}
+
+.btn-start-trial {
+    background-color: #F56129;
+    border: none;
+    color: white;
+    margin-left: 10px;
+    padding: 8px 15px;
+}
+
+.navbar-toggler {
+    border: none;
+}
+
+.logo {
+    height: 40px; /* Adjust the height as needed */
+    max-width: 100%; /* Ensure the logo does not exceed its container width */
+}
+
+.main-image {
+    width: 100%;
+    height: auto;
+    max-width: 1200px;
+    border-radius: 15px;
+}
+
+.responsive-image {
+    width: 100%;
+    height: auto;
+    max-width: 1000px; /* Set a maximum width */
+    transform: scale(0.8); /* Scale the image to 80% of its original size */
+    transform-origin: center; /* Ensures the image scales from its center */
+}
+
+.store-logo {
+    height: 30px;
+    margin-right: 10px;
+}
+
+@media (max-width: 768px) {
+    .mobile-image {
+        right: -30px;
+        bottom: -20px;
+        width: 150px;
+    }
+
+    .pdf-section h1 {
+        font-size: 1.75rem;
+    }
+}
+
+/* Full background image setup */
+#pdf-tool-section {
+    background: url('background-full.png') no-repeat center center fixed;
+    background-size: cover;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 100px 0;
+    color: #fff;
+    position: relative;
+    background: linear-gradient(to bottom, #007bff 50%, #fff 50%);
+}
+
+.section-in {
+    height: 900px;
+    background-color: #5A26EF;
+    position: relative;
+    text-align: center;
+    padding-top: 100px;
+    color: white;
+    clip-path: circle(83% at 51% 3%);
+}
+
+/* Default Styles */
+.tablet-image img {
+    position: absolute;
+    top: 370px;
+    left: 100px; /* Corrected from padding-left to left */
+    max-width: 100%;
+    height: auto;
+}
+
+h1 {
+    font-weight: bold;
+}
+
+.btn-lg {
+    font-size: 1.2rem;
+}
+
+.col-md-8.offset-md-2 {
+    padding-top: 259px;
+}
+
+/* Responsive Styles */
+@media (max-width: 1199px) {
+    /* Styles for tablets and small screens */
+    .tablet-image img {
+        left: 50px; /* Adjust positioning for smaller screens */
+        top: 250px;
+    }
+}
+
+@media (max-width: 991px) {
+    /* Styles for large tablets and small desktops */
+    .tablet-image img {
+        left: 20px; /* Further adjust positioning */
+        top: 150px;
+    }
+    
+    .btn-lg {
+        font-size: 1rem; /* Adjust button font size for smaller devices */
+    }
+    
+    .col-md-8.offset-md-2 {
+        padding-top: 100px; /* Reduce padding for smaller screens */
+    }
+}
+
+@media (max-width: 767px) {
+    /* Styles for mobile screens */
+    .tablet-image img {
+        position: static; /* Let the image flow naturally */
+        top: auto; /* Remove absolute positioning */
+        left: auto; /* Remove left positioning */
+        margin: 0 auto; /* Center the image horizontally */
+        display: block; /* Ensure block display */
+        max-width: 90%; /* Adjust image width to fit mobile screens */
+    }
+    
+    h1 {
+        font-size: 1.5rem; /* Adjust font size for mobile screens */
+        text-align: center; /* Center the heading text */
+    }
+    
+    .btn-lg {
+        font-size: 1rem; /* Adjust button font size */
+        padding: 0.5rem 1rem; /* Adjust button padding */
+    }
+    
+    .col-md-8.offset-md-2 {
+        padding-top: 1rem; /* Reduce padding for mobile screens */
+    }
+}
+
+/* Custom header background and text styling */
+.custom-header {
+    background-color: #5f20da; /* Matching the purple background */
+    position: relative;
+    color: white;
+    font-family: Arial, sans-serif;
+    height: 300px; /* Adjust the height as per your design */
+    clip-path: polygon(0 0, 100% 0, 100% 75%, 50% 100%, 0 75%); /* V shape with straight sides */
+}
+
+/* Heading styling */
+.custom-header h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+/* Footer links */
+nav a {
+    color: #000;
+    text-decoration: none;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .custom-header h1 {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .custom-header h1 {
+        font-size: 1.5rem;
+    }
+}
+
+/* General Styles */
+.container {
+    max-width: 1200px;
+}
+
+/* File item styling - Updated from provided CSS to match screenshot */
+
+/* Add file button */
+.add-file-btn {
+    display: inline-block;
+    font-size: 2rem;
+    color: #6c63ff;
+    cursor: pointer;
+    margin-top: 10px;
+    border: 2px solid #6c63ff;
+    padding: 10px 20px;
+    border-radius: 50%;
+    text-align: center;
+    width: 60px;
+    height: 60px;
+    line-height: 40px;
+}
+
+.file-upload {
+    display: none;
+}
+
+/* Add Button Image Styling */
+#addBtn {
+    position: fixed;
+    bottom: 40px;
+    left: 40px;
+    width: 49px;
+    height: 49px;
+    z-index: 1000;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+#addBtn:hover {
+    transform: scale(1.1);
+}
+
+/* Password protect section styling */
+.password-protect-section {
+    border: 2px solid #eaeaea;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #fff;
+}
+
+.password-protect-section h3 {
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.btn-primary {
+    background-color: #F56129;
+    border: none;
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+}
+
+.btn-primary:hover {
+    background-color: #F56129;
+}

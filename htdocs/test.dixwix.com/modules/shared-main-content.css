@@ -1,0 +1,248 @@
+/* ===================================
+   Main Content Styles
+   Shared styles for all PDF tools
+   =================================== */
+
+.main-content {
+    padding: var(--spacing-2xl) 0 80px;
+    background-color: var(--color-white);
+}
+
+.section-title {
+    font-family: 'Mont', var(--font-montserrat);
+    font-size: 30px;
+    font-weight: 800;
+    color: var(--color-black);
+    text-align: center;
+    text-transform: capitalize;
+    margin-bottom: var(--spacing-2xl);
+}
+
+.alert-container {
+    max-width: 100%;
+}
+
+/* ===================================
+   Upload Area
+   =================================== */
+.upload-area {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-black);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    padding: var(--spacing-2xl);
+    height: 100%;
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.file-list-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+}
+
+.upload-default {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.pdf-icon-large {
+    width: 80px;
+    height: 99px;
+}
+
+/* PDF Thumbnail */
+.pdf-thumbnail {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    padding: var(--spacing-md);
+    background-color: var(--color-white);
+    border: 2px solid var(--color-gray-border);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pdf-thumbnail img {
+    width: 100%;
+    height: auto;
+    max-height: 350px;
+    object-fit: contain;
+}
+
+.delete-icon {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background-color: var(--color-primary-orange);
+    color: var(--color-white);
+    padding: var(--spacing-xs);
+    border-radius: 50%;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    box-shadow: var(--shadow-sm);
+}
+
+.delete-icon:hover {
+    background-color: #e04f1f;
+    transform: scale(1.1);
+}
+
+.delete-icon img {
+    width: 16px;
+    height: 16px;
+}
+
+/* ===================================
+   Options Panel
+   =================================== */
+.options-panel {
+    background-color: rgba(254, 254, 254, 0.25);
+    border: 1px solid var(--color-black);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    padding: var(--spacing-xl);
+    height: 100%;
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* ===================================
+   Floating Add Button
+   =================================== */
+.floating-add-btn {
+    position: fixed;
+    bottom: 40px;
+    left: 40px;
+    width: 49px;
+    height: 49px;
+    background-color: var(--color-primary-purple);
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: var(--shadow-lg);
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.floating-add-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(90, 38, 239, 0.4);
+}
+
+.floating-add-btn:active {
+    transform: scale(0.95);
+}
+
+.plus-icon {
+    width: 28px;
+    height: 28px;
+}
+
+/* ===================================
+   Generic Button Styles
+   =================================== */
+.btn-primary-action {
+    font-family: var(--font-sora);
+    font-size: 21.69px;
+    font-weight: 700;
+    color: var(--color-white);
+    background-color: var(--color-primary-orange);
+    padding: 18px var(--spacing-2xl);
+    border-radius: var(--radius-xl);
+    border: none;
+    width: 100%;
+    max-width: 486px;
+    margin: 0 auto;
+    display: block;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(245, 97, 41, 0.3);
+    text-align: center;
+}
+
+.btn-primary-action:hover {
+    background-color: #e04f1f;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(245, 97, 41, 0.4);
+}
+
+.btn-primary-action:active {
+    transform: translateY(0);
+}
+
+.btn-primary-action:disabled {
+    background-color: var(--color-gray-border);
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+
+/* ===================================
+   File List Styles
+   =================================== */
+.file-list {
+    width: 100%;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-md);
+}
+
+/* ===================================
+   Responsive Styles
+   =================================== */
+@media (max-width: 768px) {
+    .section-title {
+        font-size: 20px;
+    }
+    
+    .upload-area,
+    .options-panel {
+        padding: var(--spacing-lg);
+        min-height: 400px;
+    }
+    
+    .btn-primary-action {
+        font-size: 18px;
+        padding: 14px var(--spacing-lg);
+    }
+    
+    .floating-add-btn {
+        bottom: 20px;
+        left: 20px;
+        width: 44px;
+        height: 44px;
+    }
+}
+
+@media (max-width: 576px) {
+    .section-title {
+        font-size: 18px;
+    }
+}
+
+

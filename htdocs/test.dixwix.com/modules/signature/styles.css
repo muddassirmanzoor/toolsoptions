@@ -1,0 +1,1488 @@
+/* ===================================
+   CSS Variables / Design Tokens
+   =================================== */
+:root {
+    /* Colors */
+    --color-primary-purple: #5A26EF;
+    --color-primary-orange: #F56129;
+    --color-white: #FFFFFF;
+    --color-black: #000000;
+    --color-gray-light: #FAFAFA;
+    --color-gray-border: #E4E4E4;
+    --color-gray-text: #666666;
+    --color-gray-dark: #333333;
+    
+    /* Typography */
+    --font-poppins: 'Poppins', sans-serif;
+    --font-montserrat: 'Montserrat', sans-serif;
+    --font-sora: 'Sora', sans-serif;
+    
+    /* Spacing */
+    --spacing-xs: 8px;
+    --spacing-sm: 12px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+    --spacing-2xl: 48px;
+    
+    /* Border Radius */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 50px;
+    
+    /* Shadows */
+    --shadow-sm: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    --shadow-lg: 0px 4px 12px rgba(90, 38, 239, 0.3);
+}
+
+/* ===================================
+   Main Content
+   =================================== */
+.main-content {
+    padding: var(--spacing-2xl) 0 80px;
+    background-color: var(--color-white);
+}
+
+.container-custom {
+    padding: 20px;
+}
+
+/* ===================================
+   Document Preview Container
+   =================================== */
+.document-preview-container {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-black);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    padding: var(--spacing-lg);
+    height: 100%;
+    min-height: 600px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+/* Document Navigation Bar */
+.document-nav-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-md) 0;
+    border-bottom: 1px solid var(--color-gray-border);
+    margin-bottom: var(--spacing-lg);
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.page-info {
+    font-family: var(--font-sora);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-black);
+}
+
+.nav-btn {
+    width: 32px;
+    height: 32px;
+    background-color: var(--color-white);
+    border: 1px solid var(--color-gray-border);
+    border-radius: var(--radius-sm);
+    color: var(--color-black);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.nav-btn:hover:not(:disabled) {
+    background-color: var(--color-primary-purple);
+    border-color: var(--color-primary-purple);
+    color: var(--color-white);
+}
+
+.nav-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.go-to-page {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-family: var(--font-sora);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-black);
+    cursor: pointer;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-sm);
+    transition: all 0.2s ease;
+}
+
+.go-to-page:hover {
+    background-color: var(--color-gray-light);
+}
+
+.go-to-page i {
+    font-size: 10px;
+    color: var(--color-gray-text);
+}
+
+.page-number-input {
+    width: 50px;
+    padding: var(--spacing-xs);
+    border: 1px solid var(--color-gray-border);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-sora);
+    font-size: 14px;
+    text-align: center;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+}
+
+.document-name {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-family: var(--font-sora);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-black);
+    cursor: pointer;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-sm);
+    transition: all 0.2s ease;
+}
+
+.document-name:hover {
+    background-color: var(--color-gray-light);
+}
+
+.document-name i {
+    font-size: 10px;
+    color: var(--color-gray-text);
+}
+
+/* Document Preview Wrapper */
+.document-preview-wrapper {
+    display: flex;
+    gap: var(--spacing-sm);
+    flex: 1;
+    position: relative;
+    min-height: 500px;
+    padding: 0;
+    margin: 0;
+}
+
+/* Page Thumbnails Column */
+.page-thumbnails-column {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    width: 80px;
+    flex-shrink: 0;
+}
+
+.page-thumbnail-small {
+    width: 80px;
+    height: 80px;
+    border: 2px solid var(--color-gray-border);
+    border-radius: var(--radius-sm);
+    background-color: var(--color-white);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.page-thumbnail-small:hover {
+    border-color: var(--color-primary-purple);
+}
+
+.page-thumbnail-small.active {
+    border-color: var(--color-primary-purple);
+    background-color: rgba(90, 38, 239, 0.1);
+}
+
+.page-thumbnail-small canvas {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.floating-add-thumbnail {
+    width: 80px;
+    height: 80px;
+    background-color: var(--color-primary-purple);
+    border: none;
+    border-radius: 50%;
+    color: var(--color-white);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-lg);
+    margin-top: var(--spacing-sm);
+}
+
+.floating-add-thumbnail:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(90, 38, 239, 0.4);
+}
+
+.floating-add-thumbnail i {
+    font-size: 24px;
+}
+
+/* Document Preview Area */
+.document-preview-area {
+    flex: 1;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    background-color: var(--color-gray-light);
+    border: 1px solid var(--color-gray-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-sm);
+    min-height: 400px;
+    position: relative;
+    overflow: auto;
+    transition: all 0.3s ease;
+}
+
+.document-preview-area.drag-over {
+    border-color: var(--color-primary-purple);
+    background-color: rgba(90, 38, 239, 0.05);
+    border-style: dashed;
+    border-width: 2px;
+}
+
+.pdf-preview-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-md);
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+.pdf-preview-placeholder.drag-over {
+    opacity: 0.8;
+}
+
+.upload-prompt {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-md);
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.upload-prompt.drag-over {
+    transform: scale(1.05);
+}
+
+.pdf-icon-large {
+    width: 120px;
+    height: 150px;
+    opacity: 0.3;
+    color: var(--color-gray-text);
+}
+
+.pdf-label {
+    font-family: var(--font-sora);
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--color-gray-text);
+}
+
+.btn-upload-pdf {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background-color: var(--color-primary-purple);
+    border: none;
+    border-radius: var(--radius-md);
+    color: var(--color-white);
+    font-family: var(--font-sora);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-upload-pdf:hover {
+    background-color: #4a1fd0;
+    transform: translateY(-2px);
+}
+
+#pdfCanvas {
+    max-width: 100%;
+    height: auto;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background-color: var(--color-white);
+    display: block;
+    margin: 0 auto;
+}
+
+/* ===================================
+   Options Panel
+   =================================== */
+.options-panel {
+    background-color: rgba(254, 254, 254, 0.25);
+    border: 1px solid var(--color-black);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    padding: var(--spacing-xl);
+    height: 100%;
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+}
+
+.section-title {
+    font-family: var(--font-montserrat);
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: var(--spacing-lg);
+    color: var(--color-black);
+}
+
+.option-label {
+    font-family: var(--font-sora);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-black);
+    margin-bottom: var(--spacing-sm);
+    display: block;
+}
+
+/* ===================================
+   Type Section
+   =================================== */
+.type-section {
+    margin-bottom: var(--spacing-lg);
+}
+
+.type-buttons {
+    display: flex;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-sm);
+}
+
+.type-btn {
+    flex: 1;
+    padding: var(--spacing-md);
+    background-color: var(--color-white);
+    border: 1px solid var(--color-gray-border);
+    border-radius: var(--radius-md);
+    font-family: var(--font-sora);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-black);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.type-btn:hover {
+    border-color: var(--color-primary-purple);
+    background-color: var(--color-gray-light);
+}
+
+.type-btn.active {
+    background-color: var(--color-primary-purple);
+    border-color: var(--color-primary-purple);
+    color: var(--color-white);
+}
+
+.type-btn:not(.active) {
+    background-color: var(--color-white);
+    border-color: var(--color-gray-border);
+    color: var(--color-black);
+}
+
+.type-btn i {
+    font-size: 20px;
+}
+
+/* ===================================
+   Required Fields Section
+   =================================== */
+.required-fields-section {
+    margin-bottom: var(--spacing-lg);
+}
+
+.required-field {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-gray-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin-top: var(--spacing-sm);
+}
+
+/* ===================================
+   Optimal Fields Section
+   =================================== */
+.optimal-fields-section {
+    margin-bottom: var(--spacing-lg);
+}
+
+.fields-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-sm);
+}
+
+.field-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    background-color: var(--color-white);
+    border: 1px solid var(--color-gray-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    cursor: move;
+    transition: all 0.3s ease;
+}
+
+.field-item:hover {
+    border-color: var(--color-primary-purple);
+    box-shadow: var(--shadow-sm);
+}
+
+.drag-handle {
+    color: var(--color-gray-text);
+    cursor: grab;
+    display: flex;
+    align-items: center;
+}
+
+.drag-handle:active {
+    cursor: grabbing;
+}
+
+.drag-handle i {
+    font-size: 16px;
+}
+
+.field-icon {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-gray-text);
+}
+
+.field-icon i {
+    font-size: 16px;
+}
+
+.field-content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.field-label {
+    font-family: var(--font-sora);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-black);
+    margin: 0;
+}
+
+.field-input {
+    flex: 1;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-family: var(--font-sora);
+    font-size: 14px;
+    border: none;
+    background-color: transparent;
+    color: var(--color-black);
+    outline: none;
+}
+
+.field-text {
+    font-family: var(--font-sora);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-black);
+}
+
+.field-edit-btn {
+    width: 32px;
+    height: 32px;
+    background-color: var(--color-primary-purple);
+    border: none;
+    border-radius: var(--radius-sm);
+    color: var(--color-white);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.field-edit-btn:hover {
+    background-color: #4a1fd6;
+    transform: scale(1.1);
+}
+
+.field-edit-btn i {
+    font-size: 12px;
+}
+
+/* ===================================
+   Sign PDF Button - Matching redact module design
+   =================================== */
+.btn-sign-pdf {
+    font-family: var(--font-sora, 'Sora', sans-serif);
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--color-white, #FFFFFF);
+    background-color: var(--color-primary-orange, #F56129);
+    padding: 14px;
+    border-radius: 8px;
+    border: none;
+    width: 100%;
+    max-width: 486px;
+    margin: 0 auto;
+    display: block;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(245, 97, 41, 0.3);
+    text-align: center;
+}
+
+.btn-sign-pdf:hover {
+    background-color: #e04f1f;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(245, 97, 41, 0.4);
+}
+
+.btn-sign-pdf:active {
+    transform: translateY(0);
+}
+
+.btn-sign-pdf:disabled {
+    background-color: var(--color-gray-border);
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+
+/* ===================================
+   Modal Buttons - Theme Colors
+   =================================== */
+
+/* Apply Button - Orange (Primary Action) */
+.btn-apply {
+    font-family: var(--font-sora, 'Sora', sans-serif);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-white, #FFFFFF);
+    background-color: var(--color-primary-orange, #F56129);
+    padding: 10px 24px;
+    border-radius: var(--radius-md);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(245, 97, 41, 0.3);
+}
+
+.btn-apply:hover {
+    background-color: #e04f1f;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(245, 97, 41, 0.4);
+}
+
+.btn-apply:active {
+    transform: translateY(0);
+}
+
+.btn-apply:disabled {
+    background-color: var(--color-gray-border);
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+
+/* Cancel Button - Gray/Secondary */
+.btn-cancel {
+    font-family: var(--font-sora, 'Sora', sans-serif);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-gray-text, #666666);
+    background-color: var(--color-white, #FFFFFF);
+    padding: 10px 24px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-gray-border, #E4E4E4);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-cancel:hover {
+    background-color: var(--color-gray-light, #FAFAFA);
+    border-color: var(--color-gray-text, #666666);
+}
+
+/* Undo Button - Purple (Secondary Action) */
+.btn-undo {
+    font-family: var(--font-sora, 'Sora', sans-serif);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-white, #FFFFFF);
+    background-color: var(--color-primary-purple, #5A26EF);
+    padding: 8px 20px;
+    border-radius: var(--radius-md);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(90, 38, 239, 0.3);
+    margin-right: 8px;
+}
+
+.btn-undo:hover {
+    background-color: #4a1fd4;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(90, 38, 239, 0.4);
+}
+
+.btn-undo:active {
+    transform: translateY(0);
+}
+
+.btn-undo:disabled {
+    background-color: var(--color-gray-border);
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+
+/* Clear Button - Gray/Secondary */
+.btn-clear {
+    font-family: var(--font-sora, 'Sora', sans-serif);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-gray-text, #666666);
+    background-color: var(--color-white, #FFFFFF);
+    padding: 8px 20px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-gray-border, #E4E4E4);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-clear:hover {
+    background-color: var(--color-gray-light, #FAFAFA);
+    border-color: var(--color-gray-text, #666666);
+}
+
+/* Upload Company Stamp Button - Orange (Primary Action) */
+.btn-upload-company-stamp {
+    font-family: var(--font-sora, 'Sora', sans-serif);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-white, #FFFFFF);
+    background-color: var(--color-primary-orange, #F56129);
+    padding: 12px 24px;
+    border-radius: var(--radius-md);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(245, 97, 41, 0.3);
+    margin-bottom: 10px;
+}
+
+.btn-upload-company-stamp:hover {
+    background-color: #e04f1f;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(245, 97, 41, 0.4);
+}
+
+.btn-upload-company-stamp:active {
+    transform: translateY(0);
+}
+
+/* Company Stamp Upload Area - Purple Border */
+.company-stamp-upload-area {
+    border: 2px dashed var(--color-primary-purple, #5A26EF);
+    border-radius: var(--radius-md);
+    padding: 40px;
+    text-align: center;
+    background: var(--color-white, #FFFFFF);
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+}
+
+.company-stamp-upload-area:hover {
+    border-color: var(--color-primary-orange, #F56129);
+    background-color: rgba(245, 97, 41, 0.02);
+}
+
+/* ===================================
+   Alert Container
+   =================================== */
+.alert-container {
+    max-width: 100%;
+}
+
+/* ===================================
+   Signature Modal Styles
+   =================================== */
+.modal {
+    z-index: 1050;
+}
+
+.modal-backdrop {
+    z-index: 1040;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal.show {
+    display: block;
+}
+
+.modal.show .modal-dialog {
+    transform: none;
+}
+
+.modal-content {
+    border-radius: var(--radius-md);
+}
+
+/* Who will sign? Modal - theme orange */
+.who-will-sign-modal .modal-title {
+    color: var(--color-gray-dark);
+    font-weight: 700;
+}
+.who-will-sign-modal .who-will-sign-icon {
+    color: var(--color-primary-orange);
+}
+.who-will-sign-modal .btn-who-sign {
+    background-color: var(--color-primary-orange);
+    border-color: var(--color-primary-orange);
+    color: var(--color-white);
+    font-weight: 600;
+}
+.who-will-sign-modal .btn-who-sign:hover {
+    background-color: #e04a1f;
+    border-color: #e04a1f;
+    color: var(--color-white);
+}
+.who-will-sign-modal .btn-who-sign:focus,
+.who-will-sign-modal .btn-who-sign:active {
+    background-color: #c93f18;
+    border-color: #c93f18;
+    color: var(--color-white);
+    box-shadow: 0 0 0 0.2rem rgba(245, 97, 41, 0.4);
+}
+
+/* Create signature request Modal - theme orange */
+.create-request-modal .modal-title {
+    color: var(--color-gray-dark);
+    font-weight: 700;
+}
+.create-request-modal .create-request-info-text {
+    color: var(--color-primary-orange);
+}
+.create-request-modal .create-request-cancel-link {
+    color: var(--color-primary-orange);
+}
+.create-request-modal .create-request-cancel-link:hover {
+    color: #e04a1f;
+}
+.create-request-modal .btn-create-request-apply {
+    background-color: var(--color-primary-orange);
+    border-color: var(--color-primary-orange);
+    color: var(--color-white);
+    font-weight: 600;
+}
+.create-request-modal .btn-create-request-apply:hover {
+    background-color: #e04a1f;
+    border-color: #e04a1f;
+    color: var(--color-white);
+}
+.create-request-modal .btn-create-request-apply:focus,
+.create-request-modal .btn-create-request-apply:active {
+    background-color: #c93f18;
+    border-color: #c93f18;
+    color: var(--color-white);
+    box-shadow: 0 0 0 0.2rem rgba(245, 97, 41, 0.4);
+}
+.create-request-modal .btn-add-receiver {
+    color: var(--color-primary-orange);
+    border-color: var(--color-primary-orange);
+}
+.create-request-modal .btn-add-receiver:hover {
+    color: var(--color-white);
+    background-color: var(--color-primary-orange);
+    border-color: var(--color-primary-orange);
+}
+.create-request-modal .btn-outline-create-request {
+    color: var(--color-primary-orange);
+    border-color: var(--color-primary-orange);
+}
+.create-request-modal .btn-outline-create-request:hover {
+    color: var(--color-white);
+    background-color: var(--color-primary-orange);
+    border-color: var(--color-primary-orange);
+}
+
+.tabs {
+    display: flex;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-lg);
+    border-bottom: 2px solid var(--color-gray-border);
+}
+
+.tab-button {
+    padding: var(--spacing-sm) var(--spacing-md);
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    font-family: var(--font-sora);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-gray-text);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: -2px;
+}
+
+.tab-button:hover {
+    color: var(--color-primary-purple);
+}
+
+.tab-button.active {
+    color: var(--color-primary-purple);
+    border-bottom-color: var(--color-primary-purple);
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+#signatureModal canvas {
+    display: block;
+    margin: var(--spacing-md) auto;
+    max-width: 100%;
+    border: 2px solid var(--color-gray-border);
+    border-radius: var(--radius-md);
+    background-color: var(--color-white);
+    touch-action: none;
+}
+
+#drawCanvas {
+    cursor: crosshair;
+}
+
+#drawCanvas:active {
+    cursor: crosshair;
+}
+
+.signature-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+}
+
+#signaturePreviews {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+    max-height: 200px;
+    overflow-y: auto;
+    padding: var(--spacing-sm);
+    border: 1px solid var(--color-gray-border);
+    border-radius: var(--radius-sm);
+    background-color: var(--color-gray-light);
+}
+
+.signature-option {
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: 2px solid var(--color-gray-border);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: var(--font-sora);
+    font-size: 16px;
+    background-color: var(--color-white);
+    min-width: 100px;
+    text-align: center;
+    font-weight: 500;
+}
+
+.signature-option:hover {
+    background-color: var(--color-primary-purple);
+    border-color: var(--color-primary-purple);
+    color: var(--color-white);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+.history-image {
+    max-width: 200px;
+    margin: var(--spacing-sm);
+    border: 1px solid var(--color-gray-border);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.history-image:hover {
+    border-color: var(--color-primary-purple);
+    transform: scale(1.05);
+}
+
+#historyContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+/* Draggable Signature Fields */
+.draggable-signature-field {
+    cursor: grab !important;
+    transition: opacity 0.2s ease;
+}
+
+.draggable-signature-field:hover {
+    background-color: rgba(90, 38, 239, 0.05) !important;
+    border-color: var(--color-primary-purple) !important;
+}
+
+.draggable-signature-field:active {
+    cursor: grabbing !important;
+}
+
+/* PDF Canvas Container - Drop Zone */
+.pdf-canvas-container {
+    position: relative;
+    display: inline-block;
+    transition: all 0.2s ease;
+}
+
+.pdf-canvas-container[dragover] {
+    border: 2px dashed var(--color-primary-purple) !important;
+    background-color: rgba(90, 38, 239, 0.05) !important;
+}
+
+/* Instruction overlay (Several people) */
+.signature-instruction-overlay {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: #fef3c7;
+    border: 1px solid #f59e0b;
+    border-radius: 8px;
+    padding: 16px 24px;
+    max-width: 420px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    z-index: 20;
+    font-size: 14px;
+    color: #92400e;
+}
+
+/* Placeholder signature box (no image yet) */
+.signature-overlay-placeholder {
+    background: rgba(254, 202, 202, 0.9);
+    border: 1px solid #f87171;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    font-size: 12px;
+    color: #111;
+}
+
+.signature-overlay-placeholder .sig-label { font-weight: 600; }
+.signature-overlay-placeholder .sig-uuid { font-size: 10px; color: #666; margin-top: 4px; }
+
+/* Signature Overlay - For movable signatures on PDF */
+.signature-overlay {
+    position: absolute;
+    z-index: 10;
+    pointer-events: auto;
+    user-select: none;
+}
+
+.signature-overlay img {
+    pointer-events: none;
+}
+
+/* Text Field Overlay - For editable text fields on PDF */
+.text-field-overlay {
+    position: absolute;
+    z-index: 10;
+    pointer-events: auto;
+}
+
+.text-field-overlay .pdf-text-input {
+    pointer-events: auto;
+    cursor: text;
+}
+
+.text-field-overlay .text-field-drag-handle {
+    pointer-events: auto;
+}
+
+.text-field-overlay:hover .text-field-drag-handle {
+    background-color: rgba(90, 38, 239, 0.1);
+}
+
+.signature-delete-btn {
+    z-index: 1001;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
+}
+
+.signature-delete-btn:hover {
+    background: #cc0000 !important;
+    transform: scale(1.1);
+}
+
+/* Active field state - when field is selected for placement */
+.field-item.field-active {
+    background-color: rgba(90, 38, 239, 0.1) !important;
+    border-color: var(--color-primary-purple) !important;
+    border-width: 2px;
+}
+
+.field-item.field-active .field-text,
+.field-item.field-active .field-label {
+    color: var(--color-primary-purple) !important;
+    font-weight: 600;
+}
+
+/* ===================================
+   Responsive Styles
+   =================================== */
+@media (max-width: 992px) {
+    .document-preview-container,
+    .options-panel {
+        min-height: 400px;
+    }
+    
+    .page-thumbnails-column {
+        width: 60px;
+    }
+    
+    .page-thumbnail-small {
+        width: 60px;
+        height: 60px;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        padding: var(--spacing-xl) 0 60px;
+    }
+    
+    .document-preview-container,
+    .options-panel {
+        padding: var(--spacing-lg);
+        min-height: 350px;
+    }
+    
+    .document-nav-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-sm);
+    }
+    
+    .nav-left,
+    .nav-right {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .document-preview-wrapper {
+        flex-direction: column;
+    }
+    
+    .page-thumbnails-column {
+        flex-direction: row;
+        width: 100%;
+        margin-bottom: var(--spacing-md);
+    }
+    
+    .page-thumbnail-small {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .type-buttons {
+        flex-direction: column;
+    }
+    
+    .decoration {
+        display: none;
+    }
+}
+
+/* ===================================
+   Initial Upload State (Merge PDF Style)
+   =================================== */
+.initial-upload-state {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    border: 2px dashed #ddd;
+    border-radius: 12px;
+    padding: 40px 20px;
+    transition: all 0.3s ease;
+    z-index: 1;
+}
+
+.initial-upload-state.drag-over {
+    border-color: #F56129;
+    background-color: rgba(245, 97, 41, 0.05);
+}
+
+.upload-content {
+    text-align: center;
+    width: 100%;
+    max-width: 600px;
+}
+
+.upload-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 12px;
+    font-family: var(--font-sora, 'Sora', sans-serif);
+}
+
+.upload-subtitle {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 32px;
+    font-family: var(--font-sora, 'Sora', sans-serif);
+}
+
+.upload-buttons-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+.btn-select-files {
+    background-color: #F56129;
+    color: white;
+    border: none;
+    padding: 16px 40px;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: var(--font-sora, 'Sora', sans-serif);
+    box-shadow: 0 4px 12px rgba(245, 97, 41, 0.3);
+}
+
+.btn-select-files:hover {
+    background-color: #e04f1f;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(245, 97, 41, 0.4);
+}
+
+.btn-select-files:active {
+    transform: translateY(0);
+}
+
+.cloud-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.cloud-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: none;
+    background-color: #F56129;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(245, 97, 41, 0.3);
+    transition: all 0.3s ease;
+    padding: 0;
+}
+
+.cloud-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(245, 97, 41, 0.4);
+}
+
+.cloud-btn:active {
+    transform: scale(0.95);
+}
+
+.cloud-btn svg {
+    width: 24px;
+    height: 24px;
+}
+
+.drop-hint {
+    font-size: 14px;
+    color: #666;
+    margin-top: 16px;
+    font-family: var(--font-sora, 'Sora', sans-serif);
+}
+
+/* ===================================
+   File Selection Buttons (Merge PDF Style)
+   =================================== */
+.file-selection-buttons {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    z-index: 100;
+    padding: 0;
+}
+
+.file-select-btn {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: none;
+    background-color: #F56129;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(245, 97, 41, 0.3);
+    transition: all 0.3s ease;
+    position: relative;
+    padding: 0;
+}
+
+.file-select-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(245, 97, 41, 0.4);
+}
+
+.file-select-btn:active {
+    transform: scale(0.95);
+}
+
+.file-select-btn i {
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.file-select-btn svg {
+    width: 24px;
+    height: 24px;
+    display: block;
+}
+
+/* Google Drive and Dropbox button icon styling */
+.google-drive-btn svg,
+.dropbox-btn svg {
+    width: 24px;
+    height: 24px;
+}
+
+/* Update document preview wrapper when file is selected */
+.document-preview-wrapper.has-file {
+    padding-left: 80px;
+}
+
+.document-preview-wrapper.has-file .initial-upload-state {
+    display: none;
+}
+
+.document-preview-wrapper.has-file .file-selection-buttons {
+    display: flex;
+}
+
+.document-preview-wrapper.has-file .page-thumbnails-column,
+.document-preview-wrapper.has-file .document-preview-area {
+    display: flex;
+}
+
+@media (max-width: 576px) {
+    .section-title {
+        font-size: 20px;
+    }
+    
+    .option-label {
+        font-size: 14px;
+    }
+    
+    .document-preview-container {
+        padding: var(--spacing-md);
+    }
+    
+    .page-thumbnail-small {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .field-item {
+        flex-wrap: wrap;
+        padding: var(--spacing-sm);
+    }
+    
+    .field-content {
+        width: 100%;
+        order: 3;
+    }
+}
+
+/* ===================================
+   Upgrade to Premium Modal (match Plans/Team view)
+   =================================== */
+#upgradePremiumModalSignature .modal-content {
+    max-width: 600px;
+}
+#upgradePremiumModalSignature .pricing-plan-modal {
+    transition: all 0.3s ease;
+}
+#upgradePremiumModalSignature .pricing-plan-modal:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+#upgradePremiumModalSignature .payment-methods-modal {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+#upgradePremiumModalSignature .payment-method-item-modal.active .payment-card-icon-modal {
+    opacity: 1;
+}
+.payment-method-item-modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    padding: 8px;
+}
+.payment-method-item-modal.paypal-tab-modal {
+    padding: 8px 16px;
+    border-radius: 8px;
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+.paypal-content-wrapper-modal {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.paypal-logo-icon-modal { width: 24px; height: 24px; flex-shrink: 0; }
+.paypal-text-label-modal { font-size: 16px; font-weight: 600; color: #0070ba; }
+.paypal-underline-modal {
+    position: absolute;
+    bottom: -24px;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background-color: #ff702a;
+    border-radius: 2px;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+.payment-method-item-modal.paypal-tab-modal.active .paypal-underline-modal {
+    opacity: 1;
+}
+.payment-method-item-modal.paypal-tab-modal:hover {
+    background-color: rgba(90, 38, 239, 0.05);
+}
+.paypal-button-container-modal { display: block; margin-bottom: 16px; }
+.btn-paypal-modal {
+    background: linear-gradient(135deg, #0070ba 0%, #003087 100%);
+    color: #fff;
+    padding: 16px 32px;
+    border-radius: 8px;
+    border: none;
+    font-weight: 600;
+    font-size: 18px;
+    width: 100%;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 2px 8px rgba(0, 112, 186, 0.3);
+}
+.btn-paypal-modal:hover {
+    background: linear-gradient(135deg, #005ea6 0%, #002d6b 100%);
+    box-shadow: 0 4px 12px rgba(0, 112, 186, 0.4);
+    transform: translateY(-1px);
+}
+.btn-confirm-payment {
+    background-color: #ff702a;
+    color: #fff;
+    padding: 16px 32px;
+    border-radius: 8px;
+    border: none;
+    font-weight: 600;
+    font-size: 16px;
+    width: 100%;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-bottom: 16px;
+}
+.btn-confirm-payment:hover {
+    background-color: #e04a1f;
+}
+.card-details-section { margin-bottom: 24px; }
+.security-text { text-align: center; font-size: 12px; color: #6B7280; }

@@ -1,0 +1,154 @@
+.custom-file-input:lang(en)~.custom-file-label::after {
+    content: "Browse";
+}
+
+#fileListSplit .list-group-item {
+    position: relative;
+    padding-right: 120px; /* Adjust as needed */
+}
+
+#fileListSplit .btn-danger {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+#alertPlaceholder .alert {
+    margin-top: 10px;
+}
+
+/* General styles for the PDF Organizer */
+.landing-page {
+    margin-top: 50px;
+}
+
+.thumbnail-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.thumbnail-wrapper {
+    position: relative;
+    margin: 10px;
+}
+
+.thumbnail {
+    width: 150px;
+    height: 200px;
+    object-fit: cover;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    padding: 5px;
+    background-color: #fff;
+}
+
+.add-page-btn, .remove-page-btn, .rotate-page-btn {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.add-page-btn {
+    top: -10px;
+    right: -10px;
+}
+
+.remove-page-btn {
+    top: -10px;
+    left: -10px;
+}
+
+.rotate-page-btn {
+    bottom: -10px;
+    right: -10px;
+}
+
+.modal-dialog {
+    max-width: 90%;
+}
+
+#organizeBtn {
+    margin-right: 10px;
+}
+
+.instructions {
+    margin-top: 20px;
+    text-align: left;
+    font-style: italic;
+    color: #666;
+}
+
+.instructions ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+.pdf-page {
+    position: relative;
+    border: 2px solid gray; /* Gray border for PDF page thumbnails */
+    margin: 35px; /* Space around the page thumbnails */
+    border-radius: 5px; /* Optional: rounded corners for a nicer look */
+}
+
+.pdf-page canvas {
+    display: block; /* Ensure canvas takes up the full width of the container */
+}
+
+.btn-group {
+    position: absolute;
+    display: flex;
+    flex-direction: column; /* Stack buttons vertically */
+    align-items: center; /* Center buttons horizontally */
+    width: 100%; /* Full width of the container */
+    z-index: 1; /* Ensure buttons are above the border */
+}
+
+.add-page-btn-left {
+    position: absolute;
+    left: -30px; /* Adjust as needed to position outside of the PDF page */
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.add-page-btn-right {
+    position: absolute;
+    right: -30px; /* Adjust as needed to position outside of the PDF page */
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.remove-page-btn {
+    position: absolute;
+    top: -30px; /* Adjust as needed to position above the PDF page */
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.rotate-page-btn {
+    position: absolute;
+    bottom: -30px; /* Adjust as needed to position below the PDF page */
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#editPdfModal .modal-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#editPdfModal canvas {
+    border: 1px solid #ccc;
+}
+
+#textOptions, #imageOptions, #shapeOptions {
+    width: 100%;
+    max-width: 600px;
+}

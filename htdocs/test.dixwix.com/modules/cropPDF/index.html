@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop PDF - I Love PDF</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Montserrat:wght@700&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- PDF.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+
+    <!-- Custom CSS -->
+    <link href="styles.css" rel="stylesheet">
+    <link href="../shared-styles.css" rel="stylesheet">
+</head>
+<body data-page-title="Crop PDF">
+    <!-- Shared Navbar -->
+    <div id="shared-navbar"></div>
+
+    <!-- Shared Hero Section -->
+    <div id="shared-hero"></div>
+            
+    <!-- Shared Breadcrumb -->
+    <div id="shared-breadcrumb"></div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <h2 class="section-title">Crop PDF</h2>
+            
+            <div id="alertPlaceholder" class="alert-container mb-4"></div>
+            
+            <div class="row g-4 align-items-stretch">
+                <!-- Left: File Upload Area -->
+                <div class="col-lg-6 d-flex position-relative" id="leftColumn">
+                    <!-- Initial Upload State -->
+                    <div id="initialUploadState" class="initial-upload-state">
+                        <div class="upload-content">
+                            <h2 class="upload-title">Crop PDF</h2>
+                            <p class="upload-subtitle">Select a PDF file to crop. After selecting, all pages will render below.</p>
+                            <div class="upload-buttons-wrapper">
+                                <button id="selectFilesBtn" class="btn-select-files" type="button">
+                                    Select PDF file
+                                </button>
+                                <div class="cloud-buttons">
+                                    <button id="initialGoogleDriveBtn" class="cloud-btn" type="button" title="Select from Google Drive">
+                                        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                                            <path d="M7.71 2.5L2.5 12.71l5.21 10.21L12.71 16l5.21-3.29L12.71 2.5H7.71z"/>
+                                        </svg>
+                                    </button>
+                                    <button id="initialDropboxBtn" class="cloud-btn" type="button" title="Select from Dropbox">
+                                        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                                            <path d="M6 2L0 6l6 4 6-4-6-4zm12 4l6-4-6-4-6 4 6 4zM0 14l6 4 6-4-6-4-6 4zm18-4l-6 4 6 4 6-4-6-4zM0 20l6 4 6-4-6-4-6 4zm12 0l6 4 6-4-6-4-6 4z"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <p class="drop-hint">or drop PDF here</p>
+                        </div>
+                    </div>
+
+                    <!-- File Selection Buttons Group (shown after file is selected) -->
+                    <div id="fileSelectionButtons" class="file-selection-buttons" style="display: none;">
+                        <button id="addBtn" class="file-select-btn add-btn" type="button" title="Change PDF file">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                        <button id="computerBtn" class="file-select-btn computer-btn" type="button" title="Select from computer">
+                            <i class="fas fa-desktop"></i>
+                        </button>
+                        <button id="googleDriveBtn" class="file-select-btn google-drive-btn" type="button" title="Select from Google Drive">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                                <path d="M7.71 2.5L2.5 12.71l5.21 10.21L12.71 16l5.21-3.29L12.71 2.5H7.71z"/>
+                            </svg>
+                        </button>
+                        <button id="dropboxBtn" class="file-select-btn dropbox-btn" type="button" title="Select from Dropbox">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                                <path d="M6 2L0 6l6 4 6-4-6-4zm12 4l6-4-6-4-6 4 6 4zM0 14l6 4 6-4-6-4-6 4zm18-4l-6 4 6 4 6-4-6-4zM0 20l6 4 6-4-6-4-6 4zm12 0l6 4 6-4-6-4-6 4z"/>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <div class="upload-area w-100">
+                        <!-- File Info (shown after file is selected) -->
+                        <div id="fileInfo" class="file-info" style="display: none;">
+                            <div class="file-info-content">
+                                <i class="fas fa-file-pdf"></i>
+                                <span id="fileName"></span>
+                                <button id="removeFileBtn" class="remove-file-btn" type="button" title="Remove file">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- PDF Pages Container (shown after file is loaded) -->
+                        <div id="pdfContainer" class="pdf-pages-container" style="display: none;">
+                            <p class="hint-text mb-3">Click and drag on any page below to draw the crop area (you can redraw as many times as you like).</p>
+                            <!-- Pages (canvas per page) will be appended here -->
+                        </div>
+                        
+                        <input type="file" id="fileInput" accept="application/pdf" style="display:none;">
+                    </div>
+                </div>
+          
+                <!-- Right: Crop Options -->
+                <div class="col-lg-6 d-flex">
+                    <div class="options-panel w-100">
+                        <h5 class="mb-3 fw-bold">Crop Options</h5>
+                        
+                        <!-- Scope Selection -->
+                        <div class="crop-scope-section mb-4">
+                            <label class="scope-label mb-3 d-block">Apply crop to:</label>
+                            <div class="scope-options">
+                                <div class="scope-option active" onclick="selectScope(this, 'all')">
+                                    <span class="option-text">All pages</span>
+                                    <span class="checkmark-icon">
+                                        <svg width="31" height="31" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <circle cx="15.5" cy="15.5" r="15.5" fill="#F56129"/>
+                                            <path d="M9 15.5L13.5 20L22 11.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </span>
+                                </div>
+                                <div class="scope-option" onclick="selectScope(this, 'current')">
+                                    <span class="option-text">Current page only</span>
+                                    <span class="checkmark-icon">
+                                        <svg width="31" height="31" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <circle cx="15.5" cy="15.5" r="15" stroke="#E4E4E4" fill="none"/>
+                                            <path d="M9 15.5L13.5 20L22 11.5" stroke="#C0C0C0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Status Message -->
+                        <div id="status" class="status-message mb-3"></div>
+                        
+                        <!-- Reset Selection Button -->
+                        <button id="resetSelectionBtn" class="btn-reset-selection mb-3" style="display: none;" type="button">
+                            <i class="fas fa-redo"></i> Reset Selection
+                        </button>
+
+                        <!-- Alert Placeholder -->
+                        <div id="alertPlaceholderRight" class="alert-container"></div>
+                    </div>
+                </div>
+            </div>
+          
+            <!-- Crop Button - Outside of columns -->
+            <div class="row mt-4">
+                <div class="col-lg-6 offset-lg-6">
+                    <button id="cropBtn" class="btn-compress" disabled>Crop & Download PDF</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Selection Box Overlay -->
+    <div id="selectionBox"></div>
+
+    <!-- Bootstrap Bundle with Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../shared-components.js"></script>
+    <script src="../config.js"></script>
+    <script src="../main.js"></script>
+  
+    <script>
+        // PDF.js setup
+        const pdfjsLib = window['pdfjsLib'];
+        if (!pdfjsLib) {
+            console.error('PDF.js failed to load');
+        } else {
+            pdfjsLib.GlobalWorkerOptions.workerSrc =
+                'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+        }
+
+        const fileInput = document.getElementById('fileInput');
+        const pdfContainer = document.getElementById('pdfContainer');
+        const cropBtn = document.getElementById('cropBtn');
+        const statusEl = document.getElementById('status');
+        const selectionBox = document.getElementById('selectionBox');
+        const leftColumn = document.getElementById('leftColumn');
+
+        // UI State Elements
+        const initialUploadState = document.getElementById('initialUploadState');
+        const fileSelectionButtons = document.getElementById('fileSelectionButtons');
+        const selectFilesBtn = document.getElementById('selectFilesBtn');
+        const initialGoogleDriveBtn = document.getElementById('initialGoogleDriveBtn');
+        const initialDropboxBtn = document.getElementById('initialDropboxBtn');
+        const addBtn = document.getElementById('addBtn');
+        const computerBtn = document.getElementById('computerBtn');
+        const googleDriveBtn = document.getElementById('googleDriveBtn');
+        const dropboxBtn = document.getElementById('dropboxBtn');
+        const fileInfo = document.getElementById('fileInfo');
+        const fileName = document.getElementById('fileName');
+        const removeFileBtn = document.getElementById('removeFileBtn');
+        const resetSelectionBtn = document.getElementById('resetSelectionBtn');
+
+        let pdfDoc = null;
+        let pageViews = []; // one entry per page: {canvas, ctx, scale, widthPts, heightPts}
+        let currentFile = null;
+        let selectedScope = 'all'; // 'all' or 'current'
+
+        let isDragging = false;
+        let dragStart = null;
+        let activePageIndex = null; // 0-based
+        let selection = null; // {pageIndex, x, y, w, h} in canvas pixels
+
+        // Scope selection function
+        function selectScope(element, scope) {
+            selectedScope = scope;
+            
+            // Update all scope options
+            document.querySelectorAll('.scope-option').forEach(opt => {
+                opt.classList.remove('active');
+                const circle = opt.querySelector('svg circle');
+                const path = opt.querySelector('svg path');
+                if (opt === element) {
+                    circle.setAttribute('fill', '#F56129');
+                    circle.setAttribute('stroke', '#F56129');
+                    if (path) path.setAttribute('stroke', 'white');
+                } else {
+                    circle.setAttribute('fill', 'none');
+                    circle.setAttribute('stroke', '#E4E4E4');
+                    if (path) path.setAttribute('stroke', '#C0C0C0');
+                }
+            });
+            
+            element.classList.add('active');
+        }
+
+        // Button event listeners
+        if (selectFilesBtn) {
+            selectFilesBtn.addEventListener('click', () => fileInput.click());
+        }
+        if (initialGoogleDriveBtn) {
+            initialGoogleDriveBtn.addEventListener('click', () => {
+                alert('Google Drive integration coming soon!');
+            });
+        }
+        if (initialDropboxBtn) {
+            initialDropboxBtn.addEventListener('click', () => {
+                alert('Dropbox integration coming soon!');
+            });
+        }
+        if (addBtn) {
+            addBtn.addEventListener('click', () => fileInput.click());
+        }
+        if (computerBtn) {
+            computerBtn.addEventListener('click', () => fileInput.click());
+        }
+        if (googleDriveBtn) {
+            googleDriveBtn.addEventListener('click', () => {
+                alert('Google Drive integration coming soon!');
+            });
+        }
+        if (dropboxBtn) {
+            dropboxBtn.addEventListener('click', () => {
+                alert('Dropbox integration coming soon!');
+            });
+        }
+
+        // Drag and drop for initial upload area
+        if (initialUploadState) {
+            initialUploadState.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                initialUploadState.classList.add('drag-over');
+            });
+
+            initialUploadState.addEventListener('dragleave', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                initialUploadState.classList.remove('drag-over');
+            });
+
+            initialUploadState.addEventListener('drop', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                initialUploadState.classList.remove('drag-over');
+                
+                const files = Array.from(e.dataTransfer.files);
+                if (files.length > 0 && files[0].type === 'application/pdf') {
+                    handleFileSelection(files[0]);
+                }
+            });
+        }
+
+        function updateUIState() {
+            const hasFile = currentFile !== null;
+            
+            if (hasFile) {
+                // Hide initial state, show file selection buttons and file info
+                if (initialUploadState) initialUploadState.style.display = 'none';
+                if (fileSelectionButtons) fileSelectionButtons.style.display = 'flex';
+                if (fileInfo) {
+                    fileInfo.style.display = 'block';
+                    if (fileName) fileName.textContent = currentFile.name;
+                }
+                if (leftColumn) leftColumn.classList.add('has-files');
+            } else {
+                // Show initial state, hide file selection buttons and file info
+                if (initialUploadState) initialUploadState.style.display = 'flex';
+                if (fileSelectionButtons) fileSelectionButtons.style.display = 'none';
+                if (fileInfo) fileInfo.style.display = 'none';
+                if (leftColumn) leftColumn.classList.remove('has-files');
+                clearPages();
+            }
+        }
+        
+        // Remove file button event listener
+        if (removeFileBtn) {
+            removeFileBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                removeCurrentFile();
+            });
+        }
+        
+        // Reset selection button event listener
+        if (resetSelectionBtn) {
+            resetSelectionBtn.addEventListener('click', () => {
+                selection = null;
+                hideSelectionBox();
+                resetSelectionBtn.style.display = 'none';
+                setStatus('Selection cleared. Drag on a page to create a new crop area.', '');
+            });
+        }
+
+        function removeCurrentFile() {
+            currentFile = null;
+            pdfDoc = null;
+            updateUIState();
+            setStatus('', '');
+            cropBtn.disabled = true;
+        }
+
+        function handleFileSelection(file) {
+            if (!file || file.type !== 'application/pdf') {
+                setStatus('Please select a valid PDF file.', 'error');
+                return;
+            }
+            
+            currentFile = file;
+            updateUIState();
+            
+            // Trigger the file input change handler
+            renderAllPages(file);
+        }
+
+        function setStatus(text, cls) {
+            if (!statusEl) return;
+            statusEl.textContent = text;
+            statusEl.className = 'status-message ' + (cls || '');
+        }
+
+        function clearPages() {
+            if (pdfContainer) {
+                pdfContainer.innerHTML = '<p class="hint-text mb-3">Click and drag on any page below to draw the crop area (you can redraw as many times as you like).</p>';
+                pdfContainer.style.display = 'none';
+            }
+            pageViews = [];
+            selection = null;
+            hideSelectionBox();
+            if (resetSelectionBtn) resetSelectionBtn.style.display = 'none';
+        }
+
+        function hideSelectionBox() {
+            if (selectionBox) selectionBox.style.display = 'none';
+        }
+
+        function showSelectionBox() {
+            if (selectionBox) selectionBox.style.display = 'block';
+        }
+
+        function updateSelectionBox() {
+            if (!selection || activePageIndex == null) {
+                hideSelectionBox();
+                return;
+            }
+            const pageView = pageViews[activePageIndex];
+            if (!pageView) {
+                hideSelectionBox();
+                return;
+            }
+            const canvas = pageView.canvas;
+            const rect = canvas.getBoundingClientRect();
+            const { x, y, w, h } = selection;
+
+            // Calculate the actual canvas scale (canvas might be scaled down for display)
+            const scaleX = rect.width / canvas.width;
+            const scaleY = rect.height / canvas.height;
+
+            selectionBox.style.display = 'block';
+            selectionBox.style.left = (rect.left + x * scaleX) + 'px';
+            selectionBox.style.top = (rect.top + y * scaleY) + 'px';
+            selectionBox.style.width = (w * scaleX) + 'px';
+            selectionBox.style.height = (h * scaleY) + 'px';
+        }
+
+        function canvasCoordsFromEvent(evt, canvas) {
+            const rect = canvas.getBoundingClientRect();
+            // Account for canvas scaling (canvas might be displayed at different size)
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+            const x = (evt.clientX - rect.left) * scaleX;
+            const y = (evt.clientY - rect.top) * scaleY;
+            return { x, y };
+        }
+
+        function attachCanvasEvents(canvas, pageIndex) {
+            canvas.addEventListener('mousedown', (e) => {
+                if (!pdfDoc) return;
+                isDragging = true;
+                activePageIndex = pageIndex;
+                const { x, y } = canvasCoordsFromEvent(e, canvas);
+                const clampedX = Math.max(0, Math.min(canvas.width, x));
+                const clampedY = Math.max(0, Math.min(canvas.height, y));
+                dragStart = { x: clampedX, y: clampedY };
+                selection = { pageIndex, x: clampedX, y: clampedY, w: 0, h: 0 };
+                updateSelectionBox();
+                setStatus(`Drawing crop on page ${pageIndex + 1}...`, '');
+            });
+        }
+
+        window.addEventListener('mousemove', (e) => {
+            if (!isDragging || dragStart == null || activePageIndex == null) return;
+            const pageView = pageViews[activePageIndex];
+            if (!pageView) return;
+            const canvas = pageView.canvas;
+
+            const { x, y } = canvasCoordsFromEvent(e, canvas);
+            const clampedX = Math.max(0, Math.min(canvas.width, x));
+            const clampedY = Math.max(0, Math.min(canvas.height, y));
+            const startX = dragStart.x;
+            const startY = dragStart.y;
+
+            const left = Math.min(startX, clampedX);
+            const top = Math.min(startY, clampedY);
+            const width = Math.abs(clampedX - startX);
+            const height = Math.abs(clampedY - startY);
+
+            selection = { pageIndex: activePageIndex, x: left, y: top, w: width, h: height };
+            updateSelectionBox();
+        });
+
+        window.addEventListener('mouseup', () => {
+            if (!isDragging) return;
+            isDragging = false;
+            dragStart = null;
+
+            if (!selection || selection.w < 5 || selection.h < 5) {
+                selection = null;
+                hideSelectionBox();
+                if (resetSelectionBtn) resetSelectionBtn.style.display = 'none';
+                setStatus('Selection too small. Drag again to define crop area.', 'error');
+            } else {
+                if (resetSelectionBtn) resetSelectionBtn.style.display = 'block';
+                setStatus(`Crop area selected on page ${selection.pageIndex + 1}. Choose scope and click "Crop & Download PDF".`, 'success');
+            }
+        });
+
+        // Update selection box position on scroll and resize
+        function handleViewportChange() {
+            if (selection && activePageIndex != null) {
+                updateSelectionBox();
+            }
+        }
+
+        // Listen to scroll events on the PDF container
+        if (pdfContainer) {
+            pdfContainer.addEventListener('scroll', handleViewportChange, { passive: true });
+        }
+
+        // Listen to window scroll and resize events
+        window.addEventListener('scroll', handleViewportChange, { passive: true });
+        window.addEventListener('resize', handleViewportChange);
+
+        async function renderAllPages(file) {
+            if (!file) return;
+            
+            clearPages();
+            setStatus('Loading PDF...', '');
+            cropBtn.disabled = true;
+
+            try {
+                const arrayBuffer = await file.arrayBuffer();
+                pdfDoc = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+
+                const numPages = pdfDoc.numPages;
+                const maxCanvasWidth = 700;
+
+                // Show PDF container
+                if (pdfContainer) {
+                    pdfContainer.style.display = 'block';
+                }
+
+                for (let pageNum = 1; pageNum <= numPages; pageNum++) {
+                    const page = await pdfDoc.getPage(pageNum);
+                    // Get viewport at scale 1 to get PDF dimensions in points
+                    const viewport1 = page.getViewport({ scale: 1 });
+                    const widthPts = viewport1.width;
+                    const heightPts = viewport1.height;
+
+                    // Calculate scale for rendering (max width 700px)
+                    const scale = Math.min(maxCanvasWidth / viewport1.width, 2);
+                    // Get viewport at render scale
+                    const viewport = page.getViewport({ scale });
+
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'pdf-page-wrapper';
+
+                    const label = document.createElement('div');
+                    label.className = 'pdf-page-label';
+                    label.textContent = `Page ${pageNum}`;
+                    wrapper.appendChild(label);
+
+                    const canvas = document.createElement('canvas');
+                    canvas.className = 'pdfCanvas';
+                    canvas.width = viewport.width;
+                    canvas.height = viewport.height;
+                    wrapper.appendChild(canvas);
+
+                    if (pdfContainer) {
+                        pdfContainer.appendChild(wrapper);
+                    }
+
+                    const ctx = canvas.getContext('2d');
+                    await page.render({ canvasContext: ctx, viewport }).promise;
+
+                    pageViews.push({
+                        canvas,
+                        ctx,
+                        scale,
+                        widthPts,
+                        heightPts
+                    });
+
+                    attachCanvasEvents(canvas, pageNum - 1);
+                }
+
+                setStatus('PDF loaded. Drag on any page to define crop area.', 'success');
+                cropBtn.disabled = false;
+            } catch (err) {
+                console.error(err);
+                clearPages();
+                setStatus('Failed to load PDF.', 'error');
+                cropBtn.disabled = true;
+                removeCurrentFile();
+            }
+        }
+
+        fileInput.addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            handleFileSelection(file);
+            // Reset input to allow selecting the same file again
+            e.target.value = '';
+        });
+
+        // Initialize UI state
+        updateUIState();
+
+        function computeMarginsFromSelection() {
+            if (!selection) return null;
+            const pageIndex = selection.pageIndex;
+            const pv = pageViews[pageIndex];
+            if (!pv) return null;
+
+            const { x, y, w, h } = selection;
+            const { widthPts, heightPts, scale } = pv;
+
+            // Convert canvas pixels to PDF points
+            // Canvas coordinates: (0,0) at top-left, Y increases downward
+            // PDF coordinates: (0,0) at bottom-left, Y increases upward
+            // However, PDF.js viewport renders with Y=0 at top when displayed
+            
+            // Selection rectangle represents the area we want to KEEP
+            const leftPt = x / scale;                    // Left edge in PDF points (from left)
+            const rightPt = (x + w) / scale;             // Right edge in PDF points (from left)
+            const topPt = y / scale;                     // Top edge in PDF points (from top of rendered viewport)
+            const bottomPt = (y + h) / scale;            // Bottom edge in PDF points (from top of rendered viewport)
+            
+            // Calculate margins: how much to cut from each edge
+            // Backend expects: distances to cut from each edge
+            const leftMargin = leftPt;                           // Cut from left edge
+            const rightMargin = widthPts - rightPt;             // Cut from right edge
+            const topMargin = topPt;                             // Cut from top edge (in viewport coordinates, which is from top)
+            const bottomMargin = heightPts - bottomPt;          // Cut from bottom edge
+
+            // Validate margins
+            if (leftMargin < 0 || rightMargin < 0 || topMargin < 0 || bottomMargin < 0) {
+                console.error('Invalid margins calculated:', { 
+                    leftMargin, rightMargin, topMargin, bottomMargin,
+                    selection: { x, y, w, h },
+                    pageInfo: { widthPts, heightPts, scale }
+                });
+                return null;
+            }
+
+            // Validate that margins don't exceed page dimensions
+            if (leftMargin + rightMargin >= widthPts || topMargin + bottomMargin >= heightPts) {
+                console.error('Margins exceed page dimensions:', {
+                    leftMargin, rightMargin, widthPts,
+                    topMargin, bottomMargin, heightPts
+                });
+                return null;
+            }
+
+            console.log('Computed margins:', {
+                left: leftMargin.toFixed(2),
+                top: topMargin.toFixed(2),
+                right: rightMargin.toFixed(2),
+                bottom: bottomMargin.toFixed(2),
+                pageIndex,
+                pageSize: `${widthPts.toFixed(2)} x ${heightPts.toFixed(2)}`
+            });
+
+            return { pageIndex, left: leftMargin, top: topMargin, right: rightMargin, bottom: bottomMargin };
+        }
+
+        cropBtn.addEventListener('click', async () => {
+            if (!currentFile) {
+                setStatus('Please select a PDF first.', 'error');
+                return;
+            }
+            if (!selection) {
+                setStatus('Please drag on a page to select crop area first.', 'error');
+                return;
+            }
+
+            const margins = computeMarginsFromSelection();
+            if (!margins) {
+                setStatus('Unable to compute crop margins.', 'error');
+                return;
+            }
+
+            cropBtn.disabled = true;
+            setStatus('Cropping PDF...', '');
+
+            const fd = new FormData();
+            fd.append('file', currentFile);
+            // Round to 2 decimal places to avoid floating point precision issues
+            fd.append('left', margins.left.toFixed(2));
+            fd.append('top', margins.top.toFixed(2));
+            fd.append('right', margins.right.toFixed(2));
+            fd.append('bottom', margins.bottom.toFixed(2));
+            fd.append('mode', selectedScope === 'current' ? 'single' : 'all');
+            fd.append('pageIndex', String(margins.pageIndex)); // 0-based
+            
+            console.log('Sending crop request:', {
+                left: margins.left.toFixed(2),
+                top: margins.top.toFixed(2),
+                right: margins.right.toFixed(2),
+                bottom: margins.bottom.toFixed(2),
+                mode: selectedScope === 'current' ? 'single' : 'all',
+                pageIndex: margins.pageIndex
+            });
+
+            try {
+                const res = await fetch('/api/crop-pdf', {
+                    method: 'POST',
+                    body: fd
+                });
+
+                if (!res.ok) {
+                    let data = {};
+                    try { data = await res.json(); } catch (_) {}
+                    console.error('Crop PDF failed:', data);
+                    setStatus(data.error || data.reason || 'Crop PDF failed.', 'error');
+                    cropBtn.disabled = false;
+                    return;
+                }
+
+                const blob = await res.blob();
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+
+                const cd = res.headers.get('Content-Disposition') || '';
+                const match = cd.match(/filename="(.+?)"/);
+                const filename = match ? match[1] : 'cropped.pdf';
+
+                a.href = url;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                URL.revokeObjectURL(url);
+
+                setStatus('Done. Cropped PDF downloaded.', 'success');
+            } catch (err) {
+                console.error(err);
+                setStatus('Error contacting server.', 'error');
+            } finally {
+                cropBtn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>
