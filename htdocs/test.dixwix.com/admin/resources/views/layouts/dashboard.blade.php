@@ -114,20 +114,20 @@
                                         <span>Last tasks</span>
                                     </a>
                                 </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                <li class="nav-item {{ request()->routeIs('signatures.overview') ? 'active' : '' }}">
+                                    <a href="{{ route('signatures.overview') }}" class="nav-link">
                                         <i class="fas fa-eye"></i>
                                         <span>Overview</span>
                                     </a>
                                 </li>
-                                <li class="nav-item {{ request()->routeIs('signatures.requests') ? 'active' : '' }}">
-                                    <a href="{{ route('signatures.requests') }}" class="nav-link">
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
                                         <i class="fas fa-paper-plane"></i>
                                         <span>Sent</span>
                                     </a>
                                 </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                <li class="nav-item {{ request()->routeIs('signatures.inbox') ? 'active' : '' }}">
+                                    <a href="{{ route('signatures.inbox') }}" class="nav-link">
                                         <i class="fas fa-inbox"></i>
                                         <span>Inbox</span>
                                     </a>
