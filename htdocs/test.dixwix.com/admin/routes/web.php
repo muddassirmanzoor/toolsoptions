@@ -57,10 +57,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/invoices/{id}/download', [DashboardController::class, 'downloadInvoice'])->name('dashboard.invoices.download');
     Route::delete('/invoices/{id}', [DashboardController::class, 'hideInvoice'])->name('dashboard.invoices.hide');
 
-    // Signatures (sent requests, requester overview, sidebar links)
+    // Signatures (overview, sent requests, requester detail, sidebar links)
+    Route::get('/user/signatures/overview', [SignatureRequestController::class, 'overview'])->name('signatures.overview');
     Route::get('/user/signatures/requests', [SignatureRequestController::class, 'index'])->name('signatures.requests');
     Route::get('/user/signatures/requester/{requestId}', [SignatureRequestController::class, 'show'])->name('signatures.requester.show');
-    Route::get('/user/signatures/overview', function () { return redirect()->route('signatures.requests'); })->name('signatures.overview');
     Route::get('/user/signatures/inbox', [SignatureRequestController::class, 'inbox'])->name('signatures.inbox');
     Route::get('/user/signatures/signed', function (\Illuminate\Http\Request $r) {
         return redirect()->route('signatures.requests', ['status' => 'completed']);

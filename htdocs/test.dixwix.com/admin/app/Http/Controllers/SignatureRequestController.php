@@ -11,6 +11,36 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 class SignatureRequestController extends Controller
 {
     /**
+     * Signature overview – summary counts and quick links to Sent, Inbox, Signed.
+     */
+    public function overview(Request $request)
+    {
+        $userId = $request->user()->id;
+        $userEmail = $request->user()->email;
+
+        $sentTotal = SignatureRequest::where('user_id', $userId)->count();
+        $sentPending = SignatureRequest::where('user_id', $userId)->where('status', 'pending')->count();
+        $sentCompleted = SignatureRequest::where('user_id', $userId)->where('status', 'completed')->count();
+        $inboxCount = SignatureRequest::whereHas('receivers', function ($q) use ($userEmail) {
+            $q->where('email', $userEmail);
+        })->count();
+
+        $recentRequests = SignatureRequest::where('user_id', $userId)
+            ->with(['receivers'])
+            ->orderByDesc('created_at')
+            ->limit(5)
+            ->get();
+
+        return view('dashboard.signatures.overview', [
+            'sentTotal' => $sentTotal,
+            'sentPending' => $sentPending,
+            'sentCompleted' => $sentCompleted,
+            'inboxCount' => $inboxCount,
+            'recentRequests' => $recentRequests,
+        ]);
+    }
+
+    /**
      * List sent signature requests (Sent tab).
      */
     public function index(Request $request)
