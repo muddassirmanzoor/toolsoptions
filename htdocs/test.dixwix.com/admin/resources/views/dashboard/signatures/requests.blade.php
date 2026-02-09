@@ -57,7 +57,7 @@
                         <li><a class="dropdown-item" href="{{ request()->fullUrlWithQuery(['status' => 'completed']) }}">Signed</a></li>
                     </ul>
                 </div>
-                <form action="{{ route('signatures.requests') }}" method="GET" class="d-flex align-items-center gap-2 flex-grow-1" style="max-width: 320px;">
+                <form action="{{ isset($isInbox) && $isInbox ? route('signatures.inbox') : route('signatures.requests') }}" method="GET" class="d-flex align-items-center gap-2 flex-grow-1" style="max-width: 320px;">
                     @if(request('status'))
                         <input type="hidden" name="status" value="{{ request('status') }}">
                     @endif
