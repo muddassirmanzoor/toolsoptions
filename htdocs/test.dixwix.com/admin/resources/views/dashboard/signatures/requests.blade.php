@@ -44,7 +44,7 @@
         </div>
 
         <div class="signatures-section">
-            <h2 class="signatures-section-title mb-3">{{ isset($isInbox) && $isInbox ? 'Inbox' : 'Signature requests' }}</h2>
+            <h2 class="signatures-section-title mb-3">{{ isset($isSigned) && $isSigned ? 'Signed' : (isset($isInbox) && $isInbox ? 'Inbox' : 'Signature requests') }}</h2>
 
             <div class="signatures-toolbar d-flex flex-wrap align-items-center gap-2 mb-3">
                 <div class="dropdown">
@@ -57,7 +57,7 @@
                         <li><a class="dropdown-item" href="{{ request()->fullUrlWithQuery(['status' => 'completed']) }}">Signed</a></li>
                     </ul>
                 </div>
-                <form action="{{ isset($isInbox) && $isInbox ? route('signatures.inbox') : route('signatures.requests') }}" method="GET" class="d-flex align-items-center gap-2 flex-grow-1" style="max-width: 320px;">
+                <form action="{{ isset($isSigned) && $isSigned ? route('signatures.signed') : (isset($isInbox) && $isInbox ? route('signatures.inbox') : route('signatures.requests')) }}" method="GET" class="d-flex align-items-center gap-2 flex-grow-1" style="max-width: 320px;">
                     @if(request('status'))
                         <input type="hidden" name="status" value="{{ request('status') }}">
                     @endif

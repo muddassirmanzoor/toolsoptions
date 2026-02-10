@@ -62,9 +62,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/user/signatures/requests', [SignatureRequestController::class, 'index'])->name('signatures.requests');
     Route::get('/user/signatures/requester/{requestId}', [SignatureRequestController::class, 'show'])->name('signatures.requester.show');
     Route::get('/user/signatures/inbox', [SignatureRequestController::class, 'inbox'])->name('signatures.inbox');
-    Route::get('/user/signatures/signed', function (\Illuminate\Http\Request $r) {
-        return redirect()->route('signatures.requests', ['status' => 'completed']);
-    })->name('signatures.signed');
+    Route::get('/user/signatures/signed', [SignatureRequestController::class, 'signed'])->name('signatures.signed');
     Route::get('/user/signatures/templates', function () { return view('dashboard.signatures.templates'); })->name('signatures.templates');
     Route::get('/user/signatures/contacts', function () { return view('dashboard.signatures.contacts'); })->name('signatures.contacts');
     Route::get('/user/signatures/settings', function () { return view('dashboard.signatures.settings'); })->name('signatures.settings');

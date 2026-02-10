@@ -74,6 +74,34 @@ class SignatureRequestController extends Controller
     }
 
     /**
+     * Signed: sent signature requests with status completed (signed by all).
+     */
+    public function signed(Request $request)
+    {
+        $query = SignatureRequest::where('user_id', $request->user()->id)
+            ->where('status', 'completed')
+            ->with(['receivers'])
+            ->withCount('receivers')
+            ->orderByDesc('updated_at');
+
+        if ($request->filled('search')) {
+            $term = $request->search;
+            $query->where(function ($q) use ($term) {
+                $q->where('document_name', 'like', "%{$term}%")
+                    ->orWhere('request_id', 'like', "%{$term}%");
+            });
+        }
+
+        $requests = $query->paginate(10)->withQueryString();
+
+        return view('dashboard.signatures.requests', [
+            'requests' => $requests,
+            'isSigned' => true,
+            'showLanding' => false,
+        ]);
+    }
+
+    /**
      * Inbox: signature requests where the user is a receiver.
      */
     public function inbox(Request $request)
