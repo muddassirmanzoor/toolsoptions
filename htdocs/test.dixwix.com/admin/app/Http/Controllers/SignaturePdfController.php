@@ -21,10 +21,12 @@ class SignaturePdfController extends Controller
         $request = $receiver->signatureRequest;
 
         if ($request->status === 'completed') {
-            return response()->json(['redirect' => route('signature-pdf.thank-you') . '?token=' . urlencode($token)], 302);
+            $thankYouUrl = route('signature-pdf.thank-you') . '?token=' . urlencode($token);
+            return response()->json(['redirect' => $thankYouUrl], 200);
         }
         if ($request->expires_at && $request->expires_at->isPast()) {
-            return response()->json(['redirect' => route('signature-pdf.thank-you') . '?token=' . urlencode($token) . '&expired=1'], 410);
+            $thankYouUrl = route('signature-pdf.thank-you') . '?token=' . urlencode($token) . '&expired=1';
+            return response()->json(['redirect' => $thankYouUrl], 200);
         }
 
         // Use request host so document/sign URLs work from Node (3000) or any client

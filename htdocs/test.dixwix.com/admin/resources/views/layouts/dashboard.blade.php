@@ -120,8 +120,8 @@
                                         <span>Overview</span>
                                     </a>
                                 </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                <li class="nav-item {{ request()->routeIs('signatures.requests') && request()->query('status') !== 'completed' ? 'active' : '' }}">
+                                    <a href="{{ route('signatures.requests') }}" class="nav-link">
                                         <i class="fas fa-paper-plane"></i>
                                         <span>Sent</span>
                                     </a>
@@ -132,14 +132,14 @@
                                         <span>Inbox</span>
                                     </a>
                                 </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                <li class="nav-item {{ request()->routeIs('signatures.requests') && request()->query('status') === 'completed' ? 'active' : '' }}">
+                                    <a href="{{ route('signatures.signed') }}" class="nav-link">
                                         <i class="fas fa-check-circle"></i>
                                         <span>Signed</span>
                                     </a>
                                 </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                <li class="nav-item d-none">
+                                    <a href="{{ route('signatures.templates') }}" class="nav-link">
                                         <i class="fas fa-file-alt"></i>
                                         <span>Templates</span>
                                     </a>
