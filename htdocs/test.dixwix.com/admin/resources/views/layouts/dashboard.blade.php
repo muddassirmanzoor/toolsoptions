@@ -144,8 +144,8 @@
                                         <span>Templates</span>
                                     </a>
                                 </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                <li class="nav-item {{ request()->routeIs('signatures.contacts*') ? 'active' : '' }}">
+                                    <a href="{{ route('signatures.contacts') }}" class="nav-link">
                                         <i class="fas fa-address-book"></i>
                                         <span>Contacts</span>
                                     </a>

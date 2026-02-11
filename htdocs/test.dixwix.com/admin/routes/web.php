@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\SignatureRequestController;
+use App\Http\Controllers\SignatureContactController;
 use App\Http\Controllers\Api\SignatureRequestApiController;
 use App\Http\Controllers\SignaturePdfController;
 
@@ -64,7 +65,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/user/signatures/inbox', [SignatureRequestController::class, 'inbox'])->name('signatures.inbox');
     Route::get('/user/signatures/signed', [SignatureRequestController::class, 'signed'])->name('signatures.signed');
     Route::get('/user/signatures/templates', function () { return view('dashboard.signatures.templates'); })->name('signatures.templates');
-    Route::get('/user/signatures/contacts', function () { return view('dashboard.signatures.contacts'); })->name('signatures.contacts');
+    Route::get('/user/signatures/contacts', [SignatureContactController::class, 'index'])->name('signatures.contacts');
+    Route::post('/user/signatures/contacts', [SignatureContactController::class, 'store'])->name('signatures.contacts.store');
+    Route::put('/user/signatures/contacts/{contact}', [SignatureContactController::class, 'update'])->name('signatures.contacts.update');
+    Route::delete('/user/signatures/contacts/{contact}', [SignatureContactController::class, 'destroy'])->name('signatures.contacts.destroy');
     Route::get('/user/signatures/settings', function () { return view('dashboard.signatures.settings'); })->name('signatures.settings');
 
     // Signature request API (called by sign tool when "Send to Sign")
