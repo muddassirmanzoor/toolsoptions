@@ -1,44 +1,58 @@
-# Dependencies
-node_modules/
-vendor/
-.npm/
-
-# Environment & secrets
+# Laravel
+/vendor/
+admin/vendor/
+/node_modules/
+/.venv/
 .env
-.env.*
-!.env.example
+.env.backup
+.env.production
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
 
-# IDE / OS
+# IDE
 .idea/
 .vscode/
-.DS_Store
-Thumbs.db
 *.swp
 *.swo
 *~
 
-# Cache / logs / temp
-.cache/
-*.log
-tmp/
-logs/
-pm2/
+# OS
+.DS_Store
+Thumbs.db
 
-# Backups
-backups/
-*.bkp
-*.bak
+# Project specific
+/uploads/
+/cache/
 *.zip
-
-# NVM (optional – remove if you want to track .nvmrc)
-.nvm/
-
-# PM2
-.pm2/
-
-# Project-specific (from htdocs)
-uploads/
 *.pdf
 *.pptx
 *.docx
 *.xlsx
+archive.zip
+project.zip
+temp_*.pptx
+in.pdf
+example_password.txt
+
+# Backups
+modules_bkp_*/
+*.bkp
+*.bak
+
+# Logs
+*.log
+logs/
+
+# Admin (Laravel) storage/cache (do not version runtime artifacts)
+admin/storage/framework/views/
+admin/storage/framework/cache/
+admin/storage/framework/sessions/
+admin/storage/logs/
+admin/storage
+
+# Temporary files
+tmp/
+.cache/
