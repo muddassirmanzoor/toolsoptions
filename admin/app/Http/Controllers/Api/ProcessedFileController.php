@@ -86,7 +86,7 @@ class ProcessedFileController extends Controller
         }
         
         // Add CORS headers
-        return $response->header('Access-Control-Allow-Origin', 'http://82.180.132.134:3000')
+        return $response->header('Access-Control-Allow-Origin', config('app.tools_url', 'http://187.77.22.201:3000'))
                         ->header('Access-Control-Allow-Credentials', 'true')
                         ->header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
                         ->header('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization');
@@ -117,7 +117,7 @@ class ProcessedFileController extends Controller
                     'original_filename' => $file->original_filename,
                 ]
             ], 200)
-            ->header('Access-Control-Allow-Origin', 'http://82.180.132.134:3000')
+            ->header('Access-Control-Allow-Origin', config('app.tools_url', 'http://187.77.22.201:3000'))
             ->header('Access-Control-Allow-Credentials', 'true')
             ->header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
             ->header('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization');
@@ -132,7 +132,7 @@ class ProcessedFileController extends Controller
                 'message' => 'Failed to fetch file info',
                 'error' => $e->getMessage()
             ], 500)
-            ->header('Access-Control-Allow-Origin', 'http://82.180.132.134:3000')
+            ->header('Access-Control-Allow-Origin', config('app.tools_url', 'http://187.77.22.201:3000'))
             ->header('Access-Control-Allow-Credentials', 'true')
             ->header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
             ->header('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization');

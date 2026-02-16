@@ -58,11 +58,20 @@ return [
     |--------------------------------------------------------------------------
     | Signing Page Base URL (Node server - port 3000)
     |--------------------------------------------------------------------------
-    | When set (e.g. http://82.180.132.134:3000), invitation/reminder emails
+    | When set (e.g. http://187.77.22.201:3000), invitation/reminder emails
     | use this URL for the sign link so signers open the Node signing view.
     |
     */
     'signing_base_url' => env('SIGNING_BASE_URL', null),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Tools frontend URL (Node server - port 3000)
+    |--------------------------------------------------------------------------
+    | Base URL for the PDF tools UI. Used for login redirect, dashboard links, CORS.
+    |
+    */
+    'tools_url' => env('TOOLS_URL', env('APP_URL', 'http://localhost')),
 
     /*
     |--------------------------------------------------------------------------

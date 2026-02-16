@@ -347,7 +347,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Get user ID
         let userId = null;
         try {
-            const laravelUrl = 'http://82.180.132.134:8000';
+            const laravelUrl = 'http://187.77.22.201:8000';
             const userResponse = await fetch(`${laravelUrl}/api/current-user`, {
                 method: 'GET',
                 credentials: 'include',
@@ -365,7 +365,7 @@ document.addEventListener("DOMContentLoaded", () => {
         
         // Record file in database
         try {
-            const SERVER_NAME = window.env.PUBLIC_SERVER_URL || 'http://82.180.132.134:3000';
+            const SERVER_NAME = window.env.PUBLIC_SERVER_URL || 'http://187.77.22.201:3000';
             const formData = new FormData();
             formData.append('file', blob, fileName);
             formData.append('tool_name', 'Merge PDF');

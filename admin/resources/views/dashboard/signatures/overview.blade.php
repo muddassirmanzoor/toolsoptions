@@ -9,7 +9,7 @@
             <i class="fas fa-file-signature text-primary me-2" style="font-size: 1.5rem;"></i>
             <h1 class="page-title mb-0">Signature overview</h1>
         </div>
-        <a href="http://82.180.132.134:3000/signature/" class="btn btn-new-signature" id="newSignatureBtn">
+        <a href="{{ config('app.tools_url') }}/signature/" class="btn btn-new-signature" id="newSignatureBtn">
             New signature
         </a>
     </div>
@@ -141,7 +141,7 @@
                     <span class="signatures-empty-pdf-label">PDF</span>
                 </div>
                 <p class="signatures-empty-message mb-2">You have not sent any signature requests yet</p>
-                <a href="http://82.180.132.134:3000/signature/" class="signatures-empty-link">Send your first signature request</a>
+                <a href="{{ config('app.tools_url') }}/signature/" class="signatures-empty-link">Send your first signature request</a>
             </div>
         @endif
     </div>

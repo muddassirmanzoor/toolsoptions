@@ -20,7 +20,7 @@ return [
     'allowed_methods' => ['*'],
 
     // Must specify exact origin when using credentials, cannot use '*'
-    'allowed_origins' => ['http://82.180.132.134:3000'],
+    'allowed_origins' => [env('TOOLS_URL', 'http://187.77.22.201:3000')],
 
     'allowed_origins_patterns' => [],
 

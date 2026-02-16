@@ -342,7 +342,7 @@ app.get('/env', (req, res) => {
             envVars[key] = value;
         }
     }
-    // Laravel backend base URL for API (signature-requests, payment). Set PUBLIC_APP_URL e.g. http://82.180.132.134/admin
+    // Laravel backend base URL for API (signature-requests, payment). Set PUBLIC_APP_URL e.g. http://187.77.22.201:8000
     envVars.APP_URL = process.env.PUBLIC_APP_URL || process.env.APP_URL || '';
 
     res.json(envVars);
@@ -1146,7 +1146,7 @@ app.post('/api/generate-icons', upload.single('image'), async (req, res) => {
 // This route matches UUIDs (with hyphens, case-insensitive) or numeric IDs
 app.get('/:id([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}|[0-9]+)', async (req, res) => {
     const fileId = req.params.id;
-    const laravelUrl = process.env.LARAVEL_API_URL || 'http://82.180.132.134:8000';
+    const laravelUrl = process.env.LARAVEL_API_URL || 'http://187.77.22.201:8000';
     
     console.log(`📥 File download request for ID: ${fileId}`);
     
@@ -1268,6 +1268,7 @@ app.get('/:id([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-
     }
 });
 
-app.listen(port, () => {
-    console.log(`Server running at ${serverName}:${port}`);
+const host = process.env.HOST || '0.0.0.0';
+app.listen(port, host, () => {
+    console.log(`Server running at ${serverName} (listening on ${host}:${port})`);
 });

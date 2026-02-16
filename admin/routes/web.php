@@ -16,9 +16,12 @@ use App\Http\Controllers\SignaturePdfController;
 |--------------------------------------------------------------------------
 */
 
-// Public routes
+// Public routes – Laravel admin: / shows login or dashboard
 Route::get('/', function () {
-    return redirect('/modules/index.html');
+    if (auth()->check()) {
+        return redirect()->route('dashboard');
+    }
+    return redirect()->route('login');
 });
 
 // Authentication Routes

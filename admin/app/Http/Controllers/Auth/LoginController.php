@@ -53,7 +53,7 @@ class LoginController extends Controller
 
         // If request is from cross-origin (Node.js app), redirect back to tools
         if ($request->header('Referer') && str_contains($request->header('Referer'), ':3000')) {
-            return redirect('http://82.180.132.134:3000/')
+            return redirect(config('app.tools_url', 'http://187.77.22.201:3000').'/')
                 ->with('success', 'You have been logged out successfully.');
         }
 

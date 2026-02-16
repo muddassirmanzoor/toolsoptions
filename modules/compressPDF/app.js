@@ -214,7 +214,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Get user ID from Laravel (if logged in)
         let userId = null;
         try {
-            const laravelUrl = 'http://82.180.132.134:8000';
+            const laravelUrl = 'http://187.77.22.201:8000';
             const userResponse = await fetch(`${laravelUrl}/api/current-user`, {
                 method: 'GET',
                 credentials: 'include', // Include cookies for session

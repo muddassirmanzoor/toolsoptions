@@ -218,7 +218,7 @@ function loadBreadcrumb() {
 // Function to update navbar based on user authentication status
 async function updateNavbarForUser(retryCount = 0) {
     const maxRetries = 5;
-    const laravelUrl = 'http://82.180.132.134:8000';
+    const laravelUrl = 'http://187.77.22.201:8000';
     
     // Wait for elements to be available (retry if needed)
     let guestNav = document.getElementById('guest-nav');

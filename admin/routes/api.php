@@ -30,7 +30,7 @@ Route::get('/current-user', function (Request $request) {
     
     // Create response with CORS headers - must set headers before json()
     $response = response()->json($data, 200, [
-        'Access-Control-Allow-Origin' => 'http://82.180.132.134:3000',
+        'Access-Control-Allow-Origin' => config('app.tools_url', 'http://187.77.22.201:3000'),
         'Access-Control-Allow-Credentials' => 'true',
         'Access-Control-Allow-Methods' => 'GET, POST, OPTIONS, PUT, DELETE',
         'Access-Control-Allow-Headers' => 'Content-Type, Accept, Authorization, X-Requested-With',
@@ -43,7 +43,7 @@ Route::get('/current-user', function (Request $request) {
 // Handle OPTIONS preflight requests
 Route::options('/current-user', function () {
     return response('', 200, [
-        'Access-Control-Allow-Origin' => 'http://82.180.132.134:3000',
+        'Access-Control-Allow-Origin' => config('app.tools_url', 'http://187.77.22.201:3000'),
         'Access-Control-Allow-Credentials' => 'true',
         'Access-Control-Allow-Methods' => 'GET, POST, OPTIONS, PUT, DELETE',
         'Access-Control-Allow-Headers' => 'Content-Type, Accept, Authorization, X-Requested-With',
@@ -54,7 +54,7 @@ Route::options('/current-user', function () {
 // Handle OPTIONS preflight for processed-files
 Route::options('/processed-files', function () {
     return response('', 200)
-        ->header('Access-Control-Allow-Origin', 'http://82.180.132.134:3000')
+        ->header('Access-Control-Allow-Origin', config('app.tools_url', 'http://187.77.22.201:3000'))
         ->header('Access-Control-Allow-Credentials', 'true')
         ->header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
         ->header('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization');
@@ -62,7 +62,7 @@ Route::options('/processed-files', function () {
 
 Route::options('/processed-files/{id}', function () {
     return response('', 200)
-        ->header('Access-Control-Allow-Origin', 'http://82.180.132.134:3000')
+        ->header('Access-Control-Allow-Origin', config('app.tools_url', 'http://187.77.22.201:3000'))
         ->header('Access-Control-Allow-Credentials', 'true')
         ->header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
         ->header('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization');

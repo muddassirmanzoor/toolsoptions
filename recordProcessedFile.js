@@ -27,7 +27,7 @@ async function recordProcessedFile(options) {
         filePath = null,
         originalFilename = null,
         metadata = {},
-        laravelUrl = process.env.LARAVEL_API_URL || 'http://82.180.132.134:8000'
+        laravelUrl = process.env.LARAVEL_API_URL || 'http://187.77.22.201:8000'
     } = options;
 
     if (!toolName) {

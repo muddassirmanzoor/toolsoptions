@@ -28,7 +28,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-white">
         <div class="container-fluid px-4">
-            <a class="navbar-brand" href="http://82.180.132.134:3000/">
+            <a class="navbar-brand" href="{{ config('app.tools_url', 'http://187.77.22.201:3000') }}/">
                 <img src="{{ asset('modules/compressPDF/assets/logo-ilovepdf.svg') }}" alt="I Love PDF" class="logo-img">
             </a>
             
